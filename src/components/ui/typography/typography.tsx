@@ -15,6 +15,7 @@ export type Variant =
   | 'overline'
   | 'subtitle_1'
   | 'subtitle_2'
+
 type TypographyProps<T extends ElementType = 'p'> = {
   as?: T
   text?: string
