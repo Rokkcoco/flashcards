@@ -1,4 +1,5 @@
 import { Card } from '@/components/ui'
+import { Typography } from '@/components/ui/typography'
 import { Meta, StoryObj } from '@storybook/react'
 
 const meta = {
@@ -18,7 +19,7 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
-    children: 'Card Testing',
+    children: <Typography variant={'large'}>Card testing</Typography>,
     style: {
       height: '550px',
       padding: '24px',
@@ -26,14 +27,3 @@ export const Default: Story = {
     },
   },
 }
-// export const Default1: Story = {
-//   args: {
-//     as: 'section',
-//     children: 'Card',
-//     style: {
-//       height: '550px',
-//       padding: '24px',
-//       width: '420px',
-//     },
-//   },
-// }
