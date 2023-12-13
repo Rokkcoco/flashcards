@@ -3,19 +3,21 @@ import { useState } from 'react'
 import { Vector } from '@/assets'
 import * as CheckboxRadix from '@radix-ui/react-checkbox'
 
-import s from './checkbox.module.css'
+import s from './checkbox.module.scss'
 
-// type CheckboxProps = {}
+type CheckboxProps = {
+  disabled: boolean
+}
 
-export const Checkbox = () => {
+export const Checkbox = ({}: CheckboxProps) => {
   const [checked, setChecked] = useState(false)
   const changeStatus = () => setChecked(!checked)
 
   return (
-    <CheckboxRadix.Checkbox className={s.root} onCheckedChange={changeStatus}>
-      <CheckboxRadix.CheckboxIndicator>
-        {checked && <Vector style={{ transform: 'translateY(2px)' }} />}
-      </CheckboxRadix.CheckboxIndicator>
-    </CheckboxRadix.Checkbox>
+    <div className={s.wrapper}>
+      <CheckboxRadix.Checkbox className={s.root} onCheckedChange={changeStatus}>
+        <CheckboxRadix.CheckboxIndicator>{checked && <Vector />}</CheckboxRadix.CheckboxIndicator>
+      </CheckboxRadix.Checkbox>
+    </div>
   )
 }
