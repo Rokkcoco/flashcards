@@ -27,14 +27,3 @@ export const Default: Story = {
     },
   },
 }
-// export const Default1: Story = {
-//   args: {
-//     as: 'section',
-//     children: 'Card',
-//     style: {
-//       height: '550px',
-//       padding: '24px',
-//       width: '420px',
-//     },
-//   },
-// }
