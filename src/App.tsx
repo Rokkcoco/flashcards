@@ -1,3 +1,9 @@
+import { Typography } from './components/ui/typography'
+
 export function App() {
-  return <div>Hello</div>
+  return (
+    <div>
+      <Typography></Typography>
+    </div>
+  )
 }
