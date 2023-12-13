@@ -1,0 +1,19 @@
+.root {
+    transform: translateX(-5px);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 18px;
+    height: 18px;
+
+    background-color: var(--color-dark-900);
+    border: 2px solid var(--color-light-900);
+    border-radius: 2px;
+}
+
+.indicator {
+    color: red;
+    border: white;
+}
