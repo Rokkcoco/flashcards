@@ -18,7 +18,7 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
-    children: 'Card',
+    children: 'Card Testing',
     style: {
       height: '550px',
       padding: '24px',
