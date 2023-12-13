@@ -1,28 +1,94 @@
-.button {
+@mixin button {
   all:unset;
+
   cursor: pointer;
 
+  padding: 6px 28px;
+
+  border: none;
+  border-radius: 4px;
+
+  transition: 0.2s;
+  
   &:focus-visible {
     outline: 2px solid var(--color-info-500);
+  }
+
+  &:disabled {
+  cursor: default;
+    opacity: 0.5;
   }
 }
 
 .primary {
-  background-color: red;
+  @include button;
+
+  color: var(--color-light-100);
+  background-color: var(--color-accent-500);
+  box-shadow: 0 4px 18px 0 rgb(140 97 255 / 35%);
+
+  &:active:enabled {
+    background-color: var(--color-accent-700);
+  }
+
+  &:hover:enabled {
+    background-color: var(--color-accent-300);
+  }
 }
 
 .secondary {
-  background-color: green;
+  @include button;
+
+  color: var(--color-light-100);
+  background-color: var(--color-dark-300);
+  box-shadow: 0 4px 4px 0 rgb(77 86 96 / 13%);
+
+
+  &:active:enabled {
+    background-color: var(--color-dark-500);
+  }
+
+  &:hover:enabled {
+    background-color: var(--color-dark-100);
+  }
 }
 
 .tertiary {
-  background-color: blue;
-}
+  @include button;
+
+  color: var(--color-accent-500);
+  background-color: var(--color-dark-900);
+  border: 1px solid rgb(140 97 255 / 100%);
+
+  &:active:enabled {
+    background-color: var(--color-accent-900);
+    border: 1px solid rgb(112 78 204 / 100%)
+  }
+
+  &:hover:enabled {
+    background-color: var(--color-dark-500);
+    border: 1px solid rgb(112 78 204 / 100%)
+  }
+ }
 
 .link {
-  background-color: yellow;
+  @include button;
+
+padding: 6px 10px;
+  color: var(--color-accent-500);
+  background-color: var(--color-dark-900);
+  border-radius: 20px;
+
+  &:active:enabled {
+    color: var(--color-accent-700);
+  }
+
+  &:hover:enabled {
+  color: var(--color-accent-300);
+  }
 }
 
 .fullWidth {
   width: 100%;
+  text-align: center;
 }
