@@ -26,13 +26,13 @@
   color: var(--color-light-100);
   background-color: var(--color-accent-500);
   box-shadow: 0 4px 18px 0 rgb(140 97 255 / 35%);
+  
+  &:hover:enabled {
+    background-color: var(--color-accent-300);
+  }
 
   &:active:enabled {
     background-color: var(--color-accent-700);
-  }
-
-  &:hover:enabled {
-    background-color: var(--color-accent-300);
   }
 }
 
@@ -42,14 +42,13 @@
   color: var(--color-light-100);
   background-color: var(--color-dark-300);
   box-shadow: 0 4px 4px 0 rgb(77 86 96 / 13%);
-
+  
+  &:hover:enabled {
+    background-color: var(--color-dark-100);
+  }
 
   &:active:enabled {
     background-color: var(--color-dark-500);
-  }
-
-  &:hover:enabled {
-    background-color: var(--color-dark-100);
   }
 }
 
@@ -60,15 +59,17 @@
   background-color: var(--color-dark-900);
   border: 1px solid rgb(140 97 255 / 100%);
 
+  &:hover:enabled {
+    background-color: var(--color-dark-500);
+    border: 1px solid rgb(112 78 204 / 100%)
+  }
+
   &:active:enabled {
     background-color: var(--color-accent-900);
     border: 1px solid rgb(112 78 204 / 100%)
   }
 
-  &:hover:enabled {
-    background-color: var(--color-dark-500);
-    border: 1px solid rgb(112 78 204 / 100%)
-  }
+
  }
 
 .link {
@@ -79,13 +80,15 @@ padding: 6px 10px;
   background-color: var(--color-dark-900);
   border-radius: 20px;
 
+  &:hover:enabled {
+    color: var(--color-accent-300);
+  }
+
   &:active:enabled {
     color: var(--color-accent-700);
   }
 
-  &:hover:enabled {
-  color: var(--color-accent-300);
-  }
+
 }
 
 .fullWidth {
