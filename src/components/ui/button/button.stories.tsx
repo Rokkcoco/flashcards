@@ -31,7 +31,7 @@ export const PrimaryWithIcon: Story = {
     // eslint-disable-next-line react/no-unescaped-entities
     children: (
       <>
-        <Logout fill={'white'} />
+        <Logout />
         Button primary
       </>
     ),
@@ -55,7 +55,7 @@ export const SecondaryWithIcon: Story = {
   args: {
     children: (
       <>
-        <Logout fill={'white'} />
+        <Logout />
         Button secondary
       </>
     ),
