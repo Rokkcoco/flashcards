@@ -1,0 +1,42 @@
+.container {
+  position: relative;
+
+/*  display: flex;
+  flex-direction: column; */
+
+  width: 284px;
+  height: 36px;
+}
+
+input {
+  width: 100%;
+  height: 100%;
+
+  background-color: var(--color-dark-900);
+  border: 1px solid var(--color-dark-300);
+  border-radius: 2px;
+
+  &:focus-visible {
+    border: none;
+    outline: 2px solid var(--color-info-500);
+  }
+}
+
+button {
+  position: absolute;
+  transform: translate(-40px, 5px);
+
+  width: 24px;
+  height: 24px;
+
+  color: white;
+
+  background-color: transparent;
+  border: none;
+}
+
+.label {
+  position: absolute;
+  transform: translate(-285px, 25px);
+  color: red;
+}
