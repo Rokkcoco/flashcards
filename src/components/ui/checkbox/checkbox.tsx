@@ -7,6 +7,7 @@ import s from './checkbox.module.scss'
 
 type CheckboxProps = {
   disabled: boolean
+  label: string
 }
 
 export const Checkbox = ({}: CheckboxProps) => {
