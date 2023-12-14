@@ -6,7 +6,6 @@ import * as Label from '@radix-ui/react-label'
 
 import s from './text-field.module.scss'
 export const TextField = () => {
-  const calls = () => console.log('yes')
   const label = 'Error!'
   const [text, setText] = useState('')
   const changeInputValue = (e: ChangeEvent<HTMLInputElement>) => {
@@ -16,7 +15,7 @@ export const TextField = () => {
   return (
     <div className={s.container}>
       <input id={'input'} onChange={changeInputValue} placeholder={'Input'} value={text} />
-      <button onClick={calls}>
+      <button onClick={x => x}>
         <EyeOutline />
       </button>
 
