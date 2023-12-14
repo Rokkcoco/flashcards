@@ -1,24 +1,49 @@
-import { useState } from 'react'
-
 import { Vector } from '@/assets'
+import { Typography } from '@/components/ui/typography'
 import * as CheckboxRadix from '@radix-ui/react-checkbox'
+import * as Label from '@radix-ui/react-label'
+import { clsx } from 'clsx'
 
 import s from './checkbox.module.scss'
 
 type CheckboxProps = {
-  disabled: boolean
-  label: string
+  checked?: boolean
+  disabled?: boolean
+  label?: string
+  onChange?: (checked: boolean) => void
+  required?: boolean
 }
 
-export const Checkbox = ({}: CheckboxProps) => {
-  const [checked, setChecked] = useState(false)
-  const changeStatus = () => setChecked(!checked)
+export const Checkbox = ({ checked, disabled, label, onChange, required }: CheckboxProps) => {
+  const classNames = {
+    buttonWrapper: clsx(s.buttonWrapper, disabled && s.disabled),
+    container: s.container,
+    label: clsx(s.label, disabled && s.disabled),
+    root: s.root,
+  }
 
   return (
-    <div className={s.wrapper}>
-      <CheckboxRadix.Checkbox className={s.root} onCheckedChange={changeStatus}>
-        <CheckboxRadix.CheckboxIndicator>{checked && <Vector />}</CheckboxRadix.CheckboxIndicator>
-      </CheckboxRadix.Checkbox>
+    <div className={classNames.container}>
+      <Label.Root asChild>
+        <Typography as={'label'} className={classNames.label} variant={'body_2'}>
+          <div className={classNames.buttonWrapper}>
+            <CheckboxRadix.Root
+              checked={checked}
+              className={classNames.root}
+              disabled={disabled}
+              onCheckedChange={onChange}
+              required={required}
+            >
+              {checked && (
+                <CheckboxRadix.CheckboxIndicator forceMount>
+                  <Vector />
+                </CheckboxRadix.CheckboxIndicator>
+              )}
+            </CheckboxRadix.Root>
+          </div>
+          {label}
+        </Typography>
+      </Label.Root>
     </div>
   )
 }
