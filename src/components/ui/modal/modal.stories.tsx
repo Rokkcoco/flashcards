@@ -12,6 +12,10 @@ type Story = StoryObj<typeof meta>
 
 export const Checked: Story = {
   args: {
-    children: <input />,
+    children: (
+      <>
+        <input />
+      </>
+    ),
   },
 }

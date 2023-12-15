@@ -1,7 +1,11 @@
 import { ReactNode } from 'react'
 
+import { CloseOutline } from '@/assets'
 import { Button } from '@/components/ui'
+import { Typography } from '@/components/ui/typography'
 import * as Dialog from '@radix-ui/react-dialog'
+
+import s from './modal.module.scss'
 // type ModalProps = {
 //   value: string
 // }
@@ -12,18 +16,22 @@ type ModalProps = {
 export const Modal = ({ children }: ModalProps) => {
   return (
     <Dialog.Root>
-      <Dialog.Trigger asChild>
+      <Dialog.Trigger>
         <Button variant={'primary'}>Kekw</Button>
       </Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Overlay />
         <Dialog.Content>
-          <Dialog.Title>Best boobs</Dialog.Title>
-          <Dialog.Description>You cant find nothing better then this</Dialog.Description>
-
-          <Dialog.Close>
-            <Button variant={'primary'}>Sorry, im poor</Button>
-          </Dialog.Close>
+          <div className={s.header}>
+            <Dialog.Title asChild>
+              <Typography as={'h2'} variant={'h2'}>
+                Title
+              </Typography>
+            </Dialog.Title>
+            <Dialog.Close className={s.closeButton}>
+              <CloseOutline />
+            </Dialog.Close>
+          </div>
           {children}
         </Dialog.Content>
       </Dialog.Portal>
