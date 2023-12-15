@@ -1,9 +1,5 @@
 .container {
   position: relative;
-
-/*  display: flex;
-  flex-direction: column; */
-
   width: 284px;
   height: 36px;
 }
@@ -29,7 +25,7 @@ button {
   width: 24px;
   height: 24px;
 
-  color: white;
+
 
   background-color: transparent;
   border: none;
@@ -37,6 +33,13 @@ button {
 
 .label {
   position: absolute;
-  transform: translate(-285px, 25px);
   color: red;
+}
+
+.eyeButton {
+  color: white;
+}
+
+.searchButton {
+  color: var(--color-dark-100);
 }

@@ -1,12 +1,16 @@
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, ComponentPropsWithoutRef, useState } from 'react'
 
-import { EyeOutline } from '@/assets'
+import { EyeOutline, SearchOutline } from '@/assets'
 import { Typography } from '@/components/ui/typography'
 import * as Label from '@radix-ui/react-label'
 
 import s from './text-field.module.scss'
-export const TextField = () => {
-  const label = 'Error!'
+
+type TextFieldProps = {
+  label: string
+} & ComponentPropsWithoutRef<'input'>
+export const TextField = ({ label, placeholder }: TextFieldProps) => {
+  const labelTest = label ? label : 'Error!'
   const [text, setText] = useState('')
   const changeInputValue = (e: ChangeEvent<HTMLInputElement>) => {
     setText(e.currentTarget.value)
@@ -14,13 +18,15 @@ export const TextField = () => {
 
   return (
     <div className={s.container}>
-      <input id={'input'} onChange={changeInputValue} placeholder={'Input'} value={text} />
-      <button onClick={x => x}>
+      <input id={'input'} onChange={changeInputValue} placeholder={placeholder} value={text} />
+      <button className={s.eyeButton} onClick={x => x}>
         <EyeOutline />
       </button>
-
+      <button className={s.searchButton} onClick={x => x}>
+        <SearchOutline />
+      </button>
       <Label.Root className={s.label} htmlFor={'input'}>
-        <Typography variant={'caption'}>{label}</Typography>
+        <Typography variant={'caption'}>{labelTest}</Typography>
       </Label.Root>
     </div>
   )

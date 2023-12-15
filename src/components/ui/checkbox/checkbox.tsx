@@ -9,12 +9,13 @@ import s from './checkbox.module.scss'
 type CheckboxProps = {
   checked?: boolean
   disabled?: boolean
+  id?: string
   label?: string
   onChange?: (checked: boolean) => void
   required?: boolean
 }
 
-export const Checkbox = ({ checked, disabled, label, onChange, required }: CheckboxProps) => {
+export const Checkbox = ({ checked, disabled, id, label, onChange, required }: CheckboxProps) => {
   const classNames = {
     buttonWrapper: clsx(s.buttonWrapper, disabled && s.disabled),
     container: s.container,
@@ -31,6 +32,7 @@ export const Checkbox = ({ checked, disabled, label, onChange, required }: Check
               checked={checked}
               className={classNames.root}
               disabled={disabled}
+              id={id}
               onCheckedChange={onChange}
               required={required}
             >
