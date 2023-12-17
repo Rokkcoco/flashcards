@@ -1,10 +1,4 @@
-import {
-  ComponentPropsWithoutRef,
-  ElementType,
-  ForwardedRef,
-  PropsWithChildren,
-  forwardRef,
-} from 'react'
+import { ComponentPropsWithoutRef, ElementType, ForwardedRef, forwardRef } from 'react'
 
 import { InferType } from '@/common'
 
@@ -39,7 +33,7 @@ export const Typography = forwardRef<InferType<TypographyProps>, TypographyProps
       text = '',
       variant = 'body_1',
       ...restProps
-    }: PropsWithChildren<TypographyProps<T>>,
+    }: TypographyProps<T> & Omit<ComponentPropsWithoutRef<T>, keyof TypographyProps<T>>,
     ref: ForwardedRef<InferType<T>>
   ) => {
     const Component = as || 'p'
