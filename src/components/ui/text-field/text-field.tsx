@@ -7,7 +7,7 @@ import * as Label from '@radix-ui/react-label'
 import s from './text-field.module.scss'
 
 type TextFieldProps = {
-  label: string
+  label?: string
 } & ComponentPropsWithoutRef<'input'>
 export const TextField = ({ label, placeholder }: TextFieldProps) => {
   const labelTest = label ? label : 'Error!'

@@ -1,9 +1,9 @@
 import { useState } from 'react'
 
-import { Button } from '@/components/ui'
-import { Checkbox } from '@/components/ui/checkbox'
-import { Modal } from '@/components/ui/modal/modal'
+import { Button, Checkbox } from '@/components/ui'
 import { Meta, StoryObj } from '@storybook/react'
+
+import { Modal } from './'
 
 const meta = {
   component: Modal,
