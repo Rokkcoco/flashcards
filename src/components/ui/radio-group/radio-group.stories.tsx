@@ -13,9 +13,9 @@ type Story = StoryObj<typeof meta>
 export const RadioStory: Story = {
   args: {
     options: [
-      { label: 'ye', value: 'ye' },
-      { label: 'ye1', value: 'ye1' },
-      { label: 'ye2', value: 'ye2' },
+      { label: 'Value1', value: '1' },
+      { label: 'Value2', value: '2' },
+      { label: 'Value3', value: '3' },
     ],
   },
 }

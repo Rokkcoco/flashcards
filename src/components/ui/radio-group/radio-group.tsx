@@ -15,7 +15,7 @@ const SingleRadio = forwardRef<ElementRef<typeof RadioGroupRadix.Item>, SingleRa
     return (
       <Typography as={'label'} variant={'body_2'}>
         <RadioGroupRadix.Item ref={ref} {...rest} className={s.icon}>
-          <RadioGroupRadix.Indicator asChild className={s.indicator} forceMount />
+          <RadioGroupRadix.Indicator className={s.indicator} forceMount />
         </RadioGroupRadix.Item>
         {label}
       </Typography>
@@ -35,12 +35,11 @@ type Props = {
 export const RadioGroup = forwardRef<ElementRef<typeof RadioGroupRadix.Root>, Props>(
   (props: Props, ref) => {
     const { options, ...rest } = props
+    const RadioButtons = options.map(t => <SingleRadio key={t.label} {...t} />)
 
     return (
       <RadioGroupRadix.Root className={s.root} ref={ref} {...rest}>
-        {options.map(t => (
-          <SingleRadio {...t} key={t.label} />
-        ))}
+        {RadioButtons}
       </RadioGroupRadix.Root>
     )
   }

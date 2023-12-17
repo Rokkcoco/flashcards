@@ -1,80 +1,53 @@
 button {
-
+  all: unset;
 }
 
 .root {
   display: flex;
   flex-direction: column;
+  gap: 12px;
   border: 2px solid red;
 }
 
-.wrapper {
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-}
-
-.icon {
-  all: unset;
-
+ .icon {
   width: 16px;
   height: 16px;
+  margin: 4px;
 
   border: 2px solid var(--color-accent-500);
   border-radius: 50%;
+
+
 }
 
-/*
-.RadioGroupRoot {
-  transform: translateX(0);
-  display: flex;
-  flex-direction: column;
-}
+ .indicator {
+   position: relative;
 
-.RadioGroupItem {
-  width: 25px;
-  height: 25px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
 
-  background-color: white;
-  border-radius: 100%;
-  box-shadow: 0 2px 10px black;
+   width: 100%;
+   height: 100%;
 
-  &:hover {
-    background-color: violet;
-  }
+   &::after {
+     content: '';
+     position: absolute;
+     display: block;
+     border-radius: 50%;
 
-  &:focus {
-      box-shadow: 0 0 0 2px black;
+     [data-state='checked'] & {
+      top: 50%;
+       right: 50%;
+       transform: translate(50%, -50%);
 
-  }
-}
 
-.RadioGroupIndicator {
-  position: relative;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+       width: 11px;
+       height: 11px;
 
-  width: 100%;
-  height: 100%;
-
-  &::after {
-    content: '';
-
-    display: block;
-
-    width: 11px;
-    height: 11px;
-
-    background-color: var(--violet-11);
-    border-radius: 50%;
-  }
-}
-
-.Label {
-  padding-left: 15px;
-  font-size: 15px;
-  line-height: 1;
-  color: white;
-} */
+       background-color: var(--color-accent-500);
+       border-radius: 50%;
+     }
+   }
+ }
