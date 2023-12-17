@@ -1,3 +1,7 @@
+import { useState } from 'react'
+
+import { Button } from '@/components/ui'
+import { Checkbox } from '@/components/ui/checkbox'
 import { Modal } from '@/components/ui/modal/modal'
 import { Meta, StoryObj } from '@storybook/react'
 
@@ -10,12 +14,58 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Checked: Story = {
+export const ModalOnlyText: Story = {
   args: {
     children: (
       <>
-        <input />
+        <div>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus consectetur dicta
+          distinctio ex expedita fuga maiores minus neque, nesciunt nobis, officiis omnis porro
+          possimus provident, quod rem saepe vel vitae?
+        </div>
       </>
     ),
+    open: true,
+  },
+}
+export const ModalWithTitleAndButtons: Story = {
+  args: {
+    children: (
+      <>
+        <div>
+          Accusantium aliquid aperiam assumenda consequatur culpa cum cupiditate deserunt dicta ea
+          eaque eligendi est eum eveniet ex explicabo impedit, in magnam maiores nam necessitatibus
+          pariatur porro provident quasi vero voluptatum!
+        </div>
+        <div>
+          Aliquam aliquid at aut delectus esse excepturi exercitationem fugiat impedit, inventore
+          ipsum magni minima nihil nobis non nostrum placeat provident quas quasi, similique
+          suscipit temporibus, velit veniam. Aliquid, aspernatur, dignissimos.
+        </div>
+        <Checkbox checked label={'Check'} />
+      </>
+    ),
+    title: 'Card',
+    trigger: <Button variant={'primary'}>Click me</Button>,
+  },
+  render: args => {
+    const [open, setOpen] = useState(false)
+    const openHandler = () => setOpen(checked => !checked)
+
+    return (
+      <Modal
+        onOpenChange={openHandler}
+        open={open}
+        {...args}
+        controlButtons={
+          <>
+            <Button variant={'primary'}>Click me</Button>
+            <Button onClick={openHandler} variant={'secondary'}>
+              Cancel
+            </Button>
+          </>
+        }
+      />
+    )
   },
 }

@@ -6,7 +6,6 @@ import s from './button.module.scss'
 
 type Props<T extends ElementType = 'button'> = {
   as?: T
-  className?: string
   fullWidth?: boolean
   variant?: 'link' | 'primary' | 'secondary' | 'tertiary'
 } & ComponentPropsWithoutRef<T>
@@ -27,5 +26,3 @@ export const Button = forwardRef(
     )
   }
 )
-
-//todo: can we remove className?
