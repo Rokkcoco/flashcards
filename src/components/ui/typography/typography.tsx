@@ -18,29 +18,23 @@ export type Variant =
   | 'subtitle_1'
   | 'subtitle_2'
 
-type TypographyProps<T extends ElementType = 'p'> = {
+type Props<T extends ElementType = 'p'> = {
   as?: T
   text?: string
   variant?: Variant
 } & ComponentPropsWithoutRef<T>
 
-export const Typography = forwardRef<InferType<TypographyProps>, TypographyProps>(
+export const Typography = forwardRef(
   <T extends ElementType = 'p'>(
-    {
-      as,
-      children,
-      style,
-      text = '',
-      variant = 'body_1',
-      ...restProps
-    }: TypographyProps<T> & Omit<ComponentPropsWithoutRef<T>, keyof TypographyProps<T>>,
+    props: Props<T> & Omit<ComponentPropsWithoutRef<T>, keyof Props<T>>,
     ref: ForwardedRef<InferType<T>>
   ) => {
-    const Component = as || 'p'
+    const { as: Component = 'p', children, style, text = '', variant = 'body_1', ...rest } = props
+
     const className = `${s.typography}, ${s[variant]}`
 
     return (
-      <Component className={className} style={style} {...restProps} ref={ref}>
+      <Component className={className} style={style} {...rest} ref={ref}>
         {children || text}
       </Component>
     )
