@@ -1,4 +1,6 @@
-import { ComponentPropsWithoutRef, ElementType, PropsWithChildren } from 'react'
+import { ComponentPropsWithoutRef, ElementType, ForwardedRef, forwardRef } from 'react'
+
+import { InferType } from '@/common'
 
 import s from './typography.module.scss'
 
@@ -16,26 +18,25 @@ export type Variant =
   | 'subtitle_1'
   | 'subtitle_2'
 
-type TypographyProps<T extends ElementType = 'p'> = {
+type Props<T extends ElementType = 'p'> = {
   as?: T
   text?: string
   variant?: Variant
 } & ComponentPropsWithoutRef<T>
 
-export const Typography = <T extends ElementType = 'p'>({
-  as,
-  children,
-  style,
-  text = '',
-  variant = 'body_1',
-  ...restProps
-}: PropsWithChildren<TypographyProps<T>>) => {
-  const Component = as || 'p'
-  const className = `${s.typography}, ${s[variant]}`
+export const Typography = forwardRef(
+  <T extends ElementType = 'p'>(
+    props: Props<T> & Omit<ComponentPropsWithoutRef<T>, keyof Props<T>>,
+    ref: ForwardedRef<InferType<T>>
+  ) => {
+    const { as: Component = 'p', children, style, text = '', variant = 'body_1', ...rest } = props
 
-  return (
-    <Component className={className} style={style} {...restProps}>
-      {children || text}
-    </Component>
-  )
-}
+    const className = `${s.typography}, ${s[variant]}`
+
+    return (
+      <Component className={className} style={style} {...rest} ref={ref}>
+        {children || text}
+      </Component>
+    )
+  }
+)

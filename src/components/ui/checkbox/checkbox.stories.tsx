@@ -15,15 +15,11 @@ type Story = StoryObj<typeof meta>
 export const Controlled: Story = {
   render: args => {
     const [checked, setChecked] = useState(true)
+    const onChangeHandler = () => setChecked(!checked)
 
     return (
       <>
-        <Checkbox
-          {...args}
-          checked={checked}
-          label={'Check-box'}
-          onChange={() => setChecked(!checked)}
-        />
+        <Checkbox {...args} checked={checked} label={'Check-box'} onChange={onChangeHandler} />
       </>
     )
   },

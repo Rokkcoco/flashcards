@@ -1,3 +1,5 @@
+import { ElementRef, forwardRef } from 'react'
+
 import { Vector } from '@/assets'
 import { Typography } from '@/components/ui/typography'
 import * as CheckboxRadix from '@radix-ui/react-checkbox'
@@ -6,15 +8,21 @@ import { clsx } from 'clsx'
 
 import s from './checkbox.module.scss'
 
-type CheckboxProps = {
+type Props = {
   checked?: boolean
+  defaultChecked?: boolean
   disabled?: boolean
+  id?: string
   label?: string
+  name?: string
   onChange?: (checked: boolean) => void
   required?: boolean
+  value?: string
 }
 
-export const Checkbox = ({ checked, disabled, label, onChange, required }: CheckboxProps) => {
+export const Checkbox = forwardRef<ElementRef<typeof CheckboxRadix.Root>, Props>((props, ref) => {
+  const { checked, disabled, label, onChange: onCheckedChange, ...rest } = props
+
   const classNames = {
     buttonWrapper: clsx(s.buttonWrapper, disabled && s.disabled),
     container: s.container,
@@ -31,8 +39,9 @@ export const Checkbox = ({ checked, disabled, label, onChange, required }: Check
               checked={checked}
               className={classNames.root}
               disabled={disabled}
-              onCheckedChange={onChange}
-              required={required}
+              onCheckedChange={onCheckedChange}
+              ref={ref}
+              {...rest}
             >
               {checked && (
                 <CheckboxRadix.CheckboxIndicator forceMount>
@@ -46,4 +55,4 @@ export const Checkbox = ({ checked, disabled, label, onChange, required }: Check
       </Label.Root>
     </div>
   )
-}
+})
