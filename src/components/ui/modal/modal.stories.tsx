@@ -14,20 +14,6 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const ModalOnlyText: Story = {
-  args: {
-    children: (
-      <>
-        <div>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus consectetur dicta
-          distinctio ex expedita fuga maiores minus neque, nesciunt nobis, officiis omnis porro
-          possimus provident, quod rem saepe vel vitae?
-        </div>
-      </>
-    ),
-    open: true,
-  },
-}
 export const ModalWithTitleAndButtons: Story = {
   args: {
     children: (
@@ -67,5 +53,48 @@ export const ModalWithTitleAndButtons: Story = {
         }
       />
     )
+  },
+}
+
+export const ModalTextWithTitle: Story = {
+  args: {
+    children: (
+      <>
+        <div>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus consectetur dicta
+          distinctio ex expedita fuga maiores minus neque, nesciunt nobis, officiis omnis porro
+          possimus provident, quod rem saepe vel vitae?
+        </div>
+      </>
+    ),
+    title: 'Lorem ipsum',
+    trigger: <Button variant={'primary'}>Click me</Button>,
+  },
+  render: args => {
+    const [open, setOpen] = useState(false)
+    const openHandler = () => setOpen(checked => !checked)
+
+    return <Modal onOpenChange={openHandler} open={open} {...args} />
+  },
+}
+
+export const ModalOnlyText: Story = {
+  args: {
+    children: (
+      <>
+        <div>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus consectetur dicta
+          distinctio ex expedita fuga maiores minus neque, nesciunt nobis, officiis omnis porro
+          possimus provident, quod rem saepe vel vitae?
+        </div>
+      </>
+    ),
+    trigger: <Button variant={'primary'}>Click me</Button>,
+  },
+  render: args => {
+    const [open, setOpen] = useState(false)
+    const openHandler = () => setOpen(checked => !checked)
+
+    return <Modal onOpenChange={openHandler} open={open} {...args} />
   },
 }
