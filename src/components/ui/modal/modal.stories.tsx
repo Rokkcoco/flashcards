@@ -45,7 +45,9 @@ export const ModalWithTitleAndButtons: Story = {
         {...args}
         controlButtons={
           <>
-            <Button variant={'primary'}>Click me</Button>
+            <Button onClick={() => alert('click')} variant={'primary'}>
+              Click me
+            </Button>
             <Button onClick={openHandler} variant={'secondary'}>
               Cancel
             </Button>
