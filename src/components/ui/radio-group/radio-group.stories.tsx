@@ -15,7 +15,8 @@ export const RadioStory: Story = {
     options: [
       { label: 'Value1', value: '1' },
       { label: 'Value2', value: '2' },
-      { label: 'Value3', value: '3' },
+      { disabled: true, label: 'Value3', value: '3' },
+      { checked: true, disabled: true, label: 'Value4', value: '4' },
     ],
   },
 }

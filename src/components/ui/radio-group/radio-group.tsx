@@ -1,41 +1,45 @@
 import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
 
 import Typography from '@/components/ui/typography/typography'
+import * as Label from '@radix-ui/react-label'
 import * as RadioGroupRadix from '@radix-ui/react-radio-group'
+import { clsx } from 'clsx'
 
 import s from './radio-group.module.scss'
-type SingleRadioProps = {
+type RadioItemProps = {
   label: string
 } & Omit<ComponentPropsWithoutRef<typeof RadioGroupRadix.Item>, 'asChild'>
 
-const SingleRadio = forwardRef<ElementRef<typeof RadioGroupRadix.Item>, SingleRadioProps>(
-  (props: SingleRadioProps, ref) => {
-    const { label, ...rest } = props
+const RadioItem = forwardRef<ElementRef<typeof RadioGroupRadix.Item>, RadioItemProps>(
+  (props: RadioItemProps, ref) => {
+    const { disabled, label, ...rest } = props
+    const classNames = {
+      icon: s.icon,
+      indicator: s.indicator,
+      label: clsx(s.label, disabled && s.disabled),
+    }
 
     return (
-      <Typography as={'label'} variant={'body_2'}>
-        <RadioGroupRadix.Item ref={ref} {...rest} className={s.icon}>
-          <RadioGroupRadix.Indicator className={s.indicator} forceMount />
-        </RadioGroupRadix.Item>
-        {label}
-      </Typography>
+      <Label.Root asChild>
+        <Typography as={'label'} className={classNames.label} variant={'body_2'}>
+          <RadioGroupRadix.Item ref={ref} {...rest} className={classNames.icon} disabled={disabled}>
+            <RadioGroupRadix.Indicator className={classNames.indicator} forceMount />
+          </RadioGroupRadix.Item>
+          {label}
+        </Typography>
+      </Label.Root>
     )
   }
 )
 
-type Options = {
-  label: string
-  value: string
-}
-
 type Props = {
-  options: Options[]
+  options: RadioItemProps[]
 } & Omit<ComponentPropsWithoutRef<typeof RadioGroupRadix.Root>, 'asChild'>
 //а могу ли я прокинуть реф дальше? если цепляю его уже тут
 export const RadioGroup = forwardRef<ElementRef<typeof RadioGroupRadix.Root>, Props>(
   (props: Props, ref) => {
     const { options, ...rest } = props
-    const RadioButtons = options.map(t => <SingleRadio key={t.label} {...t} />)
+    const RadioButtons = options.map(t => <RadioItem key={t.label} {...t} />)
 
     return (
       <RadioGroupRadix.Root className={s.root} ref={ref} {...rest}>
