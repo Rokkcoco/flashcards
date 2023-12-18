@@ -1,7 +1,7 @@
-import { ElementRef, forwardRef } from 'react'
+import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
 
 import { Vector } from '@/assets'
-import { Typography } from '@/components/ui/typography'
+import Typography from '@/components/ui/typography/typography'
 import * as CheckboxRadix from '@radix-ui/react-checkbox'
 import * as Label from '@radix-ui/react-label'
 import { clsx } from 'clsx'
@@ -9,16 +9,10 @@ import { clsx } from 'clsx'
 import s from './checkbox.module.scss'
 
 type Props = {
-  checked?: boolean
-  defaultChecked?: boolean
-  disabled?: boolean
   id?: string
   label?: string
-  name?: string
   onChange?: (checked: boolean) => void
-  required?: boolean
-  value?: string
-}
+} & Omit<ComponentPropsWithoutRef<typeof CheckboxRadix.Root>, 'onCheckedChange'>
 
 export const Checkbox = forwardRef<ElementRef<typeof CheckboxRadix.Root>, Props>((props, ref) => {
   const { checked, disabled, label, onChange: onCheckedChange, ...rest } = props

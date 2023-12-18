@@ -1,7 +1,7 @@
 import { ChangeEvent, ComponentPropsWithoutRef, useState } from 'react'
 
 import { EyeOutline, SearchOutline } from '@/assets'
-import { Typography } from '@/components/ui/typography'
+import Typography from '@/components/ui/typography/typography'
 import * as Label from '@radix-ui/react-label'
 
 import s from './text-field.module.scss'

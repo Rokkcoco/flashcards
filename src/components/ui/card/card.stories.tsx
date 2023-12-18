@@ -1,6 +1,5 @@
+import Card from '@/components/ui/card/card'
 import { Meta, StoryObj } from '@storybook/react'
-
-import { Card } from './'
 
 const meta = {
   argTypes: {
