@@ -1,4 +1,11 @@
-import { ComponentPropsWithoutRef, ElementType, ForwardedRef, forwardRef } from 'react'
+import {
+  ComponentPropsWithoutRef,
+  ElementRef,
+  ElementType,
+  ForwardedRef,
+  ReactElement,
+  forwardRef,
+} from 'react'
 
 import { InferType } from '@/common'
 
@@ -24,7 +31,7 @@ type Props<T extends ElementType = 'p'> = {
   variant?: Variant
 } & ComponentPropsWithoutRef<T>
 
-export const Typography = forwardRef(
+const Typography = forwardRef(
   <T extends ElementType = 'p'>(
     props: Props<T> & Omit<ComponentPropsWithoutRef<T>, keyof Props<T>>,
     ref: ForwardedRef<InferType<T>>
@@ -34,9 +41,16 @@ export const Typography = forwardRef(
     const className = `${s.typography}, ${s[variant]}`
 
     return (
-      <Component className={className} style={style} {...rest} ref={ref}>
+      <Component className={className} ref={ref} style={style} {...rest}>
         {children || text}
       </Component>
     )
   }
 )
+
+export default Typography as <T extends ElementType = 'p'>(
+  props: Props<T> &
+    Omit<ComponentPropsWithoutRef<T>, keyof Props<T>> & {
+      ref?: ForwardedRef<ElementRef<T>>
+    }
+) => ReactElement

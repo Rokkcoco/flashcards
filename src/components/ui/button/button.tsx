@@ -1,4 +1,11 @@
-import { ComponentPropsWithoutRef, ElementType, ForwardedRef, forwardRef } from 'react'
+import {
+  ComponentPropsWithoutRef,
+  ElementRef,
+  ElementType,
+  ForwardedRef,
+  ReactElement,
+  forwardRef,
+} from 'react'
 
 import { InferType } from '@/common'
 
@@ -10,7 +17,7 @@ type Props<T extends ElementType = 'button'> = {
   variant?: 'link' | 'primary' | 'secondary' | 'tertiary'
 } & ComponentPropsWithoutRef<T>
 
-export const Button = forwardRef(
+const Button = forwardRef(
   <T extends ElementType = 'button'>(
     props: Props<T> & Omit<ComponentPropsWithoutRef<T>, keyof Props<T>>,
     ref: ForwardedRef<InferType<T>>
@@ -26,3 +33,10 @@ export const Button = forwardRef(
     )
   }
 )
+
+export default Button as <T extends ElementType = 'button'>(
+  props: Props<T> &
+    Omit<ComponentPropsWithoutRef<T>, keyof Props<T>> & {
+      ref?: ForwardedRef<ElementRef<T>>
+    }
+) => ReactElement

@@ -1,4 +1,11 @@
-import { ComponentPropsWithoutRef, ElementType, ForwardedRef, forwardRef } from 'react'
+import {
+  ComponentPropsWithoutRef,
+  ElementRef,
+  ElementType,
+  ForwardedRef,
+  ReactElement,
+  forwardRef,
+} from 'react'
 
 import { InferType } from '@/common'
 import { clsx } from 'clsx'
@@ -9,7 +16,7 @@ export type Props<T extends ElementType = 'div'> = {
   as?: T
 } & ComponentPropsWithoutRef<T>
 
-export const Card = forwardRef(
+const Card = forwardRef(
   <T extends ElementType = 'div'>(
     props: Props<T> & Omit<ComponentPropsWithoutRef<T>, keyof Props<T>>,
     ref: ForwardedRef<InferType<T>>
@@ -23,3 +30,10 @@ export const Card = forwardRef(
     return <Component className={classNames.root} ref={ref} {...rest} />
   }
 )
+
+export default Card as <T extends ElementType = 'div'>(
+  props: Props<T> &
+    Omit<ComponentPropsWithoutRef<T>, keyof Props<T>> & {
+      ref?: ForwardedRef<ElementRef<T>>
+    }
+) => ReactElement
