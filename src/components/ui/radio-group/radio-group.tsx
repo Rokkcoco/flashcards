@@ -31,7 +31,7 @@ type Options = {
 type Props = {
   options: Options[]
 } & Omit<ComponentPropsWithoutRef<typeof RadioGroupRadix.Root>, 'asChild'>
-
+//а могу ли я прокинуть реф дальше? если цепляю его уже тут
 export const RadioGroup = forwardRef<ElementRef<typeof RadioGroupRadix.Root>, Props>(
   (props: Props, ref) => {
     const { options, ...rest } = props
