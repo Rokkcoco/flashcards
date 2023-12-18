@@ -1,22 +1,21 @@
 import { ComponentPropsWithoutRef, ElementRef, ReactNode, forwardRef } from 'react'
 
 import { CloseOutline } from '@/assets'
-import { Card } from '@/components/ui'
-import { Typography } from '@/components/ui/typography'
+import Card from '@/components/ui/card/card'
+import Typography from '@/components/ui/typography/typography'
 import * as Dialog from '@radix-ui/react-dialog'
 
 import s from './modal.module.scss'
 
 type Props = {
   controlButtons?: ReactNode
-  defaultOpen?: boolean
-  modal?: boolean
-  onOpenChange?: (open: boolean) => void
-  open?: boolean
   trigger?: ReactNode
-} & ComponentPropsWithoutRef<'div'>
+} & ComponentPropsWithoutRef<'div'> &
+  ComponentPropsWithoutRef<typeof Dialog.Root>
 //что тут лучше ComponentPropsWithoutRef или ComponentProps
-export const Modal = forwardRef<ElementRef<typeof Dialog.Root>, Props>((props, ref) => {
+
+//тянем Content, а не Root, ведь в руте нет рефа?
+export const Modal = forwardRef<ElementRef<typeof Dialog.Content>, Props>((props, ref) => {
   const { children, controlButtons, open, title, trigger, ...rest } = props
 
   return (
