@@ -9,17 +9,19 @@ import s from './modal.module.scss'
 
 type Props = {
   controlButtons?: ReactNode
+  onChange: (status: boolean) => void
+  open: boolean
   trigger?: ReactNode
-} & ComponentPropsWithoutRef<'div'> &
-  ComponentPropsWithoutRef<typeof Dialog.Root>
+} & Omit<ComponentPropsWithoutRef<typeof Dialog.Root>, 'onOpenChange' | 'open'> &
+  ComponentPropsWithoutRef<'div'>
 //что тут лучше ComponentPropsWithoutRef или ComponentProps
 
 //тянем Content, а не Root, ведь в руте нет рефа?
-export const Modal = forwardRef<ElementRef<typeof Dialog.Content>, Props>((props, ref) => {
-  const { children, controlButtons, open, title, trigger, ...rest } = props
+export const Modal = forwardRef<ElementRef<typeof Dialog.Root>, Props>((props, ref) => {
+  const { children, controlButtons, onChange, open, title, trigger, ...rest } = props
 
   return (
-    <Dialog.Root open={open} style={{ border: 'none' }} {...rest}>
+    <Dialog.Root onOpenChange={onChange} open={open} style={{ border: 'none' }} {...rest}>
       <Dialog.Trigger asChild>{trigger}</Dialog.Trigger>
 
       {open && (
@@ -49,3 +51,5 @@ export const Modal = forwardRef<ElementRef<typeof Dialog.Content>, Props>((props
   )
 })
 //нужен ли нам radix title или хватит типографии h2 для доступности
+
+//

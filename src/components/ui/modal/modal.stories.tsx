@@ -29,20 +29,20 @@ export const ModalWithTitleAndButtons: Story = {
           ipsum magni minima nihil nobis non nostrum placeat provident quas quasi, similique
           suscipit temporibus, velit veniam. Aliquid, aspernatur, dignissimos.
         </div>
-        <Checkbox checked label={'Check'} />
+        <Checkbox checked label={'Check'} onChange={x => x} />
       </>
     ),
+    onChange: x => !x,
+    open: false,
     title: 'Card',
     trigger: <Button variant={'primary'}>Click me</Button>,
   },
   render: args => {
     const [open, setOpen] = useState(false)
-    const openHandler = () => setOpen(checked => !checked)
+    const openHandler = () => setOpen(prevState => !prevState)
 
     return (
       <Modal
-        onOpenChange={openHandler}
-        open={open}
         {...args}
         controlButtons={
           <>
@@ -54,6 +54,8 @@ export const ModalWithTitleAndButtons: Story = {
             </Button>
           </>
         }
+        onChange={openHandler}
+        open={open}
       />
     )
   },
@@ -70,14 +72,16 @@ export const ModalTextWithTitle: Story = {
         </div>
       </>
     ),
+    onChange: x => !x,
+    open: false,
     title: 'Lorem ipsum',
     trigger: <Button variant={'primary'}>Click me</Button>,
   },
   render: args => {
     const [open, setOpen] = useState(false)
-    const openHandler = () => setOpen(checked => !checked)
+    const openHandler = () => setOpen(prevState => !prevState)
 
-    return <Modal onOpenChange={openHandler} open={open} {...args} />
+    return <Modal {...args} onChange={openHandler} open={open} />
   },
 }
 
@@ -92,12 +96,35 @@ export const ModalOnlyText: Story = {
         </div>
       </>
     ),
+    onChange: x => !x,
+    open: false,
     trigger: <Button variant={'primary'}>Click me</Button>,
   },
   render: args => {
     const [open, setOpen] = useState(false)
-    const openHandler = () => setOpen(checked => !checked)
+    const openHandler = () => setOpen(prevState => !prevState)
 
-    return <Modal onOpenChange={openHandler} open={open} {...args} />
+    return <Modal {...args} onChange={openHandler} open={open} />
+  },
+}
+export const ModalTesting: Story = {
+  args: {
+    children: (
+      <>
+        <div>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus consectetur dicta
+          distinctio ex expedita fuga maiores minus neque, nesciunt nobis, officiis omnis porro
+          possimus provident, quod rem saepe vel vitae?
+        </div>
+      </>
+    ),
+    onChange: x => !x,
+    open: false,
+  },
+  render: args => {
+    const [open, setOpen] = useState(true)
+    const openHandler = () => setOpen(prevState => !prevState)
+
+    return <Modal {...args} onChange={openHandler} open={open} />
   },
 }

@@ -9,13 +9,13 @@ import { clsx } from 'clsx'
 import s from './checkbox.module.scss'
 
 type Props = {
-  id?: string
+  checked: boolean
   label?: string
-  onChange?: (checked: boolean) => void
-} & Omit<ComponentPropsWithoutRef<typeof CheckboxRadix.Root>, 'onCheckedChange'>
+  onChange: (checked: boolean) => void
+} & Omit<ComponentPropsWithoutRef<typeof CheckboxRadix.Root>, 'checked' | 'onCheckedChange'>
 
 export const Checkbox = forwardRef<ElementRef<typeof CheckboxRadix.Root>, Props>((props, ref) => {
-  const { checked, disabled, label, onChange: onCheckedChange, ...rest } = props
+  const { checked, disabled, label, onChange, ...rest } = props
 
   const classNames = {
     buttonWrapper: clsx(s.buttonWrapper, disabled && s.disabled),
@@ -33,7 +33,7 @@ export const Checkbox = forwardRef<ElementRef<typeof CheckboxRadix.Root>, Props>
               checked={checked}
               className={classNames.root}
               disabled={disabled}
-              onCheckedChange={onCheckedChange}
+              onCheckedChange={onChange}
               ref={ref}
               {...rest}
             >

@@ -14,14 +14,12 @@ export default meta
 type Story = StoryObj<typeof meta>
 export const SliderStory: Story = {
   args: {
-    max: 10,
-    min: 0,
     step: 1,
-    value: [0, 10],
+    value: [],
   },
   render: args => {
-    const [value, setValue] = useState([0, 10])
+    const [value, setValue] = useState([0, 100])
 
-    return <Slider {...args} onValueChange={setValue} value={value} />
+    return <Slider {...args} onChange={setValue} value={value} />
   },
 }

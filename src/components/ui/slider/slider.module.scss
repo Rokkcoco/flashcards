@@ -1,3 +1,13 @@
+.container {
+  display: flex;
+  gap:12px;
+  align-items: center;
+  justify-content: center;
+
+  width: 251px;
+  height: 36px;
+}
+
 .root {
   touch-action: none;
   user-select: none;
@@ -7,44 +17,110 @@
   display: flex;
   align-items: center;
 
-  width: 200px;
+  width: 155px;
   height: 20px;
 }
+
+.input {
+  width: 36px;
+  height: 36px;
+  text-align: center;
+  appearance: none;
+
+  &::-webkit-inner-spin-button,
+  &::-webkit-outer-spin-button {
+    margin: 0;
+    appearance: none;
+  }
+
+  &::selection {
+    background-color: transparent;
+  }
+
+  [type="number"] & {
+    appearance: textfield; // Firefox
+
+    // Убрать кнопки увеличения и уменьшения для некоторых браузеров
+
+  }
+
+  &:hover {
+    background-color: var(--color-dark-500)
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-info-500);
+
+  }
+
+
+
+}
+
+
 
 .track {
   position: relative;
 
   flex-grow: 2;
 
-  height: 3px;
+  height: 5px;
 
-  background-color: red;
+  background-color: var(--color-accent-900);
   border-radius: 9999px;
 }
 
 .range {
   position: absolute;
   height: 100%;
-  background-color: white;
+  background-color: var(--color-accent-500);
   border-radius: 9999px;
 }
 
 .thumb {
   display: block;
 
-  width: 20px;
-  height: 20px;
+  width: 16px;
+  height: 16px;
 
-  background-color: white;
+  background-color: var(--color-accent-500);
   border-radius: 10px;
-  box-shadow: 0 2px 10px black;
+
+  &::after {
+    content: '';
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    display: block;
+
+    width: 8px;
+    height: 8px;
+
+    background-color: white;
+    border-radius: 10px;
+  }
+
+
+
+  &:focus-within {
+    outline: 2px solid var(--color-info-500);
+  }
+
+
+
 
   &:hover {
-    background-color: pink;
+    background-color: var(--color-accent-300);
   }
 
-  &:focus {
+  &:active {
+    background-color: var(--color-accent-700);
     outline: none;
-    box-shadow: 0 0 0 5px black;
+    box-shadow: 0 0 0 3px rgb(140 97 255 / 35%);
   }
+
+
 }
