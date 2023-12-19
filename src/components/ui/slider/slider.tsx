@@ -11,14 +11,16 @@ export const Slider = forwardRef<ElementRef<typeof SliderRadix.Root>, Props>((pr
   const minRange = min ? min : 0
   const maxRange = max ? max : 100
   const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    if (
-      (value && e.currentTarget.id === '1' && +e.currentTarget.value >= value[0]) ||
-      (value && e.currentTarget.id === '0' && +e.currentTarget.value <= value[1])
-    ) {
-      onValueChange &&
-        onValueChange(
-          value.map((t, i) => (i === +e.currentTarget.id ? e.currentTarget.valueAsNumber : t))
-        )
+    if (value) {
+      if (
+        (e.currentTarget.id === '1' && +e.currentTarget.value >= value[0]) ||
+        (e.currentTarget.id === '0' && +e.currentTarget.value <= value[1])
+      ) {
+        onValueChange &&
+          onValueChange(
+            value.map((t, i) => (i === +e.currentTarget.id ? e.currentTarget.valueAsNumber : t))
+          )
+      }
     }
   }
 
