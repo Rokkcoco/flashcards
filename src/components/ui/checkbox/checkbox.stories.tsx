@@ -14,13 +14,18 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Controlled: Story = {
+  args: {
+    checked: true,
+    disabled: false,
+    label: 'Check-box',
+  },
   render: args => {
     const [checked, setChecked] = useState(true)
     const onChangeHandler = () => setChecked(!checked)
 
     return (
       <>
-        <Checkbox {...args} checked={checked} label={'Check-box'} onChange={onChangeHandler} />
+        <Checkbox {...args} checked={checked} onChange={onChangeHandler} />
       </>
     )
   },

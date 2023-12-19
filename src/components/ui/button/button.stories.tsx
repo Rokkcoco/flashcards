@@ -27,7 +27,6 @@ export const Primary: Story = {
 }
 export const PrimaryWithIcon: Story = {
   args: {
-    // eslint-disable-next-line react/no-unescaped-entities
     children: (
       <>
         <Logout />
