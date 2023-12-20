@@ -42,7 +42,7 @@ export const RadioGroup = forwardRef<ElementRef<typeof RadioGroupRadix.Root>, Pr
     const RadioButtons = options.map(t => <RadioItem key={t.label} {...t} />)
 
     return (
-      <RadioGroupRadix.Root className={s.root} ref={ref} {...rest}>
+      <RadioGroupRadix.Root className={s.root} ref={ref} {...rest} aria-label={'View density'}>
         {RadioButtons}
       </RadioGroupRadix.Root>
     )
