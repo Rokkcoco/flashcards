@@ -13,16 +13,28 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {
+export const SelectStory: Story = {
   args: {
-    open: true,
-    options: { first: 'Picture', second: 'Video', third: 'Audio' },
+    options: { audio: 'Audio', picture: 'Picture', video: 'Video' },
     title: 'Select one answer',
+    value: 'picture',
   },
   render: args => {
-    const [open, setOpen] = useState(false)
-    const onChange = () => setOpen(prevState => !prevState)
+    const [value, setValue] = useState('picture')
 
-    return <Select {...args} onChange={onChange} open={open} />
+    return <Select {...args} onChange={setValue} value={value} />
+  },
+}
+export const Disabled: Story = {
+  args: {
+    disabled: true,
+    options: { audio: 'Audio', picture: 'Picture', video: 'Video' },
+    title: 'Select one answer',
+    value: 'picture',
+  },
+  render: args => {
+    const [value, setValue] = useState('picture')
+
+    return <Select {...args} onChange={setValue} value={value} />
   },
 }

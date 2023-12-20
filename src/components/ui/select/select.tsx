@@ -25,13 +25,13 @@ const SelectItem = forwardRef<ElementRef<typeof SelectRadix.Item>, SelectItemPro
 )
 
 type Props = {
-  onChange: (status: boolean) => void
-  open: boolean
+  onChange: (value: string) => void
   options: Record<string, string>
   title: string
-} & Omit<ComponentPropsWithoutRef<typeof SelectRadix.Root>, 'onOpenChange' | 'open'>
-export const Select = forwardRef<ElementRef<typeof SelectRadix.Root>, Props>((props, ref) => {
-  const { onChange, open, options, title, ...rest } = props
+  value: string
+} & Omit<ComponentPropsWithoutRef<typeof SelectRadix.Root>, 'onValueChange' | 'value'>
+export const Select = forwardRef<ElementRef<typeof SelectRadix.Trigger>, Props>((props, ref) => {
+  const { onChange, open, options, title, value, ...rest } = props
 
   return (
     <>
@@ -41,20 +41,15 @@ export const Select = forwardRef<ElementRef<typeof SelectRadix.Root>, Props>((pr
         </Typography>
       </Label.Root>
       <Typography as={'label'} variant={'body_1'}>
-        <SelectRadix.Root onOpenChange={onChange} open={open} {...rest}>
-          <SelectRadix.Trigger aria-label={'Food'} className={s.SelectTrigger}>
-            <SelectRadix.Value placeholder={'Select a fruit…'} />
+        <SelectRadix.Root onValueChange={onChange} open={open} value={value} {...rest}>
+          <SelectRadix.Trigger className={s.SelectTrigger} ref={ref}>
+            <SelectRadix.Value aria-label={value}>{options[value]}</SelectRadix.Value>
             <SelectRadix.Icon asChild className={s.SelectIcon}>
               {!open ? <ArrowIosDownOutline /> : <ArrowIosUp />}
             </SelectRadix.Icon>
           </SelectRadix.Trigger>
           <SelectRadix.Portal>
-            <SelectRadix.Content
-              className={s.SelectContent}
-              position={'popper'}
-              ref={ref}
-              sideOffset={0}
-            >
+            <SelectRadix.Content className={s.SelectContent} position={'popper'} sideOffset={0}>
               <SelectRadix.Viewport className={s.SelectViewport}>
                 {Object.keys(options).map(t => (
                   <SelectItem key={t} value={t}>
