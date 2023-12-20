@@ -14,7 +14,7 @@ const SelectItem = forwardRef<ElementRef<typeof SelectRadix.Item>, SelectItemPro
     const { children, ...rest } = props
 
     return (
-      <Typography as={'p'} variant={'body_1'}>
+      <Typography as={'label'} variant={'body_1'}>
         <SelectRadix.Item className={s.SelectItem} {...rest} ref={ref}>
           <SelectRadix.ItemText>{children}</SelectRadix.ItemText>
           <SelectRadix.ItemIndicator className={s.SelectItemIndicators}></SelectRadix.ItemIndicator>
