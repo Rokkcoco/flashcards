@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 import { Meta, StoryObj } from '@storybook/react'
 
 import { Select } from './'
@@ -12,5 +14,15 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
-  args: {},
+  args: {
+    open: true,
+    options: { first: 'Picture', second: 'Video', third: 'Audio' },
+    title: 'Select one answer',
+  },
+  render: args => {
+    const [open, setOpen] = useState(false)
+    const onChange = () => setOpen(prevState => !prevState)
+
+    return <Select {...args} onChange={onChange} open={open} />
+  },
 }
