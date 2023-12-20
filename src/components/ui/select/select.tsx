@@ -17,7 +17,6 @@ const SelectItem = forwardRef<ElementRef<typeof SelectRadix.Item>, SelectItemPro
       <Typography as={'label'} variant={'body_1'}>
         <SelectRadix.Item className={s.SelectItem} {...rest} ref={ref}>
           <SelectRadix.ItemText>{children}</SelectRadix.ItemText>
-          <SelectRadix.ItemIndicator className={s.SelectItemIndicators}></SelectRadix.ItemIndicator>
         </SelectRadix.Item>
       </Typography>
     )

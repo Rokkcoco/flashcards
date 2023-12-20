@@ -44,7 +44,6 @@ type Props = {
 export const RadioGroup = forwardRef<ElementRef<typeof RadioGroupRadix.Root>, Props>(
   (props: Props, ref) => {
     const { onChange, options, ...rest } = props
-    const RadioButtons = options.map(t => <RadioItem key={t.label} {...t} />)
 
     return (
       <RadioGroupRadix.Root
@@ -54,7 +53,9 @@ export const RadioGroup = forwardRef<ElementRef<typeof RadioGroupRadix.Root>, Pr
         aria-label={'View density'}
         onValueChange={onChange}
       >
-        {RadioButtons}
+        {options.map(t => (
+          <RadioItem key={t.label} {...t} />
+        ))}
       </RadioGroupRadix.Root>
     )
   }
