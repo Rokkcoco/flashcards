@@ -24,15 +24,19 @@ const TabItem = forwardRef<ElementRef<typeof TabsRadix.Trigger>, TabItemProps>((
 })
 
 type Props = {
+  disabled?: boolean
   indexToDisable?: number[]
   onChange: (value: string) => void
   options: Record<string, string>
   title: string
   value: string
-} & Omit<ComponentPropsWithoutRef<typeof TabsRadix.Root>, 'onChange' | 'onValueChange' | 'value'>
+} & Omit<
+  ComponentPropsWithoutRef<typeof TabsRadix.Root>,
+  'asChild' | 'onChange' | 'onValueChange' | 'value'
+>
 
 export const Tabs = forwardRef<ElementRef<typeof TabsRadix.Root>, Props>((props, ref) => {
-  const { defaultValue, indexToDisable, onChange, options, title, value, ...rest } = props
+  const { defaultValue, disabled, indexToDisable, onChange, options, title, value, ...rest } = props
 
   return (
     <TabsRadix.Root
@@ -51,7 +55,7 @@ export const Tabs = forwardRef<ElementRef<typeof TabsRadix.Root>, Props>((props,
       )}
       <TabsRadix.List aria-label={'Manage your deck'} className={s.list}>
         {Object.keys(options).map((t, i) => (
-          <TabItem disabled={indexToDisable?.includes(i)} key={options[t]} value={t}>
+          <TabItem disabled={disabled || indexToDisable?.includes(i)} key={options[t]} value={t}>
             {options[t]}
           </TabItem>
         ))}
