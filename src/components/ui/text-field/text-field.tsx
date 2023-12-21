@@ -1,6 +1,15 @@
 import { ChangeEvent, ComponentPropsWithoutRef, forwardRef, useState } from 'react'
 
+import { CloseOutline, SearchOutline } from '@/assets'
+import Typography from '@/components/ui/typography/typography'
+import * as Label from '@radix-ui/react-label'
 
+import s from './text-field.module.scss'
+
+type Props = {
+  error: string
+  label: string
+  placeholder: string
 } & ComponentPropsWithoutRef<'input'>
 export const TextField = forwardRef<HTMLInputElement, Props>((props, ref) => {
   const { error, label, placeholder, ...rest } = props
