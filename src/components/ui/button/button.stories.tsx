@@ -1,8 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
 import { Logout } from '@/assets'
-
-import { Button } from './'
+import Button from '@/components/ui/button/button'
 
 const meta = {
   argTypes: {
@@ -28,7 +27,6 @@ export const Primary: Story = {
 }
 export const PrimaryWithIcon: Story = {
   args: {
-    // eslint-disable-next-line react/no-unescaped-entities
     children: (
       <>
         <Logout />

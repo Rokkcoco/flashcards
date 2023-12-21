@@ -1,9 +1,9 @@
-import { Typography } from './components/ui/typography'
+import Card from '@/components/ui/card/card'
 
 export function App() {
   return (
     <div>
-      <Typography></Typography>
+      <Card></Card>
     </div>
   )
 }
