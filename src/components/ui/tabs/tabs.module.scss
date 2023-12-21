@@ -27,12 +27,10 @@
     border-radius: 2px 0 0 2px;
   }
 
-  &:last-child
-  {
+  &:last-child {
     border-right: 1px solid var(--color-dark-300);
     border-radius: 0 2px 2px 0;
   }
-
 
 
   &[data-state='active'] {
@@ -59,7 +57,7 @@
     border: 1px solid var(--color-dark-100);
   }
 
-  &:disabled + &[data-state='active']{
+  &:disabled + &[data-state='active'] {
     color: var(--color-light-100);
     background-color: var(--color-accent-500);
     border: 1px solid var(--color-accent-500);
@@ -79,6 +77,10 @@
     border-right: none;
   }
 
+  &[data-state='active']:first-child:disabled:hover + button {
+    border-left: 1px solid var(--color-dark-300);
+  }
+
   &:disabled {
     cursor: default;
 
@@ -88,7 +90,6 @@
     border: 1px solid var(--color-dark-300);
     border-right: none;
   }
-
 
 
   &:disabled:hover {
@@ -102,16 +103,18 @@
   }
 
 
-
   &:last-child:disabled {
     border-right: 1px solid var(--color-dark-300);
     border-radius: 0 2px 2px 0;
   }
 
-  button + &:disabled:hover{
+  button + &:disabled:hover {
     border-right: 1px solid var(--color-dark-300);
   }
 
+  &:disabled:first-child:hover {
+    border-right: 1px solid var(--color-dark-300);
+  }
 
 
   &[data-state='active'] + &:disabled {
@@ -128,27 +131,16 @@
 
 
 
-  &:first-child:disabled:hover + &:disabled {
-    border-left: 1px solid var(--color-dark-300);
-  }
-
   &[data-state='active'] + button,
-  &:hover + button{
+  &:hover + button {
     border-left: none;
   }
 
-  &:first-child:disabled:hover + button {
-    border-left: 1px solid var(--color-dark-300);
-  }
-  
 
   &:disabled:hover + &[data-active='active'] {
     padding-left: 1px;
     border-left: none;
   }
-
-
-
 
 
   &:disabled + &[data-state='active']:focus-visible {
@@ -163,10 +155,10 @@
     border: 1px solid var(--color-dark-100);
   }
 
- &:disabled:hover + &[data-state='active'] {
-   padding-left: 23px;
+  &:disabled:hover + &[data-state='active'] {
+    padding-left: 23px;
+  }
 
- }
 
   &:focus-visible + &:disabled::after {
     content: '';
@@ -201,7 +193,7 @@
   }
 
   &:disabled:hover + &[data-state='active']::after {
-   content: '';
+    content: '';
 
     position: absolute;
     top: -3%;
@@ -214,10 +206,10 @@
     height: 38px;
 
     border-left: 2px solid var(--color-accent-500);
- }
+  }
 
   &:disabled:hover + &[data-state='active']:last-child::after {
-   content: '';
+    content: '';
 
     position: absolute;
     top: -3%;
@@ -230,6 +222,6 @@
     height: 38px;
 
     border-left: 2px solid var(--color-accent-500)
- }
+  }
 }
 

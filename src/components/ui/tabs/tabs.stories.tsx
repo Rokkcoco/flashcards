@@ -22,7 +22,7 @@ export const TabsWithControl: Story = {
   },
   render: args => {
     const [value, setValue] = useState('1')
-    const indexToDisable: number[] = [0, 4]
+    const indexToDisable: number[] = [0, 1]
 
     return <Tabs {...args} indexToDisable={indexToDisable} onChange={setValue} value={value} />
   },
