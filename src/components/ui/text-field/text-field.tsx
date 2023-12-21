@@ -22,14 +22,16 @@ export const TextField = forwardRef<HTMLInputElement, Props>((props, ref) => {
   return (
     <div className={s.root}>
       {label && (
-        <Typography as={'label'} className={s.Label} variant={'h1'}>
-          {label}
-        </Typography>
+        <Label.Root asChild htmlFor={label}>
+          <Typography as={'label'} className={s.label} variant={'body_2'}>
+            {label}
+          </Typography>
+        </Label.Root>
       )}
       <div className={s.wrapper}>
         <input
           className={s.input}
-          id={'firstName'}
+          id={label}
           onChange={changeInputValue}
           placeholder={placeholder}
           ref={ref}
@@ -48,8 +50,8 @@ export const TextField = forwardRef<HTMLInputElement, Props>((props, ref) => {
         </button>
       </div>
       {error && (
-        <Label.Root asChild htmlFor={'firstName'}>
-          <Typography as={'label'} variant={'body_2'}>
+        <Label.Root asChild className={s.error} htmlFor={label}>
+          <Typography as={'label'} variant={'caption'}>
             {error}
           </Typography>
         </Label.Root>

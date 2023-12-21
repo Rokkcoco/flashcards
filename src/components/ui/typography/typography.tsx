@@ -34,12 +34,23 @@ const Typography = forwardRef(
     props: Props<T> & Omit<ComponentPropsWithoutRef<T>, keyof Props<T>>,
     ref: ForwardedRef<InferType<T>>
   ) => {
-    const { as: Component = 'p', children, style, text = '', variant = 'body_1', ...rest } = props
-
-    const className = `${s.typography}, ${s[variant]}`
+    const {
+      as: Component = 'p',
+      children,
+      className,
+      style,
+      text = '',
+      variant = 'body_1',
+      ...rest
+    } = props
 
     return (
-      <Component className={className} ref={ref} style={style} {...rest}>
+      <Component
+        className={`${s.typography} ${s[variant]} ${className}`}
+        ref={ref}
+        style={style}
+        {...rest}
+      >
         {children || text}
       </Component>
     )

@@ -19,11 +19,13 @@
   position: relative;
   width: 100%;
 
-  .Label {
+  .label {
     color: var(--color-dark-100);
   }
 
-
+  .error {
+    color: red;
+  }
 
   .wrapper {
     position: relative;
@@ -94,9 +96,6 @@
 
   }
 
-  .error {
-    color: var(--color-danger-300)
-  }
 }
 
 
