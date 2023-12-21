@@ -11,24 +11,22 @@ import { InferType } from '@/common'
 
 import s from './typography.module.scss'
 
-export type Variant =
-  | 'body_1'
-  | 'body_2'
-  | 'caption'
-  | 'h1'
-  | 'h2'
-  | 'h3'
-  | 'large'
-  | 'link_1'
-  | 'link_2'
-  | 'overline'
-  | 'subtitle_1'
-  | 'subtitle_2'
-
 type Props<T extends ElementType = 'p'> = {
   as?: T
   text?: string
-  variant?: Variant
+  variant?:
+    | 'body_1'
+    | 'body_2'
+    | 'caption'
+    | 'h1'
+    | 'h2'
+    | 'h3'
+    | 'large'
+    | 'link_1'
+    | 'link_2'
+    | 'overline'
+    | 'subtitle_1'
+    | 'subtitle_2'
 } & ComponentPropsWithoutRef<T>
 
 const Typography = forwardRef(
