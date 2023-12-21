@@ -1,45 +1,105 @@
-.container {
-  position: relative;
-  width: 284px;
-  height: 36px;
-}
+@mixin button {
+  cursor: pointer;
 
-input {
-  width: 100%;
-  height: 100%;
-
-  background-color: var(--color-dark-900);
-  border: 1px solid var(--color-dark-300);
-  border-radius: 2px;
-
-  &:focus-visible {
-    border: none;
-    outline: 2px solid var(--color-info-500);
-  }
-}
-
-.button {
   position: absolute;
-  transform: translate(-40px, 5px);
 
-  width: 24px;
-  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-
+  width: 36px;
+  height: 36px;
+  padding: 0;
 
   background-color: transparent;
   border: none;
 }
 
-.label {
-  position: absolute;
-  color: red;
+.root {
+  position: relative;
+  width: 100%;
+
+  .Label {
+    color: var(--color-dark-100);
+  }
+
+
+
+  .wrapper {
+    position: relative;
+    display: flex;
+    width: 284px;
+    height: 36px;
+
+
+    .searchButton {
+    @include button;
+
+      color: var(--color-dark-100);
+
+      svg {
+        width: 20px;
+        height: 20px;
+      }
+    }
+
+    .input {
+      display: flex;
+
+      width: 100%;
+      height: 100%;
+      padding-left: 41px;
+
+      color: var(--color-light-100);
+
+      background-color: transparent;
+      border: 1px solid var(--color-dark-300);
+      border-radius: 2px;
+
+      &:focus-visible {
+        border: 1px solid var(--color-info-500);
+        outline: 1px solid var(--color-info-500);
+      }
+
+      &:active:not(&:disabled) {
+        border-color: var(--color-light-100);
+        outline: none;
+
+        &::placeholder {
+          color: var(--color-light-100);
+        }
+      }
+    }
+
+    .EyeButton {
+      @include button;
+
+      top: 0;
+      right: 0;
+    display: none;
+      padding: 12px 6px;
+      
+      svg {
+        width: 16px;
+        height: 16px;
+      }
+    }
+
+    &:focus-within .searchButton,
+    &:focus-within .eyeButton{
+      display: inline-flex;
+      color: var(--color-light-100);
+    }
+
+
+  }
+
+  .error {
+    color: var(--color-danger-300)
+  }
 }
 
-.eyeButton {
-  color: white;
-}
 
-.searchButton {
-  color: var(--color-dark-100);
-}
+
+
+
