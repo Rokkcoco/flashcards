@@ -26,7 +26,7 @@ const Button = forwardRef(
 
     return (
       <Component
-        className={`${s[variant]} ${fullWidth ? s.fullWidth : ''} ${className}`}
+        className={`${s.button} ${s[variant]} ${fullWidth ? s.fullWidth : ''} ${className}`}
         ref={ref}
         {...rest}
       />

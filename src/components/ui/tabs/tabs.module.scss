@@ -31,8 +31,7 @@
     border-right: 1px solid var(--color-dark-300);
     border-radius: 0 2px 2px 0;
   }
-
-
+  
   &[data-state='active'] {
     color: var(--color-light-100);
     background-color: var(--color-accent-500);
@@ -77,6 +76,15 @@
     border-right: none;
   }
 
+  &:hover + button {
+    border-left: none;
+  }
+
+  &[data-state='active'] + button {
+    border-left: none;
+
+  }
+
   &[data-state='active']:first-child:disabled:hover + button {
     border-left: 1px solid var(--color-dark-300);
   }
@@ -91,7 +99,6 @@
     border-right: none;
   }
 
-
   &:disabled:hover {
     cursor: default;
 
@@ -101,7 +108,6 @@
     border: 1px solid var(--color-dark-300);
     border-right: none;
   }
-
 
   &:last-child:disabled {
     border-right: 1px solid var(--color-dark-300);
@@ -116,7 +122,6 @@
     border-right: 1px solid var(--color-dark-300);
   }
 
-
   &[data-state='active'] + &:disabled {
     border-left: none;
   }
@@ -128,20 +133,6 @@
   &:disabled + &:disabled:hover {
     border-right: 1px solid var(--color-dark-300);
   }
-
-
-
-  &[data-state='active'] + button,
-  &:hover + button {
-    border-left: none;
-  }
-
-
-  &:disabled:hover + &[data-active='active'] {
-    padding-left: 1px;
-    border-left: none;
-  }
-
 
   &:disabled + &[data-state='active']:focus-visible {
     background-color: var(--color-dark-700);
@@ -156,9 +147,9 @@
   }
 
   &:disabled:hover + &[data-state='active'] {
-    padding-left: 23px;
+    padding-left: 24px;
+    border-left: none;
   }
-
 
   &:focus-visible + &:disabled::after {
     content: '';
@@ -196,9 +187,9 @@
     content: '';
 
     position: absolute;
-    top: -3%;
+    top: -1px;
     left: 0;
-    transform: translateX(-100%);
+    transform: translateX(-50%);
 
     display: block;
 
@@ -212,16 +203,16 @@
     content: '';
 
     position: absolute;
-    top: -3%;
+    top: -1px;
     left: 0;
-    transform: translateX(-95%);
+    transform: translateX(-50%);
 
     display: block;
 
     width: 1px;
-    height: 38px;
+    height: 38px;;
 
-    border-left: 2px solid var(--color-accent-500)
+    border-left: 2px solid var(--color-accent-500);
   }
 }
 

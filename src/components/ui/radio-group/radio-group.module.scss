@@ -71,14 +71,13 @@ button {
 
    &::after {
      content: '';
-     position: absolute;
-     display: block;
-     border-radius: 50%;
 
-     [data-state='checked'] & {
+     position: absolute;
       top: 50%;
        right: 50%;
        transform: translate(50%, -50%);
+
+     display: block;
 
        width: 11px;
        height: 11px;
@@ -86,7 +85,7 @@ button {
        background-color: var(--color-accent-700);
        border-radius: 50%;
 
-     }
+
    }
 
  }

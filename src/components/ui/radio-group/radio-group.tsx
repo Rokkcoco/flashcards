@@ -8,6 +8,7 @@ import { clsx } from 'clsx'
 import s from './radio-group.module.scss'
 type RadioItemProps = {
   label: string
+  value: number | string
 } & Omit<ComponentPropsWithoutRef<typeof RadioGroupRadix.Item>, 'asChild'>
 
 const RadioItem = forwardRef<ElementRef<typeof RadioGroupRadix.Item>, RadioItemProps>(
@@ -23,7 +24,7 @@ const RadioItem = forwardRef<ElementRef<typeof RadioGroupRadix.Item>, RadioItemP
       <Label.Root asChild>
         <Typography as={'label'} className={classNames.label} variant={'body_2'}>
           <RadioGroupRadix.Item ref={ref} {...rest} className={classNames.icon} disabled={disabled}>
-            <RadioGroupRadix.Indicator className={classNames.indicator} forceMount />
+            <RadioGroupRadix.Indicator className={classNames.indicator} />
           </RadioGroupRadix.Item>
           {label}
         </Typography>
@@ -54,7 +55,7 @@ export const RadioGroup = forwardRef<ElementRef<typeof RadioGroupRadix.Root>, Pr
         onValueChange={onChange}
       >
         {options.map(t => (
-          <RadioItem key={t.label} {...t} />
+          <RadioItem key={t.value} {...t} />
         ))}
       </RadioGroupRadix.Root>
     )

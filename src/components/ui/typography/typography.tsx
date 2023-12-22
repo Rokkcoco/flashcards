@@ -18,9 +18,11 @@ type Props<T extends ElementType = 'p'> = {
     | 'body_1'
     | 'body_2'
     | 'caption'
+    | 'error'
     | 'h1'
     | 'h2'
     | 'h3'
+    | 'label'
     | 'large'
     | 'link_1'
     | 'link_2'
@@ -28,7 +30,7 @@ type Props<T extends ElementType = 'p'> = {
     | 'subtitle_1'
     | 'subtitle_2'
 } & ComponentPropsWithoutRef<T>
-
+//todo
 const Typography = forwardRef(
   <T extends ElementType = 'p'>(
     props: Props<T> & Omit<ComponentPropsWithoutRef<T>, keyof Props<T>>,

@@ -38,7 +38,7 @@ export const Checkbox = forwardRef<ElementRef<typeof CheckboxRadix.Root>, Props>
               {...rest}
             >
               {checked && (
-                <CheckboxRadix.CheckboxIndicator forceMount>
+                <CheckboxRadix.CheckboxIndicator>
                   <Vector />
                 </CheckboxRadix.CheckboxIndicator>
               )}

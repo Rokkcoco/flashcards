@@ -24,42 +24,43 @@ const SelectItem = forwardRef<ElementRef<typeof SelectRadix.Item>, SelectItemPro
 )
 
 type Props = {
+  label: string
   onChange: (value: string) => void
   options: Record<string, string>
-  title: string
   value: string
 } & Omit<ComponentPropsWithoutRef<typeof SelectRadix.Root>, 'onValueChange' | 'value'>
 export const Select = forwardRef<ElementRef<typeof SelectRadix.Trigger>, Props>((props, ref) => {
-  const { onChange, open, options, title, value, ...rest } = props
+  const { label, onChange, open, options, value, ...rest } = props
 
+  //todo htmlFor
+
+  //todo check label or title
   return (
     <>
-      <Label.Root className={s.label}>
+      <Label.Root asChild className={s.label}>
         <Typography as={'label'} variant={'body_2'}>
-          {title}
+          {label}
         </Typography>
       </Label.Root>
-      <Typography as={'label'} variant={'body_1'}>
-        <SelectRadix.Root onValueChange={onChange} open={open} value={value} {...rest}>
-          <SelectRadix.Trigger className={s.SelectTrigger} ref={ref}>
-            <SelectRadix.Value aria-label={value}>{options[value]}</SelectRadix.Value>
-            <SelectRadix.Icon asChild className={s.SelectIcon}>
-              {!open ? <ArrowIosDownOutline /> : <ArrowIosUp />}
-            </SelectRadix.Icon>
-          </SelectRadix.Trigger>
-          <SelectRadix.Portal>
-            <SelectRadix.Content className={s.SelectContent} position={'popper'} sideOffset={0}>
-              <SelectRadix.Viewport className={s.SelectViewport}>
-                {Object.keys(options).map(t => (
-                  <SelectItem key={t} value={t}>
-                    {options[t]}
-                  </SelectItem>
-                ))}
-              </SelectRadix.Viewport>
-            </SelectRadix.Content>
-          </SelectRadix.Portal>
-        </SelectRadix.Root>
-      </Typography>
+      <SelectRadix.Root onValueChange={onChange} open={open} value={value} {...rest}>
+        <SelectRadix.Trigger className={s.SelectTrigger} ref={ref}>
+          <SelectRadix.Value aria-label={options[value]}>{options[value]}</SelectRadix.Value>
+          <SelectRadix.Icon asChild className={s.SelectIcon}>
+            {open ? <ArrowIosUp /> : <ArrowIosDownOutline />}
+          </SelectRadix.Icon>
+        </SelectRadix.Trigger>
+        <SelectRadix.Portal>
+          <SelectRadix.Content className={s.SelectContent} position={'popper'} sideOffset={0}>
+            <SelectRadix.Viewport className={s.SelectViewport}>
+              {Object.keys(options).map(t => (
+                <SelectItem key={t} value={t}>
+                  {options[t]}
+                </SelectItem>
+              ))}
+            </SelectRadix.Viewport>
+          </SelectRadix.Content>
+        </SelectRadix.Portal>
+      </SelectRadix.Root>
     </>
   )
 })

@@ -38,6 +38,7 @@ type Props = {
 export const Tabs = forwardRef<ElementRef<typeof TabsRadix.Root>, Props>((props, ref) => {
   const { defaultValue, disabled, indexToDisable, onChange, options, title, value, ...rest } = props
 
+  //todo object => array
   return (
     <TabsRadix.Root
       className={s.root}

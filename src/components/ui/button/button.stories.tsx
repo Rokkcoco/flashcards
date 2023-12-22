@@ -34,10 +34,6 @@ export const PrimaryWithIcon: Story = {
       </>
     ),
     disabled: false,
-    style: {
-      display: 'flex',
-      gap: '10px',
-    },
     variant: 'primary',
   },
 }

@@ -24,7 +24,7 @@ export const Slider = forwardRef<ElementRef<typeof SliderRadix.Root>, Props>((pr
       e.preventDefault()
     }
   }
-
+  //todo 2 handlers
   const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     if (value && onChange) {
       if (e.currentTarget.name === 'maxInput' && e.currentTarget.valueAsNumber >= value[0]) {
@@ -61,8 +61,8 @@ export const Slider = forwardRef<ElementRef<typeof SliderRadix.Root>, Props>((pr
         <SliderRadix.Track className={s.track}>
           <SliderRadix.Range className={s.range} />
         </SliderRadix.Track>
-        <SliderRadix.Thumb aria-label={'Volume min'} className={s.thumb} />
-        <SliderRadix.Thumb aria-label={'Volume max'} className={s.thumb} />
+        <SliderRadix.Thumb aria-label={'Range min'} className={s.thumb} />
+        <SliderRadix.Thumb aria-label={'Range max'} className={s.thumb} />
       </SliderRadix.Root>
       <div>
         <input
