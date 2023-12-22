@@ -1,8 +1,9 @@
 import { ChangeEvent, ComponentPropsWithoutRef, forwardRef, useState } from 'react'
 
-import { CloseOutline, SearchOutline } from '@/assets'
+import { CloseOutline, EyeOutline, SearchOutline } from '@/assets'
 import Typography from '@/components/ui/typography/typography'
 import * as Label from '@radix-ui/react-label'
+import { clsx } from 'clsx'
 
 import s from './text-field.module.scss'
 
@@ -12,45 +13,61 @@ type Props = {
   placeholder: string
 } & ComponentPropsWithoutRef<'input'>
 export const TextField = forwardRef<HTMLInputElement, Props>((props, ref) => {
-  const { error, label, placeholder, ...rest } = props
+  const { error, label, placeholder, type, ...rest } = props
   /*    const labelTest = label ? label : 'Error!'*/
   const [text, setText] = useState('')
   const changeInputValue = (e: ChangeEvent<HTMLInputElement>) => {
     setText(e.currentTarget.value)
   }
 
+  const classNames = {
+    error: clsx(s.error),
+    input: clsx(
+      s.input,
+      error && s.error,
+      type === 'search' && s.search,
+      type === 'password' && s.password
+    ),
+    label: clsx(s.label),
+    root: clsx(s.root),
+    search: clsx(s.searchButton),
+    secondButton: clsx(s.cancelButton, type === 'password' && s.passwordButton),
+    wrapper: clsx(s.wrapper),
+  }
+
   return (
-    <div className={s.root}>
+    <div className={classNames.root}>
       {label && (
         <Label.Root asChild htmlFor={label}>
-          <Typography as={'label'} className={s.label} variant={'body_2'}>
+          <Typography as={'label'} className={classNames.label} variant={'body_2'}>
             {label}
           </Typography>
         </Label.Root>
       )}
-      <div className={s.wrapper}>
+      <div className={classNames.wrapper}>
+        {type === 'search' && (
+          <button className={classNames.search} onClick={() => alert('yo')} type={'button'}>
+            <SearchOutline />
+          </button>
+        )}
         <input
-          className={s.input}
+          className={classNames.input}
           id={label}
           onChange={changeInputValue}
           placeholder={placeholder}
           ref={ref}
+          type={type}
           value={text}
           {...rest}
         />
-        <button
-          className={`${s.eyeButton} ${s.EyeButton}`}
-          onClick={() => alert('yo')}
-          type={'button'}
-        >
-          <CloseOutline />
-        </button>
-        <button className={`${s.searchButton}`} onClick={() => alert('yo')} type={'button'}>
-          <SearchOutline />
-        </button>
+        {
+          <button className={classNames.secondButton} onClick={() => alert('yo')} type={'button'}>
+            {(type === 'search' && <CloseOutline />) || (type === 'password' && <EyeOutline />)}
+          </button>
+        }
       </div>
       {error && (
-        <Label.Root asChild className={s.error} htmlFor={label}>
+        <Label.Root asChild className={classNames.error} htmlFor={label}>
           <Typography as={'label'} variant={'caption'}>
             {error}
           </Typography>
@@ -59,9 +76,6 @@ export const TextField = forwardRef<HTMLInputElement, Props>((props, ref) => {
     </div>
   )
 })
-// <Label.Root className={s.label} htmlFor={'input'}>
-//     <Typography variant={'caption'}>{labelTest}</Typography>
-// </Label.Root>
 
 // Для того, чтобы ваши поля не были стандартного цвета, при выборе из списка ранее вводимых значений, нужно добавить:
 //     input:-webkit-autofill,
