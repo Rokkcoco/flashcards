@@ -14,13 +14,13 @@ type Props = {
   type?: 'password' | 'search' | 'text'
 } & Omit<ComponentPropsWithoutRef<'input'>, 'type'>
 export const TextField = forwardRef<HTMLInputElement, Props>((props, ref) => {
-  const { error, id, label, placeholder, type, ...rest } = props
+  const { error, label, placeholder, type, ...rest } = props
   /*    const labelTest = label ? label : 'Error!'*/
   const [text, setText] = useState('')
   const changeInputValue = (e: ChangeEvent<HTMLInputElement>) => {
     setText(e.currentTarget.value)
   }
-
+  const inputId = useId()
   const passwordType = type === 'password'
   const searchType = type === 'search'
 
@@ -37,7 +37,7 @@ export const TextField = forwardRef<HTMLInputElement, Props>((props, ref) => {
   return (
     <div className={classNames.root}>
       {label && (
-        <Label.Root asChild htmlFor={label}>
+        <Label.Root asChild htmlFor={inputId}>
           <Typography as={'label'} className={classNames.label} variant={'body_2'}>
             {label}
           </Typography>
@@ -51,7 +51,7 @@ export const TextField = forwardRef<HTMLInputElement, Props>((props, ref) => {
         )}
         <input
           className={classNames.input}
-          id={id || useId()}
+          id={inputId}
           onChange={changeInputValue}
           placeholder={placeholder}
           ref={ref}
@@ -66,7 +66,7 @@ export const TextField = forwardRef<HTMLInputElement, Props>((props, ref) => {
         }
       </div>
       {error && (
-        <Label.Root asChild className={classNames.error} htmlFor={label}>
+        <Label.Root asChild className={classNames.error} htmlFor={inputId}>
           <Typography as={'label'} variant={'caption'}>
             {error}
           </Typography>
