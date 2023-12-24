@@ -1,4 +1,4 @@
-import { ChangeEvent, ComponentPropsWithoutRef, forwardRef, useState } from 'react'
+import { ChangeEvent, ComponentPropsWithoutRef, forwardRef, useId, useState } from 'react'
 
 import { CloseOutline, EyeOutline, SearchOutline } from '@/assets'
 import Typography from '@/components/ui/typography/typography'
@@ -11,27 +11,26 @@ type Props = {
   error: string
   label: string
   placeholder: string
-} & ComponentPropsWithoutRef<'input'>
+  type?: 'password' | 'search' | 'text'
+} & Omit<ComponentPropsWithoutRef<'input'>, 'type'>
 export const TextField = forwardRef<HTMLInputElement, Props>((props, ref) => {
-  const { error, label, placeholder, type, ...rest } = props
+  const { error, id, label, placeholder, type, ...rest } = props
   /*    const labelTest = label ? label : 'Error!'*/
   const [text, setText] = useState('')
   const changeInputValue = (e: ChangeEvent<HTMLInputElement>) => {
     setText(e.currentTarget.value)
   }
 
+  const passwordType = type === 'password'
+  const searchType = type === 'search'
+
   const classNames = {
     error: clsx(s.error),
-    input: clsx(
-      s.input,
-      error && s.error,
-      type === 'search' && s.search,
-      type === 'password' && s.password
-    ),
+    input: clsx(s.input, error && s.error, searchType && s.search, passwordType && s.password),
     label: clsx(s.label),
     root: clsx(s.root),
     search: clsx(s.searchButton),
-    secondButton: clsx(s.cancelButton, type === 'password' && s.passwordButton),
+    secondButton: clsx(s.cancelButton, passwordType && s.passwordButton),
     wrapper: clsx(s.wrapper),
   }
 
@@ -45,14 +44,14 @@ export const TextField = forwardRef<HTMLInputElement, Props>((props, ref) => {
         </Label.Root>
       )}
       <div className={classNames.wrapper}>
-        {type === 'search' && (
+        {searchType && (
           <button className={classNames.search} onClick={() => alert('yo')} type={'button'}>
             <SearchOutline />
           </button>
         )}
         <input
           className={classNames.input}
-          id={label}
+          id={id || useId()}
           onChange={changeInputValue}
           placeholder={placeholder}
           ref={ref}
@@ -62,7 +61,7 @@ export const TextField = forwardRef<HTMLInputElement, Props>((props, ref) => {
         />
         {
           <button className={classNames.secondButton} onClick={() => alert('yo')} type={'button'}>
-            {(type === 'search' && <CloseOutline />) || (type === 'password' && <EyeOutline />)}
+            {(searchType && <CloseOutline />) || (type === 'password' && <EyeOutline />)}
           </button>
         }
       </div>
