@@ -1,71 +1,51 @@
 import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
 
-import { Edit2Outline, PlayCircleOutline, TrashOutline } from '@/assets'
+import { clsx } from 'clsx'
 
 import s from './table.module.scss'
 
-const TableRoot = forwardRef<HTMLTableElement, ComponentPropsWithoutRef<'table'>>((props, ref) => {
-  return <table {...props} className={s.root} ref={ref} />
-})
-
-const TableHead = forwardRef<ElementRef<'thead'>, ComponentPropsWithoutRef<'thead'>>(
+export const TableRoot = forwardRef<HTMLTableElement, ComponentPropsWithoutRef<'table'>>(
   (props, ref) => {
-    return <thead {...props} className={s.head} ref={ref} />
+    const { className, ...rest } = props
+
+    return <table {...rest} className={clsx(s.root, className)} ref={ref} />
   }
 )
 
-const TableBody = forwardRef<ElementRef<'tbody'>, ComponentPropsWithoutRef<'tbody'>>(
+export const TableHead = forwardRef<ElementRef<'thead'>, ComponentPropsWithoutRef<'thead'>>(
+  (props, ref) => {
+    const { className, ...rest } = props
+
+    return <thead {...rest} className={clsx(s.head, className)} ref={ref} />
+  }
+)
+
+export const TableBody = forwardRef<ElementRef<'tbody'>, ComponentPropsWithoutRef<'tbody'>>(
   (props, ref) => {
     return <tbody {...props} ref={ref} />
   }
 )
 
-const TableDataCell = forwardRef<ElementRef<'td'>, ComponentPropsWithoutRef<'td'>>((props, ref) => {
-  return <td {...props} className={`${s.cell} ${s.data}`} ref={ref} />
-})
+export const TableDataCell = forwardRef<ElementRef<'td'>, ComponentPropsWithoutRef<'td'>>(
+  (props, ref) => {
+    const { className, ...rest } = props
 
-const TableRow = forwardRef<ElementRef<'tr'>, ComponentPropsWithoutRef<'tr'>>((props, ref) => {
-  return <tr {...props} className={s.row} ref={ref} />
-})
+    return <td {...rest} className={clsx(s.cell, s.data, className)} ref={ref} />
+  }
+)
 
-const TableHeadCell = forwardRef<ElementRef<'th'>, ComponentPropsWithoutRef<'th'>>((props, ref) => {
-  return <th {...props} className={s.cell} ref={ref} />
-})
+export const TableRow = forwardRef<ElementRef<'tr'>, ComponentPropsWithoutRef<'tr'>>(
+  (props, ref) => {
+    const { className, ...rest } = props
 
-type Props = {
-  options: { cardsNumber: number; createdBy: string; lastUpdated: string; name: string }[]
-}
-export const Table = forwardRef<HTMLTableElement, Props>((props, ref) => {
-  const { options, ...rest } = props
+    return <tr {...rest} className={clsx(s.row, className)} ref={ref} />
+  }
+)
 
-  return (
-    <TableRoot ref={ref} {...rest}>
-      <TableHead>
-        <TableRow>
-          <TableHeadCell>Name</TableHeadCell>
-          <TableHeadCell>Cards</TableHeadCell>
-          <TableHeadCell>Last Updated</TableHeadCell>
-          <TableHeadCell>Created By</TableHeadCell>
-          <TableHeadCell></TableHeadCell>
-        </TableRow>
-      </TableHead>
-      <TableBody>
-        {options.map(t => (
-          <TableRow key={t.lastUpdated}>
-            <TableDataCell>{t.name}</TableDataCell>
-            <TableDataCell>{t.cardsNumber}</TableDataCell>
-            <TableDataCell>{t.name}</TableDataCell>
-            <TableDataCell>
-              {new Date(t.lastUpdated).toLocaleString('ru', { dateStyle: 'short' })}
-            </TableDataCell>
-            <TableDataCell>
-              <TrashOutline />
-              <Edit2Outline />
-              <PlayCircleOutline />
-            </TableDataCell>
-          </TableRow>
-        ))}
-      </TableBody>
-    </TableRoot>
-  )
-})
+export const TableHeadCell = forwardRef<ElementRef<'th'>, ComponentPropsWithoutRef<'th'>>(
+  (props, ref) => {
+    const { className, ...rest } = props
+
+    return <th {...rest} className={clsx(s.headCell, s.cell, className)} ref={ref} />
+  }
+)
