@@ -1,6 +1,7 @@
 import { ChangeEvent, ComponentPropsWithoutRef, ElementRef, KeyboardEvent, forwardRef } from 'react'
 
 import * as SliderRadix from '@radix-ui/react-slider'
+import { clsx } from 'clsx'
 
 import s from './slider.module.scss'
 
@@ -13,7 +14,7 @@ type Props = {
 >
 
 export const Slider = forwardRef<ElementRef<typeof SliderRadix.Root>, Props>((props, ref) => {
-  const { onChange, value, ...rest } = props
+  const { className, onChange, value, ...rest } = props
   //default Radix Slider Values
   const minRange = props.min ? props.min : 0
   const maxRange = props.max ? props.max : 100
@@ -24,14 +25,19 @@ export const Slider = forwardRef<ElementRef<typeof SliderRadix.Root>, Props>((pr
       e.preventDefault()
     }
   }
-  //todo 2 handlers
-  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+
+  const inputMinChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     if (value && onChange) {
-      if (e.currentTarget.name === 'maxInput' && e.currentTarget.valueAsNumber >= value[0]) {
-        onChange([value[0], e.currentTarget.valueAsNumber])
-      }
-      if (e.currentTarget.name === 'minInput' && e.currentTarget.valueAsNumber <= value[1]) {
+      if (e.currentTarget.valueAsNumber <= value[1]) {
         onChange([e.currentTarget.valueAsNumber, value[1]])
+      }
+    }
+  }
+
+  const inputMaxChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    if (value && onChange) {
+      if (e.currentTarget.valueAsNumber >= value[0]) {
+        onChange([value[0], e.currentTarget.valueAsNumber])
       }
     }
   }
@@ -42,8 +48,7 @@ export const Slider = forwardRef<ElementRef<typeof SliderRadix.Root>, Props>((pr
         <input
           className={s.input}
           min={minRange}
-          name={'minInput'}
-          onChange={onChangeHandler}
+          onChange={inputMinChangeHandler}
           onKeyDown={disableOnKeyPress}
           step={stepChange}
           type={'number'}
@@ -53,7 +58,7 @@ export const Slider = forwardRef<ElementRef<typeof SliderRadix.Root>, Props>((pr
 
       <SliderRadix.Root
         {...rest}
-        className={s.root}
+        className={clsx(s.root, className)}
         onValueChange={onChange}
         ref={ref}
         value={value}
@@ -68,8 +73,7 @@ export const Slider = forwardRef<ElementRef<typeof SliderRadix.Root>, Props>((pr
         <input
           className={s.input}
           max={maxRange}
-          name={'maxInput'}
-          onChange={onChangeHandler}
+          onChange={inputMaxChangeHandler}
           onKeyDown={disableOnKeyPress}
           step={stepChange}
           type={'number'}
