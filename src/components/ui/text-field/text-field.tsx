@@ -1,32 +1,91 @@
-import { ChangeEvent, ComponentPropsWithoutRef, forwardRef, useId, useState } from 'react'
+import {
+  ChangeEvent,
+  ComponentPropsWithoutRef,
+  KeyboardEvent,
+  MouseEvent,
+  forwardRef,
+  useId,
+  useState,
+} from 'react'
 
-import { CloseOutline, EyeOutline, SearchOutline } from '@/assets'
+import { CloseOutline, EyeOffOutline, EyeOutline, SearchOutline } from '@/assets'
 import Typography from '@/components/ui/typography/typography'
 import * as Label from '@radix-ui/react-label'
 import { clsx } from 'clsx'
 
 import s from './text-field.module.scss'
 
-type Props = {
+type TextFieldProps = {
   error: string
   label: string
+  onChange?: (value: string) => void
+  onKeyDown?: () => void
+  onKeyUp?: () => void
   placeholder: string
   type?: 'password' | 'search' | 'text'
-} & Omit<ComponentPropsWithoutRef<'input'>, 'type'>
+}
+type Props = TextFieldProps & Omit<ComponentPropsWithoutRef<'input'>, keyof TextFieldProps>
 export const TextField = forwardRef<HTMLInputElement, Props>((props, ref) => {
-  const { error, label, placeholder, type, ...rest } = props
-  /*    const labelTest = label ? label : 'Error!'*/
-  const [text, setText] = useState('')
-  const changeInputValue = (e: ChangeEvent<HTMLInputElement>) => {
-    setText(e.currentTarget.value)
-  }
+  const {
+    className,
+    error,
+    label,
+    onChange,
+    onKeyDown,
+    onKeyUp,
+    placeholder,
+    type = 'text',
+    ...rest
+  } = props
+
+  const [showPassword, setShowPassword] = useState(false)
   const inputId = useId()
   const passwordType = type === 'password'
   const searchType = type === 'search'
+  const notATextType = type !== 'text'
+  const showPasswordHandler = () => setShowPassword(prevState => !prevState)
+  const clearField = () => onChange?.('')
+  const secondButtonHander =
+    (passwordType && showPasswordHandler) || (searchType && clearField) || ((x: any) => x)
+
+  const inputTypeDefine = (
+    type: ComponentPropsWithoutRef<'input'>['type'],
+    showPassword: boolean
+  ) => {
+    if (showPassword && passwordType) {
+      return 'text'
+    }
+
+    return type
+  }
+
+  const inputType = inputTypeDefine(type, showPassword)
+
+  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    onChange?.(e.currentTarget.value)
+  }
+
+  const onEnterPress = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      onKeyDown?.()
+      onKeyUp?.()
+    }
+  }
+
+  const onSearchHandler = (e: MouseEvent<HTMLButtonElement>) => {
+    onKeyDown?.()
+    onKeyUp?.()
+  }
 
   const classNames = {
     error: clsx(s.error),
-    input: clsx(s.input, error && s.error, searchType && s.search, passwordType && s.password),
+    input: clsx(
+      s.input,
+      error && s.error,
+      searchType && s.search,
+      passwordType && s.password,
+      className
+    ),
     label: clsx(s.label),
     root: clsx(s.root),
     search: clsx(s.searchButton),
@@ -45,25 +104,27 @@ export const TextField = forwardRef<HTMLInputElement, Props>((props, ref) => {
       )}
       <div className={classNames.wrapper}>
         {searchType && (
-          <button className={classNames.search} onClick={() => alert('yo')} type={'button'}>
+          <button className={classNames.search} onClick={onSearchHandler} type={'button'}>
             <SearchOutline />
           </button>
         )}
         <input
           className={classNames.input}
           id={inputId}
-          onChange={changeInputValue}
+          onChange={onChangeHandler}
+          onKeyDown={onEnterPress}
+          onKeyUp={onEnterPress}
           placeholder={placeholder}
           ref={ref}
-          type={type}
-          value={text}
+          type={inputType}
           {...rest}
         />
-        {
-          <button className={classNames.secondButton} onClick={() => alert('yo')} type={'button'}>
-            {(searchType && <CloseOutline />) || (type === 'password' && <EyeOutline />)}
+        {notATextType && (
+          <button className={classNames.secondButton} onClick={secondButtonHander} type={'button'}>
+            {(searchType && <CloseOutline />) ||
+              (passwordType && showPassword ? <EyeOffOutline /> : <EyeOutline />)}
           </button>
-        }
+        )}
       </div>
       {error && (
         <Label.Root asChild className={classNames.error} htmlFor={inputId}>
