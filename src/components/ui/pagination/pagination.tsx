@@ -1,114 +1,102 @@
-import { useState } from 'react'
-
+import { OnPageChangeArgs } from '@/App'
+import { KeyboardArrowLeft, KeyboardArrowRight } from '@/assets'
+import { usePagination } from '@/common/hooks/usePagination'
 import clsx from 'clsx'
+import { v4 } from 'uuid'
 
 import s from './pagination.module.scss'
 
-type Props = {
-  currrentPage: number
-  onPageChange: () => void
-  pageSise: number
+import { Select } from '../select'
+import Typography from '../typography/typography'
+
+type PaginationProps = {
+  currentPage: number
+  onPageChange: ({ currentPage, pageSize }: OnPageChangeArgs) => void
+  pageSize: number
   totalCount: number
 }
 
-export const Pagination: React.FC<Props> = ({
-  currrentPage,
+export const Pagination: React.FC<PaginationProps> = ({
+  currentPage,
   onPageChange,
-  pageSise,
+  pageSize,
   totalCount,
 }) => {
-  const [current, setCurrent] = useState<number>(currrentPage)
-  const pagesCount = Math.ceil(totalCount / pageSise)
-  const pagesArr = []
-
-  for (let i = 0; i < pagesCount; i++) {
-    pagesArr.push(i + 1)
-  }
-
-  const onPageChangeHandler = (page: number) => {
-    console.log(page)
-    setCurrent(page)
-    onPageChange()
-  }
+  const paginationRange = usePagination({
+    currentPage,
+    pageSize,
+    siblingCount: 1,
+    totalCount,
+  })
+  const totalPageCount = Math.ceil(totalCount / pageSize)
 
   const back = () => {
-    if (current === 1) {
-      return setCurrent(pagesCount)
-    }
-    setCurrent(current - 1)
+    onPageChange({ currentPage: currentPage - 1 })
   }
 
   const forward = () => {
-    if (current === pagesCount) {
-      return setCurrent(1)
-    }
-    setCurrent(current + 1)
+    onPageChange({ currentPage: currentPage + 1 })
   }
 
-  const pages = pagesArr.map((item: number) => {
+  const buttons = paginationRange.map((item: number | string) => {
     return (
-      <div key={item}>
-        <p
-          className={clsx(current === item ? s.red : '')}
-          onClick={() => {
-            onPageChangeHandler(item)
-          }}
-          style={{ margin: '0 10px' }}
-        >
-          {item}
-        </p>
-      </div>
+      <DefaultNavigateButton
+        currentPage={currentPage}
+        item={item}
+        key={v4()}
+        onPageChange={onPageChange}
+      />
     )
   })
 
   return (
-    <div>
-      {current}
-      <div style={{ display: 'flex' }}>
-        <div onClick={back}>Back</div>
-        {pages}
-        <div onClick={forward}>Forward</div>
-        <Select
-          onChangePage={(page: number) => {
-            setCurrent(page)
-          }}
-          options={[10, 20, 30, 50, 100]}
-        />
-      </div>
+    <div className={clsx(s.paginationWrapp)}>
+      <PaginationPrevButton disabled={currentPage === 1} onClick={back} />
+      {buttons}
+      <PaginationNextButton disabled={currentPage === totalPageCount} onClick={forward} />
     </div>
   )
 }
 
-type SelectType = {
-  onChangePage: (page: number) => void
-  options: number[] | string[]
+type NavigateButtonProps = {
+  currentPage?: number
+  disabled?: boolean
+  item?: number | string
+  onClick?: () => void
+  onPageChange?: ({ currentPage, pageSize }: OnPageChangeArgs) => void
 }
 
-export const Select: React.FC<SelectType> = ({ onChangePage, options }) => {
-  const [selectedFruit, setSelectedFruit] = useState(options[0]) // Declare a state variable...
-
-  const onChange = (e: any) => {
-    setSelectedFruit(parseInt(e.target.value))
-    onChangePage(e.target.value)
-  }
-
-  // ...
+const DefaultNavigateButton: React.FC<NavigateButtonProps> = ({
+  currentPage,
+  item,
+  onPageChange,
+}) => {
   return (
-    <div>
-      {selectedFruit}
-      <select
-        onChange={onChange} // ... and update the state variable on any change!
-        style={{ color: 'black' }}
-        value={selectedFruit} // ...force the select's value to match the state variable...
-      >
-        {options.map(el => {
-          return (
-            <option key={el} value={el}>
-              {el}
-            </option>
-          )
-        })}
-      </select>
-    </div>
+    <button
+      className={clsx(s.defaultButton, s.navigateButton, currentPage === item ? s.active : '')}
+      onClick={() => {
+        if (onPageChange && typeof item === 'number') {
+          onPageChange({ currentPage: item })
+        }
+      }}
+    >
+      <Typography variant={'body_2'}>{item}</Typography>
+    </button>
+  )
+}
+
+const PaginationPrevButton: React.FC<NavigateButtonProps> = ({ disabled, onClick }) => {
+  return (
+    <button className={s.navigateButton} disabled={disabled} onClick={onClick}>
+      <KeyboardArrowLeft />
+    </button>
+  )
+}
+
+const PaginationNextButton: React.FC<NavigateButtonProps> = ({ disabled, onClick }) => {
+  return (
+    <button className={s.navigateButton} disabled={disabled} onClick={onClick}>
+      <KeyboardArrowRight />
+    </button>
   )
 }

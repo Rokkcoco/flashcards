@@ -15,7 +15,7 @@ export const Default: Story = {
   args: {
     currrentPage: 5,
     onPageChange: () => {},
-    pageSise: 3,
+    pageSize: 3,
     totalCount: 20,
   },
 }
