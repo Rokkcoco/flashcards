@@ -13,13 +13,11 @@ type SelectItemProps = { variant?: 'default' | 'pagination' } & ComponentPropsWi
 >
 
 const SelectItem = forwardRef<ElementRef<typeof SelectRadix.Item>, SelectItemProps>(
-  (props, ref) => {
-    const { children, variant = 'default', ...rest } = props
-
+  ({ children, variant = 'default', ...rest }, ref) => {
     return (
-      <Typography as={'label'} variant={variant === 'pagination' ? 'body_2' : 'body_1'}>
+      <Typography as={'label'} variant={VariantIsPagination(variant) ? 'body_2' : 'body_1'}>
         <SelectRadix.Item
-          className={clsx(s.SelectItem, variant === 'pagination' ? s.PaginationSelectItem : '')}
+          className={clsx(s.SelectItem, VariantIsPagination(variant) && s.PaginationSelectItem)}
           {...rest}
           ref={ref}
         >
@@ -40,7 +38,16 @@ export type SelectProps = {
 } & Omit<ComponentPropsWithoutRef<typeof SelectRadix.Root>, 'onValueChange' | 'value'>
 export const Select = forwardRef<ElementRef<typeof SelectRadix.Trigger>, SelectProps>(
   ({ onChange, open, options, title, value, variant = 'default', ...rest }, ref) => {
-    console.log(open)
+    const GetTopicalIcon = (variant: 'default' | 'pagination', open: false | true | undefined) => {
+      if (VariantIsPagination(variant)) {
+        return <KeyboardArrowDown />
+      }
+      if (open) {
+        return <ArrowIosUp />
+      }
+
+      return <ArrowIosDownOutline />
+    }
 
     return (
       <>
@@ -51,31 +58,25 @@ export const Select = forwardRef<ElementRef<typeof SelectRadix.Trigger>, SelectP
             </Typography>
           </Label.Root>
         )}
-        <Typography as={'label'} variant={variant === 'pagination' ? 'body_2' : 'body_1'}>
+        <Typography as={'label'} variant={VariantIsPagination(variant) ? 'body_2' : 'body_1'}>
           <SelectRadix.Root onValueChange={onChange} open={open} value={value} {...rest}>
             <SelectRadix.Trigger
               className={clsx(
                 s.SelectTrigger,
-                variant === 'pagination' ? s.PaginationSelectTrigger : ''
+                VariantIsPagination(variant) && s.PaginationSelectTrigger
               )}
               ref={ref}
             >
               <SelectRadix.Value aria-label={value}>{options[value]}</SelectRadix.Value>
               <SelectRadix.Icon asChild className={s.SelectIcon}>
-                {variant === 'pagination' ? (
-                  <KeyboardArrowDown />
-                ) : open ? (
-                  <ArrowIosUp />
-                ) : (
-                  <ArrowIosDownOutline />
-                )}
+                {GetTopicalIcon(variant, open)}
               </SelectRadix.Icon>
             </SelectRadix.Trigger>
             <SelectRadix.Portal>
               <SelectRadix.Content
                 className={clsx(
                   s.SelectContent,
-                  variant === 'pagination' ? s.PaginationSelectContent : ''
+                  VariantIsPagination(variant) && s.PaginationSelectContent
                 )}
                 position={'popper'}
                 sideOffset={0}
@@ -95,3 +96,7 @@ export const Select = forwardRef<ElementRef<typeof SelectRadix.Trigger>, SelectP
     )
   }
 )
+
+function VariantIsPagination(variant: 'default' | 'pagination'): boolean {
+  return variant === 'pagination'
+}

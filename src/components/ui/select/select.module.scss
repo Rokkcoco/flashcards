@@ -59,12 +59,16 @@ button {
 }
 
 .PaginationSelectTrigger{
-  width: auto;
+  width: 50px;
   height: 24px;
   margin: 0 9px 0 6px;
 
   background-color: var(--color-dark-700);
   border: 1px solid var(--color-dark-500);
+
+  span {
+    margin-left: 6px ;
+  }
 
   svg {
     width: 16px;
@@ -93,6 +97,10 @@ button {
   background-color: var(--color-dark-700);
   border: 1px solid var(--color-dark-500);
   border-top: none;
+
+  span {
+    margin: 6px 5px;
+  }
 }
 
 .SelectItem {
