@@ -34,7 +34,7 @@ export function App() {
         currentPage={currentPage}
         onPageChange={onPageChange}
         pageSize={pageSize}
-        totalCount={35}
+        totalCount={67}
       />
     </div>
   )
