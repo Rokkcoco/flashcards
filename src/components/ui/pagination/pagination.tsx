@@ -1,4 +1,3 @@
-import { OnPageChangeArgs } from '@/App'
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@/assets'
 import { usePagination } from '@/common/hooks/usePagination'
 import clsx from 'clsx'
@@ -8,6 +7,8 @@ import s from './pagination.module.scss'
 
 import { Select } from '../select'
 import Typography from '../typography/typography'
+
+export type OnPageChangeArgs = { currentPage?: number; pageSize?: number }
 
 type PaginationProps = {
   currentPage: number
