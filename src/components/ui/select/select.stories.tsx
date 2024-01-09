@@ -42,7 +42,7 @@ export const Disabled: Story = {
 export const PaginationSelect: Story = {
   args: {
     options: { 10: '10', 20: '20' },
-    value: 10,
+    value: '10',
     variant: 'pagination',
   },
   render: args => {

@@ -28,13 +28,11 @@ type Props = {
   onChange: (value: string) => void
   options: Record<string, string>
   title?: string
-  value: number | string
+  value: string
   variant?: 'default' | 'pagination'
 } & Omit<ComponentPropsWithoutRef<typeof SelectRadix.Root>, 'onValueChange' | 'value'>
 export const Select = forwardRef<ElementRef<typeof SelectRadix.Trigger>, Props>(
   ({ onChange, open, options, title, value, variant = 'default', ...rest }, ref) => {
-    const valueS = value + ''
-
     return (
       <>
         {title && (
@@ -45,9 +43,9 @@ export const Select = forwardRef<ElementRef<typeof SelectRadix.Trigger>, Props>(
           </Label.Root>
         )}
         <Typography as={'label'} variant={variant === 'pagination' ? 'body_2' : 'body_1'}>
-          <SelectRadix.Root onValueChange={onChange} open={open} value={valueS} {...rest}>
+          <SelectRadix.Root onValueChange={onChange} open={open} value={value} {...rest}>
             <SelectRadix.Trigger className={s.SelectTrigger} ref={ref}>
-              <SelectRadix.Value aria-label={valueS}>{options[valueS]}</SelectRadix.Value>
+              <SelectRadix.Value aria-label={value}>{options[value]}</SelectRadix.Value>
               <SelectRadix.Icon asChild className={s.SelectIcon}>
                 {!open ? <ArrowIosDownOutline /> : <ArrowIosUp />}
               </SelectRadix.Icon>
