@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 import { OnPageChangeArgs } from '@/App'
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@/assets'
 import { usePagination } from '@/common/hooks/usePagination'
@@ -13,6 +15,7 @@ type PaginationProps = {
   currentPage: number
   onPageChange: ({ currentPage, pageSize }: OnPageChangeArgs) => void
   pageSize: number
+  selectOptions?: Record<string, string>
   totalCount: number
 }
 
@@ -20,6 +23,7 @@ export const Pagination: React.FC<PaginationProps> = ({
   currentPage,
   onPageChange,
   pageSize,
+  selectOptions = { 10: '10', 20: '20', 30: '30', 50: '50', 100: '100' },
   totalCount,
 }) => {
   const paginationRange = usePagination({
@@ -54,6 +58,16 @@ export const Pagination: React.FC<PaginationProps> = ({
       <PaginationPrevButton disabled={currentPage === 1} onClick={back} />
       {buttons}
       <PaginationNextButton disabled={currentPage === totalPageCount} onClick={forward} />
+      <Typography variant={'body_2'}>Показать</Typography>
+      <Select
+        onChange={(value: string) => {
+          onPageChange({ currentPage: 1, pageSize: Number(value) })
+        }}
+        options={selectOptions}
+        value={pageSize + ''}
+        variant={'pagination'}
+      />
+      <Typography variant={'body_2'}>на странице</Typography>
     </div>
   )
 }

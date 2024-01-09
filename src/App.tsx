@@ -6,7 +6,7 @@ export type OnPageChangeArgs = { currentPage?: number; pageSize?: number }
 
 export function App() {
   const [currentPage, setCurrentPage] = useState(1)
-  const [pageSize, setPageSize] = useState(5)
+  const [pageSize, setPageSize] = useState(10)
 
   const onPageChange = ({ currentPage, pageSize }: OnPageChangeArgs) => {
     if (currentPage && pageSize) {
@@ -34,7 +34,7 @@ export function App() {
         currentPage={currentPage}
         onPageChange={onPageChange}
         pageSize={pageSize}
-        totalCount={67}
+        totalCount={71}
       />
     </div>
   )

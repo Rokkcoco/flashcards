@@ -58,6 +58,21 @@ button {
 
 }
 
+.PaginationSelectTrigger{
+  width: auto;
+  height: 24px;
+  margin: 0 9px 0 6px;
+
+  background-color: var(--color-dark-700);
+  border: 1px solid var(--color-dark-500);
+
+  svg {
+    width: 16px;
+    height: 16px;
+    margin: 4px 2px;
+  }
+}
+
 .SelectContent {
   cursor: pointer;
 
@@ -74,6 +89,12 @@ button {
   }
 }
 
+.PaginationSelectContent{
+  background-color: var(--color-dark-700);
+  border: 1px solid var(--color-dark-500);
+  border-top: none;
+}
+
 .SelectItem {
   cursor: pointer;
   padding: 6px 0;
@@ -83,4 +104,15 @@ button {
     background-color: var(--color-accent-900);
     outline: none;
   }
+}
+
+.PaginationSelectItem {
+  width: auto;
+  height: 24px;
+  padding:0;
+}
+
+.SelectIcon{
+  margin: 0;
+  padding: 0;
 }
