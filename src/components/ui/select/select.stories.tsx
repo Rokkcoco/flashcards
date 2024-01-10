@@ -38,3 +38,16 @@ export const Disabled: Story = {
     return <Select {...args} onChange={setValue} value={value} />
   },
 }
+
+export const PaginationSelect: Story = {
+  args: {
+    options: { 10: '10', 20: '20', 30: '30', 50: '50', 100: '100' },
+    value: '10',
+    variant: 'pagination',
+  },
+  render: args => {
+    const [value, setValue] = useState('10')
+
+    return <Select {...args} onChange={setValue} value={value} />
+  },
+}

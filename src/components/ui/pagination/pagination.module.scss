@@ -1,0 +1,42 @@
+.paginationWrapp {
+    display: flex;
+    align-items: center;
+    height: auto;
+}
+
+.navigateButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 24px;
+    height: 24px;
+    margin: 0 6px;
+
+    background-color: var(--color-dark-900);
+    border: none;
+}
+
+.navigateButton:hover {
+    color: var(--color-light-100);
+    background-color: var(--color-dark-500);
+}
+
+.navigateButton.defaultButton.active {
+    color: var(--color-dark-900);
+    background-color: var(--color-light-100);
+}
+
+.navigateButton:disabled{
+    path {
+        fill: var(--color-dark-100)
+    }
+}
+
+.paginationWrapp:first-child {
+    margin-right: 0;
+}
+
+.paginationWrapp:last-child {
+    margin-left: 0;
+}
