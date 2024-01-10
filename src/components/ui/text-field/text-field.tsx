@@ -45,7 +45,7 @@ export const TextField = forwardRef<HTMLInputElement, Props>((props, ref) => {
   const notATextType = type !== 'text'
   const showPasswordHandler = () => setShowPassword(prevState => !prevState)
   const clearField = () => onChange?.('')
-  const secondButtonHander =
+  const secondButtonHandler =
     (passwordType && showPasswordHandler) || (searchType && clearField) || ((x: any) => x)
 
   const inputTypeDefine = (
@@ -65,9 +65,13 @@ export const TextField = forwardRef<HTMLInputElement, Props>((props, ref) => {
     onChange?.(e.currentTarget.value)
   }
 
-  const onEnterPress = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
+  const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (onKeyDown && e.key === 'Enter') {
       onKeyDown?.()
+    }
+  }
+  const onKeyUpHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (onKeyUp && e.key === 'Enter') {
       onKeyUp?.()
     }
   }
@@ -112,15 +116,15 @@ export const TextField = forwardRef<HTMLInputElement, Props>((props, ref) => {
           className={classNames.input}
           id={inputId}
           onChange={onChangeHandler}
-          onKeyDown={onEnterPress}
-          onKeyUp={onEnterPress}
+          onKeyDown={onKeyDownHandler}
+          onKeyUp={onKeyUpHandler}
           placeholder={placeholder}
           ref={ref}
           type={inputType}
           {...rest}
         />
         {notATextType && (
-          <button className={classNames.secondButton} onClick={secondButtonHander} type={'button'}>
+          <button className={classNames.secondButton} onClick={secondButtonHandler} type={'button'}>
             {(searchType && <CloseOutline />) ||
               (passwordType && showPassword ? <EyeOffOutline /> : <EyeOutline />)}
           </button>
