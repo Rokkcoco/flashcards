@@ -2,9 +2,10 @@ import {
   ChangeEvent,
   ComponentPropsWithoutRef,
   KeyboardEvent,
-  MouseEvent,
+  RefObject,
   forwardRef,
   useId,
+  useRef,
   useState,
 } from 'react'
 
@@ -16,18 +17,20 @@ import { clsx } from 'clsx'
 import s from './text-field.module.scss'
 
 type TextFieldProps = {
-  error: string
+  error?: string
   label: string
   onChange?: (value: string) => void
   onKeyDown?: () => void
   onKeyUp?: () => void
   placeholder: string
   type?: 'password' | 'search' | 'text'
+  value?: string
 }
 type Props = TextFieldProps & Omit<ComponentPropsWithoutRef<'input'>, keyof TextFieldProps>
 export const TextField = forwardRef<HTMLInputElement, Props>((props, ref) => {
   const {
     className,
+    disabled,
     error,
     label,
     onChange,
@@ -35,6 +38,7 @@ export const TextField = forwardRef<HTMLInputElement, Props>((props, ref) => {
     onKeyUp,
     placeholder,
     type = 'text',
+    value = '',
     ...rest
   } = props
 
@@ -44,9 +48,11 @@ export const TextField = forwardRef<HTMLInputElement, Props>((props, ref) => {
   const searchType = type === 'search'
   const notATextType = type !== 'text'
   const showPasswordHandler = () => setShowPassword(prevState => !prevState)
+
   const clearField = () => onChange?.('')
+
   const secondButtonHandler =
-    (passwordType && showPasswordHandler) || (searchType && clearField) || ((x: any) => x)
+    (passwordType && showPasswordHandler) || (searchType && clearField) || (() => {})
 
   const inputTypeDefine = (
     type: ComponentPropsWithoutRef<'input'>['type'],
@@ -60,23 +66,43 @@ export const TextField = forwardRef<HTMLInputElement, Props>((props, ref) => {
   }
 
   const inputType = inputTypeDefine(type, showPassword)
+  const internalInputRef = useRef<HTMLInputElement | null>(null)
+  const inputRef = (ref || internalInputRef) as RefObject<HTMLInputElement>
 
   const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     onChange?.(e.currentTarget.value)
   }
 
+  const focusOnEmptyInput = () => {
+    if (inputRef && inputRef.current?.value === '') {
+      inputRef.current.focus()
+
+      return true
+    }
+
+    return false
+  }
   const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (focusOnEmptyInput()) {
+      return
+    }
     if (onKeyDown && e.key === 'Enter') {
       onKeyDown?.()
     }
   }
   const onKeyUpHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (focusOnEmptyInput()) {
+      return
+    }
     if (onKeyUp && e.key === 'Enter') {
       onKeyUp?.()
     }
   }
 
-  const onSearchHandler = (e: MouseEvent<HTMLButtonElement>) => {
+  const onSearchHandler = () => {
+    if (focusOnEmptyInput()) {
+      return
+    }
     onKeyDown?.()
     onKeyUp?.()
   }
@@ -85,16 +111,20 @@ export const TextField = forwardRef<HTMLInputElement, Props>((props, ref) => {
     error: clsx(s.error),
     input: clsx(
       s.input,
-      error && s.error,
+      error && s.inputError,
       searchType && s.search,
       passwordType && s.password,
       className
     ),
-    label: clsx(s.label),
+    label: clsx(s.label, disabled && s.disabled),
     root: clsx(s.root),
-    search: clsx(s.searchButton),
-    secondButton: clsx(s.cancelButton, passwordType && s.passwordButton),
-    wrapper: clsx(s.wrapper),
+    search: clsx(s.searchButton, disabled && s.disabled),
+    secondButton: clsx(
+      searchType && s.cancelButton,
+      passwordType && s.passwordButton,
+      value.length > 0 && s.showCancelButton
+    ),
+    wrapper: clsx(s.wrapper, disabled && s.disabled),
   }
 
   return (
@@ -108,23 +138,35 @@ export const TextField = forwardRef<HTMLInputElement, Props>((props, ref) => {
       )}
       <div className={classNames.wrapper}>
         {searchType && (
-          <button className={classNames.search} onClick={onSearchHandler} type={'button'}>
+          <button
+            className={classNames.search}
+            onClick={onSearchHandler}
+            tabIndex={-1}
+            type={'button'}
+          >
             <SearchOutline />
           </button>
         )}
         <input
           className={classNames.input}
+          disabled={disabled}
           id={inputId}
           onChange={onChangeHandler}
           onKeyDown={onKeyDownHandler}
           onKeyUp={onKeyUpHandler}
           placeholder={placeholder}
-          ref={ref}
+          ref={inputRef}
           type={inputType}
+          value={value}
           {...rest}
         />
         {notATextType && (
-          <button className={classNames.secondButton} onClick={secondButtonHandler} type={'button'}>
+          <button
+            className={classNames.secondButton}
+            onClick={secondButtonHandler}
+            tabIndex={-1}
+            type={'button'}
+          >
             {(searchType && <CloseOutline />) ||
               (passwordType && showPassword ? <EyeOffOutline /> : <EyeOutline />)}
           </button>
@@ -142,31 +184,5 @@ export const TextField = forwardRef<HTMLInputElement, Props>((props, ref) => {
 })
 
 // Для того, чтобы ваши поля не были стандартного цвета, при выборе из списка ранее вводимых значений, нужно добавить:
-//     input:-webkit-autofill,
-//         input:-webkit-autofill:hover,
-//     input:-webkit-autofill:focus
-// input:-webkit-autofill,
-//     textarea:-webkit-autofill,
-//     textarea:-webkit-autofill:hover
-// textarea:-webkit-autofill:focus,
-//     select:-webkit-autofill,
-//     select:-webkit-autofill:hover,
-//     select:-webkit-autofill:focus {
-//     border: 0;
-//     -webkit-text-fill-color: #1f1f20;
-//     -webkit-box-shadow: 0 0 0 1000px transparent inset;
-//     transition: background-color 5000s ease-in-out 0s;
-//     background: -webkit-linear-gradient(top,  rgba(255,255,255,0) 0%,rgba(0,174,255,0.04) 50%,rgba(255,255,255,0) 51%,rgba(0,174,255,0.03) 100%);
-// }
-// где вместо transparent можно указать любой цвет.
 
-// Ещё для input типа search чтоб не был дефолтный крестик:
-//     input[type='search'] {
-// &::-webkit-search-decoration,
-// &::-webkit-search-cancel-button,
-// &::-webkit-search-results-button,
-// &::-webkit-search-results-decoration {
-//         appearance: none;
-//     }
-// }
-// и если нужно предотвратить предложение раннее введённых значений в конкретном инпуте, ему можно указать пропс autoComplete={'off'}
+// где вместо transparent можно указать любой цвет.

@@ -20,10 +20,12 @@
   width: 100%;
 
   .label {
+    cursor: pointer;
     color: var(--color-dark-100);
   }
 
   .error {
+    cursor: pointer;
     color: red;
   }
 
@@ -34,20 +36,12 @@
     height: 36px;
 
 
-    .searchButton {
-    @include button;
-
-      color: var(--color-dark-100);
-
-      svg {
-        width: 20px;
-        height: 20px;
-      }
-    }
 
 
 
     .input {
+      cursor: initial;
+
       display: flex;
 
       width: 100%;
@@ -59,6 +53,10 @@
       background-color: transparent;
       border: 1px solid var(--color-dark-300);
       border-radius: 2px;
+
+      &:hover {
+        background-color: var(--color-dark-700);
+      }
 
       &:focus-visible {
         border: 1px solid var(--color-info-500);
@@ -75,13 +73,45 @@
       }
     }
 
+    input[type='search'] {
+      &::-webkit-search-decoration,
+      &::-webkit-search-cancel-button,
+      &::-webkit-search-results-button,
+      &::-webkit-search-results-decoration {
+        appearance: none;
+      }
+    }
+
+
+
+    .searchButton {
+      @include button;
+
+      color: var(--color-dark-100);
+
+      svg {
+        width: 20px;
+        height: 20px;
+      }
+
+    &:hover .input {
+        background-color: var(--color-dark-700);
+      }
+
+    }
+
+    .inputError {
+      color: red;
+      border: 1px solid red;
+    }
+
     .cancelButton {
       @include button;
 
       top: 0;
       right: 0;
     display: none;
-
+      color: var(--color-dark-100);
 
       svg {
         width: 16px;
@@ -89,18 +119,25 @@
       }
     }
 
+    .showCancelButton {
+      display: inline-flex;
+    }
+
     .passwordButton {
       @include button;
 
+    top: 0;
+      right: 0;
 
       svg {
         width: 20px;
         height: 20px;
       }
+
     }
 
-    &:focus-within .searchButton,
-    &:focus-within .cancelButton{
+    &:active .searchButton,
+    &:active:not(:disabled) .cancelButton{
       display: inline-flex;
       color: var(--color-light-100);
     }
@@ -109,6 +146,32 @@
       padding: 6px 12px 6px 41px;
     }
   }
+
+
+
+  .disabled {
+    cursor: initial;
+    opacity: 0.5;
+  }
+
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  textarea:-webkit-autofill,
+  textarea:-webkit-autofill:hover,
+  textarea:-webkit-autofill:focus,
+  select:-webkit-autofill,
+  select:-webkit-autofill:hover,
+  select:-webkit-autofill:focus {
+    background: linear-gradient(top,  rgb(255 255 255 / 0%) 0%,rgb(0 174 255 / 4%) 50%,rgb(255 255 255 / 0%) 51%,rgb(0 174 255 / 3%) 100%);
+    border: 0;
+    box-shadow: 0 0 0 1000px transparent inset;
+
+    transition: background-color 5000s ease-in-out 0s;
+
+    -webkit-text-fill-color: #1f1f20;
+  }
+
 
 }
 
