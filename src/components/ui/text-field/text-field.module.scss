@@ -35,10 +35,6 @@
     width: 284px;
     height: 36px;
 
-
-
-
-
     .input {
       cursor: initial;
 
@@ -54,7 +50,7 @@
       border: 1px solid var(--color-dark-300);
       border-radius: 2px;
 
-      &:hover {
+      &:not(:disabled):hover {
         background-color: var(--color-dark-700);
       }
 
@@ -71,6 +67,7 @@
           color: var(--color-light-100);
         }
       }
+
     }
 
     input[type='search'] {
@@ -98,11 +95,20 @@
         background-color: var(--color-dark-700);
       }
 
+    &:disabled {
+      cursor: default;
+      color: var(--color-dark-300);
+
+    }
     }
 
     .inputError {
       color: red;
       border: 1px solid red;
+
+      &::placeholder {
+        color: red;
+      }
     }
 
     .cancelButton {
@@ -134,10 +140,14 @@
         height: 20px;
       }
 
+    &:disabled {
+      cursor: default;
+      color: var(--color-dark-300);
+    }
     }
 
-    &:active .searchButton,
-    &:active:not(:disabled) .cancelButton{
+    &:active .searchButton:not(:disabled),
+    &:active .cancelButton:not(:disabled){
       display: inline-flex;
       color: var(--color-light-100);
     }
@@ -150,10 +160,16 @@
 
 
   .disabled {
-    cursor: initial;
-    opacity: 0.5;
+    cursor: default;
+    color: var(--color-dark-300);
+
+    &::placeholder {
+      color: var(--color-dark-300);
+    }
   }
 
+  // Для того, чтобы ваши поля не были стандартного цвета, при выборе из списка ранее вводимых значений, нужно добавить:
+  // где вместо transparent можно указать любой цвет.
   input:-webkit-autofill,
   input:-webkit-autofill:hover,
   input:-webkit-autofill:focus,

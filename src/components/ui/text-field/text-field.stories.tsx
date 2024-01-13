@@ -95,6 +95,21 @@ export const PasswordTextFieldWithoutError: Story = {
     return <TextField {...args} onChange={changeInputValue} value={text} />
   },
 }
+export const PasswordTextFieldDisabled: Story = {
+  args: {
+    label: 'Enter your password',
+    placeholder: 'Input',
+    type: 'password',
+  },
+  render: args => {
+    const [text, setText] = useState('')
+    const changeInputValue = (value: string) => {
+      setText(value)
+    }
+
+    return <TextField {...args} disabled onChange={changeInputValue} value={text} />
+  },
+}
 export const DefaultTextFieldWithError: Story = {
   args: {
     error: 'Wrong login!',
@@ -122,5 +137,19 @@ export const DefaultTextFieldWithoutError: Story = {
     }
 
     return <TextField {...args} onChange={changeInputValue} value={text} />
+  },
+}
+export const DefaultTextFieldDisabled: Story = {
+  args: {
+    label: 'Enter your login',
+    placeholder: 'Input',
+  },
+  render: args => {
+    const [text, setText] = useState('')
+    const changeInputValue = (value: string) => {
+      setText(value)
+    }
+
+    return <TextField {...args} disabled onChange={changeInputValue} value={text} />
   },
 }

@@ -114,6 +114,7 @@ export const TextField = forwardRef<HTMLInputElement, Props>((props, ref) => {
       error && s.inputError,
       searchType && s.search,
       passwordType && s.password,
+      disabled && s.disabled,
       className
     ),
     label: clsx(s.label, disabled && s.disabled),
@@ -122,9 +123,10 @@ export const TextField = forwardRef<HTMLInputElement, Props>((props, ref) => {
     secondButton: clsx(
       searchType && s.cancelButton,
       passwordType && s.passwordButton,
-      value.length > 0 && s.showCancelButton
+      value.length > 0 && s.showCancelButton,
+      disabled && s.disabled
     ),
-    wrapper: clsx(s.wrapper, disabled && s.disabled),
+    wrapper: clsx(s.wrapper),
   }
 
   return (
@@ -140,6 +142,7 @@ export const TextField = forwardRef<HTMLInputElement, Props>((props, ref) => {
         {searchType && (
           <button
             className={classNames.search}
+            disabled={disabled}
             onClick={onSearchHandler}
             tabIndex={-1}
             type={'button'}
@@ -163,6 +166,7 @@ export const TextField = forwardRef<HTMLInputElement, Props>((props, ref) => {
         {notATextType && (
           <button
             className={classNames.secondButton}
+            disabled={disabled}
             onClick={secondButtonHandler}
             tabIndex={-1}
             type={'button'}
@@ -182,7 +186,5 @@ export const TextField = forwardRef<HTMLInputElement, Props>((props, ref) => {
     </div>
   )
 })
-
-// Для того, чтобы ваши поля не были стандартного цвета, при выборе из списка ранее вводимых значений, нужно добавить:
-
-// где вместо transparent можно указать любой цвет.
+//1 плывет лупа при таб
+//2 добавить бэкграунд инпуту при ховере лупы
