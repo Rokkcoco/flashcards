@@ -1,17 +1,29 @@
 import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
 
 import * as AvatarRadix from '@radix-ui/react-avatar'
+import { clsx } from 'clsx'
 
-import s from 'avatar.module.scss'
+import s from './avatar.module.scss'
 
-type Props = {} & ComponentPropsWithoutRef<typeof AvatarRadix.Root>
+type Props = {
+  alt?: string
+  src?: string
+} & ComponentPropsWithoutRef<typeof AvatarRadix.Root>
 
 export const Avatar = forwardRef<ElementRef<typeof AvatarRadix.Root>, Props>((props, ref) => {
-  const { className, ...rest } = props
+  const { alt, children, className, src, ...rest } = props
+  const classNames = {
+    fallback: clsx(s.fallback),
+    image: clsx(s.image),
+    root: clsx(s.root, className),
+  }
 
   return (
-    <AvatarRadix.Root asChild className={s.root} ref={ref} {...rest}>
-      <AvatarRadix.Fallback className={s.fallback}>CT</AvatarRadix.Fallback>
+    <AvatarRadix.Root className={classNames.root} ref={ref} {...rest}>
+      {src && alt && <AvatarRadix.Image alt={alt} className={classNames.image} src={src} />}
+      <AvatarRadix.Fallback className={classNames.fallback} delayMs={500}>
+        {children}
+      </AvatarRadix.Fallback>
     </AvatarRadix.Root>
   )
 })
