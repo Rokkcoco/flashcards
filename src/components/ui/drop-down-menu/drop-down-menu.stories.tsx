@@ -1,4 +1,3 @@
-import { CloseOutline } from '@/assets'
 import { Avatar } from '@/components/ui/avatar'
 import { Meta, StoryObj } from '@storybook/react'
 
@@ -26,11 +25,7 @@ export const DropdownMenuStory: Story = {
         ),
       },
       {
-        content: (
-          <>
-            Yes <CloseOutline />
-          </>
-        ),
+        content: 'NO',
       },
     ],
     trigger: 'TEST',

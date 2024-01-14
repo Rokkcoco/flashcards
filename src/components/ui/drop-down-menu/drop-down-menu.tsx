@@ -1,4 +1,11 @@
-import { ComponentPropsWithoutRef, ElementRef, ReactNode, forwardRef } from 'react'
+import {
+  ComponentPropsWithoutRef,
+  ElementRef,
+  Fragment,
+  ReactNode,
+  forwardRef,
+  isValidElement,
+} from 'react'
 
 import { Avatar } from '@/components/ui/avatar'
 import * as DropdownMenuRadix from '@radix-ui/react-dropdown-menu'
@@ -20,7 +27,7 @@ const DropdownItem = forwardRef<ElementRef<typeof DropdownMenuRadix.Item>, Dropd
 
 type Props = {
   alt?: string
-  items: { content: ReactNode | string }[]
+  items: { content: ReactNode }[]
   src?: string
   trigger: ReactNode
 } & ComponentPropsWithoutRef<typeof DropdownMenuRadix.Root>
@@ -38,16 +45,24 @@ export const DropdownMenu = forwardRef<ElementRef<typeof DropdownMenuRadix.Root>
         <DropdownMenuRadix.Portal>
           <DropdownMenuRadix.Content className={s.content} ref={ref}>
             {items.map((t, index) => {
-              if (index === items.length - 1) {
-                return <DropdownItem>{t.content}</DropdownItem>
-              } else {
-                return (
-                  <>
-                    <DropdownItem>{t.content}</DropdownItem>
-                    <DropdownMenuRadix.Separator className={s.separator} />
-                  </>
-                )
+              console.log(t.content)
+              if (isValidElement(t.content)) {
+                if (
+                  t.content.props &&
+                  t.content.props.children[index].type.__docgenInfo.displayName === 'Avatar'
+                ) {
+                  console.log('yes')
+                }
               }
+
+              return (
+                <Fragment key={index}>
+                  <DropdownItem key={index}>{t.content}</DropdownItem>
+                  {index === items.length - 1 ? null : (
+                    <DropdownMenuRadix.Separator className={s.separator} />
+                  )}
+                </Fragment>
+              )
             })}
             <DropdownMenuRadix.Arrow className={s.arrow} />
           </DropdownMenuRadix.Content>
