@@ -1,16 +1,49 @@
-import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
+import { ComponentPropsWithoutRef, ElementRef, ReactElement, forwardRef } from 'react'
 
-import { CloseOutline } from '@/assets'
 import * as DropdownMenuRadix from '@radix-ui/react-dropdown-menu'
 
-type Props = {} & ComponentPropsWithoutRef<typeof DropdownMenuRadix.Root>
+import s from './drop-down-menu.module.scss'
+
+type DropdownItemProps = {} & ComponentPropsWithoutRef<typeof DropdownMenuRadix.Item>
+const DropdownItem = forwardRef<ElementRef<typeof DropdownMenuRadix.Item>, DropdownItemProps>(
+  (props, ref) => {
+    const { children, ...rest } = props
+
+    return (
+      <DropdownMenuRadix.Item {...rest} className={s.item} ref={ref}>
+        {children}
+      </DropdownMenuRadix.Item>
+    )
+  }
+)
+
+type Props = {
+  items: { content: ReactElement | string }[]
+} & ComponentPropsWithoutRef<typeof DropdownMenuRadix.Root>
 export const DropdownMenu = forwardRef<ElementRef<typeof DropdownMenuRadix.Root>, Props>(
   (props, ref) => {
+    const { items, ...rest } = props
+
     return (
-      <DropdownMenuRadix.Root {...props}>
-        <DropdownMenuRadix.Trigger>
-          <CloseOutline />
-        </DropdownMenuRadix.Trigger>
+      <DropdownMenuRadix.Root {...rest}>
+        <DropdownMenuRadix.Trigger></DropdownMenuRadix.Trigger>
+        <DropdownMenuRadix.Portal>
+          <DropdownMenuRadix.Content className={s.content} ref={ref}>
+            {items.map((t, index) => {
+              if (index === items.length - 1) {
+                return <DropdownItem>{t.content}</DropdownItem>
+              } else {
+                return (
+                  <>
+                    <DropdownItem>{t.content}</DropdownItem>
+                    <DropdownMenuRadix.Separator className={s.separator} />
+                  </>
+                )
+              }
+            })}
+            <DropdownMenuRadix.Arrow className={s.arrow} />
+          </DropdownMenuRadix.Content>
+        </DropdownMenuRadix.Portal>
       </DropdownMenuRadix.Root>
     )
   }

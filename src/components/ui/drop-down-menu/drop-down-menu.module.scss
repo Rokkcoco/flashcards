@@ -1,0 +1,26 @@
+
+.arrow {
+  fill: var(--color-dark-700);
+}
+
+.content {
+  padding: 12px;
+  background-color: var(--color-dark-700);
+  border: 1px solid var(--color-dark-500);
+  border-radius: 4px;
+}
+
+.item {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  justify-content: flex-start;
+
+
+}
+
+.separator {
+  height: 1px;
+  margin: 12px 0;
+  background-color: var(--color-dark-500);
+}
