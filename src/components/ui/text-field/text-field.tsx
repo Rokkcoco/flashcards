@@ -10,6 +10,7 @@ import {
 } from 'react'
 
 import { CloseOutline, EyeOffOutline, EyeOutline, SearchOutline } from '@/assets'
+import { Tooltip } from '@/components/ui/tooltip'
 import Typography from '@/components/ui/typography/typography'
 import * as Label from '@radix-ui/react-label'
 import { clsx } from 'clsx'
@@ -50,6 +51,8 @@ export const TextField = forwardRef<HTMLInputElement, Props>((props, ref) => {
   const showPasswordHandler = () => setShowPassword(prevState => !prevState)
 
   const clearField = () => onChange?.('')
+
+  const disabledTooltip = disabled && 'Input disabled'
 
   const secondButtonHandler =
     (passwordType && showPasswordHandler) || (searchType && clearField) || (() => {})
@@ -140,15 +143,17 @@ export const TextField = forwardRef<HTMLInputElement, Props>((props, ref) => {
       )}
       <div className={classNames.wrapper}>
         {searchType && (
-          <button
-            className={classNames.search}
-            disabled={disabled}
-            onClick={onSearchHandler}
-            tabIndex={-1}
-            type={'button'}
-          >
-            <SearchOutline />
-          </button>
+          <Tooltip content={disabledTooltip || 'Search'}>
+            <button
+              className={classNames.search}
+              disabled={disabled}
+              onClick={onSearchHandler}
+              tabIndex={-1}
+              type={'button'}
+            >
+              <SearchOutline />
+            </button>
+          </Tooltip>
         )}
         <input
           className={classNames.input}
@@ -164,16 +169,24 @@ export const TextField = forwardRef<HTMLInputElement, Props>((props, ref) => {
           {...rest}
         />
         {notATextType && (
-          <button
-            className={classNames.secondButton}
-            disabled={disabled}
-            onClick={secondButtonHandler}
-            tabIndex={-1}
-            type={'button'}
+          <Tooltip
+            content={
+              disabledTooltip ||
+              (searchType && 'Clear field') ||
+              (passwordType && showPassword ? 'Hide password' : 'Show password')
+            }
           >
-            {(searchType && <CloseOutline />) ||
-              (passwordType && showPassword ? <EyeOffOutline /> : <EyeOutline />)}
-          </button>
+            <button
+              className={classNames.secondButton}
+              disabled={disabled}
+              onClick={secondButtonHandler}
+              tabIndex={-1}
+              type={'button'}
+            >
+              {(searchType && <CloseOutline />) ||
+                (passwordType && showPassword ? <EyeOffOutline /> : <EyeOutline />)}
+            </button>
+          </Tooltip>
         )}
       </div>
       {error && (
@@ -188,3 +201,5 @@ export const TextField = forwardRef<HTMLInputElement, Props>((props, ref) => {
 })
 //1 плывет лупа при таб
 //2 добавить бэкграунд инпуту при ховере лупы
+// Лейблу не падает класс disabled
+//3 tooltip search, clear
