@@ -44,6 +44,7 @@ export const TextField = forwardRef<HTMLInputElement, Props>((props, ref) => {
   } = props
 
   const [showPassword, setShowPassword] = useState(false)
+  const [hoverForInput, setHoverForInput] = useState(false)
   const inputId = useId()
   const passwordType = type === 'password'
   const searchType = type === 'search'
@@ -52,7 +53,7 @@ export const TextField = forwardRef<HTMLInputElement, Props>((props, ref) => {
 
   const clearField = () => onChange?.('')
 
-  const disabledTooltip = disabled && 'Input disabled'
+  const disabledTooltip = disabled && 'Text field disabled'
 
   const secondButtonHandler =
     (passwordType && showPasswordHandler) || (searchType && clearField) || (() => {})
@@ -110,6 +111,13 @@ export const TextField = forwardRef<HTMLInputElement, Props>((props, ref) => {
     onKeyUp?.()
   }
 
+  const handleMouseEnter = () => {
+    setHoverForInput(true)
+  }
+  const handleMouseLeave = () => {
+    setHoverForInput(false)
+  }
+
   const classNames = {
     error: clsx(s.error),
     input: clsx(
@@ -117,17 +125,16 @@ export const TextField = forwardRef<HTMLInputElement, Props>((props, ref) => {
       error && s.inputError,
       searchType && s.search,
       passwordType && s.password,
-      disabled && s.disabled,
+      hoverForInput && s.hoverForInput,
       className
     ),
     label: clsx(s.label, disabled && s.disabled),
     root: clsx(s.root),
-    search: clsx(s.searchButton, disabled && s.disabled),
+    search: clsx(s.searchButton),
     secondButton: clsx(
       searchType && s.cancelButton,
       passwordType && s.passwordButton,
-      value.length > 0 && s.showCancelButton,
-      disabled && s.disabled
+      value.length > 0 && s.showCancelButton
     ),
     wrapper: clsx(s.wrapper),
   }
@@ -148,6 +155,8 @@ export const TextField = forwardRef<HTMLInputElement, Props>((props, ref) => {
               className={classNames.search}
               disabled={disabled}
               onClick={onSearchHandler}
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
               tabIndex={-1}
               type={'button'}
             >
@@ -183,8 +192,8 @@ export const TextField = forwardRef<HTMLInputElement, Props>((props, ref) => {
               tabIndex={-1}
               type={'button'}
             >
-              {(searchType && <CloseOutline />) ||
-                (passwordType && showPassword ? <EyeOffOutline /> : <EyeOutline />)}
+              {(passwordType && (showPassword ? <EyeOffOutline /> : <EyeOutline />)) ||
+                (value !== '' && searchType && <CloseOutline />)}
             </button>
           </Tooltip>
         )}
@@ -199,7 +208,3 @@ export const TextField = forwardRef<HTMLInputElement, Props>((props, ref) => {
     </div>
   )
 })
-//1 плывет лупа при таб
-//2 добавить бэкграунд инпуту при ховере лупы
-// Лейблу не падает класс disabled
-//3 tooltip search, clear

@@ -13,6 +13,11 @@
 
   background-color: transparent;
   border: none;
+
+  &:disabled {
+    cursor: default;
+    color: var(--color-dark-300);
+  }
 }
 
 .root {
@@ -26,7 +31,7 @@
 
   .error {
     cursor: pointer;
-    color: red;
+    color: var(--color-danger-300);
   }
 
   .wrapper {
@@ -50,14 +55,25 @@
       border: 1px solid var(--color-dark-300);
       border-radius: 2px;
 
-      &:not(:disabled):hover {
-        background-color: var(--color-dark-700);
-      }
-
       &:focus-visible {
         border: 1px solid var(--color-info-500);
         outline: 1px solid var(--color-info-500);
       }
+
+      &:disabled {
+        cursor: default;
+        color: var(--color-dark-300);
+
+        &::placeholder {
+          color: var(--color-dark-300);
+        }
+      }
+
+      &:not(:disabled):hover {
+        background-color: var(--color-dark-700);
+      }
+
+
 
       &:active:not(&:disabled) {
         border-color: var(--color-light-100);
@@ -68,7 +84,13 @@
         }
       }
 
+
     }
+
+    .hoverForInput {
+      background-color:var(--color-dark-700);
+    }
+
 
     input[type='search'] {
       &::-webkit-search-decoration,
@@ -80,10 +102,8 @@
     }
 
 
-
     .searchButton {
       @include button;
-
 
       color: var(--color-dark-100);
 
@@ -93,19 +113,14 @@
         height: 20px;
       }
 
-
-      .input &:hover  {
-        background-color: var(--color-dark-700);
-      }
-
     }
 
     .inputError {
-      color: red;
-      border: 1px solid red;
+      color: var(--color-danger-300);
+      border: 1px solid var(--color-danger-300);
 
       &::placeholder {
-        color: red;
+        color: var(--color-danger-300);
       }
     }
 
@@ -114,7 +129,7 @@
 
       top: 0;
       right: 0;
-    display: none;
+      display: none;
       color: var(--color-dark-100);
 
       svg {
@@ -130,7 +145,7 @@
     .passwordButton {
       @include button;
 
-    top: 0;
+      top: 0;
       right: 0;
 
       svg {
@@ -138,31 +153,30 @@
         height: 20px;
       }
 
-
-    }
-
-    .disabled {
-      cursor: default;
-      color: var(--color-dark-300);
-
-      &::placeholder {
-        color: var(--color-dark-300);
-      }
-    }
-
-    &:active .searchButton:not(:disabled),
-    &:active .cancelButton:not(:disabled){
-      display: inline-flex;
-      color: var(--color-light-100);
     }
 
     .search {
       padding: 6px 12px 6px 41px;
     }
+
+    &:active .searchButton:not(:disabled),
+  &:active .cancelButton:not(:disabled){
+      display: inline-flex;
+      color: var(--color-light-100);
+    }
+
+
+
   }
 
 
 
+
+  .disabled {
+    cursor: default;
+    color: var(--color-dark-300);
+
+  }
 
 
   // Для того, чтобы ваши поля не были стандартного цвета, при выборе из списка ранее вводимых значений, нужно добавить:
@@ -187,7 +201,6 @@
 
 
 }
-
 
 
 
