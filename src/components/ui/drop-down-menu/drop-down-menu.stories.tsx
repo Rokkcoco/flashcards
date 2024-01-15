@@ -1,7 +1,8 @@
+import { CloseOutline } from '@/assets'
 import { Avatar } from '@/components/ui/avatar'
 import { Meta, StoryObj } from '@storybook/react'
 
-import { DropdownMenu } from './'
+import { DropdownItem, DropdownMenu, DropdownSeparator } from './'
 
 const meta = {
   component: DropdownMenu,
@@ -14,23 +15,23 @@ type Story = StoryObj<typeof meta>
 
 export const DropdownMenuStory: Story = {
   args: {
-    items: [
-      {
-        content: (
-          <>
-            <Avatar>JJ</Avatar>
-            <div>yes</div>
-            <div>yes</div>
-          </>
-        ),
-      },
-      {
-        content: 'NO',
-      },
-    ],
-    trigger: 'TEST',
+    trigger: 'YES',
   },
   render: args => {
-    return <DropdownMenu {...args} />
+    return (
+      <DropdownMenu {...args}>
+        <DropdownItem>
+          YO <CloseOutline />
+        </DropdownItem>
+        <DropdownSeparator />
+        <DropdownItem>
+          COOL <CloseOutline />
+        </DropdownItem>
+        <DropdownSeparator />
+        <DropdownItem>
+          <Avatar>DG</Avatar>
+        </DropdownItem>
+      </DropdownMenu>
+    )
   },
 }

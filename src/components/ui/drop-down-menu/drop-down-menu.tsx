@@ -1,40 +1,63 @@
-import {
-  ComponentPropsWithoutRef,
-  ElementRef,
-  Fragment,
-  ReactNode,
-  forwardRef,
-  isValidElement,
-} from 'react'
+import { ComponentPropsWithoutRef, ElementRef, ReactNode, forwardRef } from 'react'
 
 import { Avatar } from '@/components/ui/avatar'
 import * as DropdownMenuRadix from '@radix-ui/react-dropdown-menu'
+import { clsx } from 'clsx'
 
 import s from './drop-down-menu.module.scss'
 
 type DropdownItemProps = {} & ComponentPropsWithoutRef<typeof DropdownMenuRadix.Item>
-const DropdownItem = forwardRef<ElementRef<typeof DropdownMenuRadix.Item>, DropdownItemProps>(
-  (props, ref) => {
-    const { children, ...rest } = props
+export const DropdownItem = forwardRef<
+  ElementRef<typeof DropdownMenuRadix.Item>,
+  DropdownItemProps
+>((props, ref) => {
+  const { children, className, ...rest } = props
 
-    return (
-      <DropdownMenuRadix.Item {...rest} className={s.item} ref={ref}>
-        {children}
-      </DropdownMenuRadix.Item>
-    )
+  const classNames = {
+    item: clsx(s.item, className),
   }
-)
+
+  return (
+    <DropdownMenuRadix.Item {...rest} className={classNames.item} ref={ref}>
+      {children}
+    </DropdownMenuRadix.Item>
+  )
+})
+
+type DropdownSeparatorProps = {} & ComponentPropsWithoutRef<typeof DropdownMenuRadix.Separator>
+export const DropdownSeparator = forwardRef<
+  ElementRef<typeof DropdownMenuRadix.Separator>,
+  DropdownSeparatorProps
+>((props, ref) => {
+  const { className, ...rest } = props
+
+  const classNames = {
+    item: clsx(s.separator, className),
+  }
+
+  return <DropdownMenuRadix.Separator className={classNames.item} ref={ref} {...rest} />
+})
 
 type Props = {
   alt?: string
-  items: { content: ReactNode }[]
   src?: string
   trigger: ReactNode
-} & ComponentPropsWithoutRef<typeof DropdownMenuRadix.Root>
-export const DropdownMenu = forwardRef<ElementRef<typeof DropdownMenuRadix.Root>, Props>(
+} & ComponentPropsWithoutRef<typeof DropdownMenuRadix.Root> &
+  ComponentPropsWithoutRef<'div'>
+export const DropdownMenu = forwardRef<ElementRef<typeof DropdownMenuRadix.Content>, Props>(
   (props, ref) => {
-    const { alt, items, src, trigger, ...rest } = props
+    const { alt, children, className, src, trigger, ...rest } = props
 
+    const classNames = {
+      content: clsx(s.content, className),
+    }
+
+    // items: { content: ReactNode }[]
+    /*  if (isValidElement(t.content) && t.content.props !== undefined) {
+          if (t.content.props.children[index].type.__docgenInfo.displayName === 'Avatar') {
+              console.log('yes')
+          }
+      }*/
     return (
       <DropdownMenuRadix.Root {...rest}>
         <DropdownMenuRadix.Trigger>
@@ -43,27 +66,8 @@ export const DropdownMenu = forwardRef<ElementRef<typeof DropdownMenuRadix.Root>
           </Avatar>
         </DropdownMenuRadix.Trigger>
         <DropdownMenuRadix.Portal>
-          <DropdownMenuRadix.Content className={s.content} ref={ref}>
-            {items.map((t, index) => {
-              console.log(t.content)
-              if (isValidElement(t.content)) {
-                if (
-                  t.content.props &&
-                  t.content.props.children[index].type.__docgenInfo.displayName === 'Avatar'
-                ) {
-                  console.log('yes')
-                }
-              }
-
-              return (
-                <Fragment key={index}>
-                  <DropdownItem key={index}>{t.content}</DropdownItem>
-                  {index === items.length - 1 ? null : (
-                    <DropdownMenuRadix.Separator className={s.separator} />
-                  )}
-                </Fragment>
-              )
-            })}
+          <DropdownMenuRadix.Content className={classNames.content} ref={ref}>
+            {children}
             <DropdownMenuRadix.Arrow className={s.arrow} />
           </DropdownMenuRadix.Content>
         </DropdownMenuRadix.Portal>
