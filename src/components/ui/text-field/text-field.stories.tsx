@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 import { Meta, StoryObj } from '@storybook/react'
 
 import { TextField } from './'
@@ -11,26 +13,143 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const SearchTextField: Story = {
+export const SearchTextFieldWithError: Story = {
   args: {
     error: 'Error!',
     label: 'Search field',
     placeholder: 'Input search',
     type: 'search',
   },
+  render: args => {
+    const [text, setText] = useState('')
+    const changeInputValue = (value: string) => {
+      setText(value)
+    }
+    const onKey = () => console.log('alert')
+
+    return <TextField {...args} onChange={changeInputValue} onKeyDown={onKey} value={text} />
+  },
 }
-export const PasswordTextField: Story = {
+export const SearchTextFieldWithoutError: Story = {
+  args: {
+    label: 'Search field',
+    placeholder: 'Input search',
+    type: 'search',
+  },
+  render: args => {
+    const [text, setText] = useState('')
+    const changeInputValue = (value: string) => {
+      setText(value)
+    }
+    const onKey = () => console.log(text)
+
+    return <TextField {...args} onChange={changeInputValue} onKeyDown={onKey} value={text} />
+  },
+}
+export const SearchTextFieldDisabled: Story = {
+  args: {
+    label: 'Search field',
+    placeholder: 'Input search',
+    type: 'search',
+  },
+  render: args => {
+    const [text, setText] = useState('')
+    const changeInputValue = (value: string) => {
+      setText(value)
+    }
+    const onKey = () => console.log(text)
+
+    return (
+      <TextField {...args} disabled onChange={changeInputValue} onKeyDown={onKey} value={text} />
+    )
+  },
+}
+export const PasswordTextFieldWithError: Story = {
   args: {
     error: 'Wrong password!',
     label: 'Enter your password',
     placeholder: 'Input',
     type: 'password',
   },
+  render: args => {
+    const [text, setText] = useState('')
+    const changeInputValue = (value: string) => {
+      setText(value)
+    }
+
+    return <TextField {...args} onChange={changeInputValue} value={text} />
+  },
 }
-export const DefaultTextField: Story = {
+export const PasswordTextFieldWithoutError: Story = {
   args: {
-    error: 'Wrong password!',
     label: 'Enter your password',
     placeholder: 'Input',
+    type: 'password',
+  },
+  render: args => {
+    const [text, setText] = useState('')
+    const changeInputValue = (value: string) => {
+      setText(value)
+    }
+
+    return <TextField {...args} onChange={changeInputValue} value={text} />
+  },
+}
+export const PasswordTextFieldDisabled: Story = {
+  args: {
+    label: 'Enter your password',
+    placeholder: 'Input',
+    type: 'password',
+  },
+  render: args => {
+    const [text, setText] = useState('')
+    const changeInputValue = (value: string) => {
+      setText(value)
+    }
+
+    return <TextField {...args} disabled onChange={changeInputValue} value={text} />
+  },
+}
+export const DefaultTextFieldWithError: Story = {
+  args: {
+    error: 'Wrong login!',
+    label: 'Enter your login',
+    placeholder: 'Input',
+  },
+  render: args => {
+    const [text, setText] = useState('')
+    const changeInputValue = (value: string) => {
+      setText(value)
+    }
+
+    return <TextField {...args} onChange={changeInputValue} value={text} />
+  },
+}
+export const DefaultTextFieldWithoutError: Story = {
+  args: {
+    label: 'Enter your login',
+    placeholder: 'Input',
+  },
+  render: args => {
+    const [text, setText] = useState('')
+    const changeInputValue = (value: string) => {
+      setText(value)
+    }
+
+    return <TextField {...args} onChange={changeInputValue} value={text} />
+  },
+}
+export const DefaultTextFieldDisabled: Story = {
+  args: {
+    label: 'Enter your login',
+    placeholder: 'Input',
+  },
+  render: args => {
+    const [text, setText] = useState('')
+    const changeInputValue = (value: string) => {
+      setText(value)
+    }
+
+    return <TextField {...args} disabled onChange={changeInputValue} value={text} />
   },
 }

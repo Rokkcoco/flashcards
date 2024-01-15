@@ -13,6 +13,11 @@
 
   background-color: transparent;
   border: none;
+
+  &:disabled {
+    cursor: default;
+    color: var(--color-dark-300);
+  }
 }
 
 .root {
@@ -20,11 +25,13 @@
   width: 100%;
 
   .label {
+    cursor: pointer;
     color: var(--color-dark-100);
   }
 
   .error {
-    color: red;
+    cursor: pointer;
+    color: var(--color-danger-300);
   }
 
   .wrapper {
@@ -33,21 +40,9 @@
     width: 284px;
     height: 36px;
 
-
-    .searchButton {
-    @include button;
-
-      color: var(--color-dark-100);
-
-      svg {
-        width: 20px;
-        height: 20px;
-      }
-    }
-
-
-
     .input {
+      cursor: initial;
+
       display: flex;
 
       width: 100%;
@@ -65,6 +60,21 @@
         outline: 1px solid var(--color-info-500);
       }
 
+      &:disabled {
+        cursor: default;
+        color: var(--color-dark-300);
+
+        &::placeholder {
+          color: var(--color-dark-300);
+        }
+      }
+
+      &:not(:disabled):hover {
+        background-color: var(--color-dark-700);
+      }
+
+
+
       &:active:not(&:disabled) {
         border-color: var(--color-light-100);
         outline: none;
@@ -73,6 +83,45 @@
           color: var(--color-light-100);
         }
       }
+
+
+    }
+
+    .hoverForInput {
+      background-color:var(--color-dark-700);
+    }
+
+
+    input[type='search'] {
+      &::-webkit-search-decoration,
+      &::-webkit-search-cancel-button,
+      &::-webkit-search-results-button,
+      &::-webkit-search-results-decoration {
+        appearance: none;
+      }
+    }
+
+
+    .searchButton {
+      @include button;
+
+      color: var(--color-dark-100);
+
+      svg {
+        transform: translateX(4px);
+        width: 20px;
+        height: 20px;
+      }
+
+    }
+
+    .inputError {
+      color: var(--color-danger-300);
+      border: 1px solid var(--color-danger-300);
+
+      &::placeholder {
+        color: var(--color-danger-300);
+      }
     }
 
     .cancelButton {
@@ -80,8 +129,8 @@
 
       top: 0;
       right: 0;
-    display: none;
-
+      display: none;
+      color: var(--color-dark-100);
 
       svg {
         width: 16px;
@@ -89,29 +138,69 @@
       }
     }
 
+    .showCancelButton {
+      display: inline-flex;
+    }
+
     .passwordButton {
       @include button;
 
+      top: 0;
+      right: 0;
 
       svg {
         width: 20px;
         height: 20px;
       }
-    }
 
-    &:focus-within .searchButton,
-    &:focus-within .cancelButton{
-      display: inline-flex;
-      color: var(--color-light-100);
     }
 
     .search {
       padding: 6px 12px 6px 41px;
     }
+
+    &:active .searchButton:not(:disabled),
+  &:active .cancelButton:not(:disabled){
+      display: inline-flex;
+      color: var(--color-light-100);
+    }
+
+
+
   }
 
-}
 
+
+
+  .disabled {
+    cursor: default;
+    color: var(--color-dark-300);
+
+  }
+
+
+  // Для того, чтобы ваши поля не были стандартного цвета, при выборе из списка ранее вводимых значений, нужно добавить:
+  // где вместо transparent можно указать любой цвет.
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  textarea:-webkit-autofill,
+  textarea:-webkit-autofill:hover,
+  textarea:-webkit-autofill:focus,
+  select:-webkit-autofill,
+  select:-webkit-autofill:hover,
+  select:-webkit-autofill:focus {
+    background: linear-gradient(top,  rgb(255 255 255 / 0%) 0%,rgb(0 174 255 / 4%) 50%,rgb(255 255 255 / 0%) 51%,rgb(0 174 255 / 3%) 100%);
+    border: 0;
+    box-shadow: 0 0 0 1000px transparent inset;
+
+    transition: background-color 5000s ease-in-out 0s;
+
+    -webkit-text-fill-color: #1f1f20;
+  }
+
+
+}
 
 
 
