@@ -7,16 +7,22 @@ import s from './table.module.scss'
 export const TableRoot = forwardRef<HTMLTableElement, ComponentPropsWithoutRef<'table'>>(
   (props, ref) => {
     const { className, ...rest } = props
+    const classNames = {
+      root: clsx(s.root, className),
+    }
 
-    return <table {...rest} className={clsx(s.root, className)} ref={ref} />
+    return <table {...rest} className={classNames.root} ref={ref} />
   }
 )
 
 export const TableHead = forwardRef<ElementRef<'thead'>, ComponentPropsWithoutRef<'thead'>>(
   (props, ref) => {
     const { className, ...rest } = props
+    const classNames = {
+      head: clsx(s.head, className),
+    }
 
-    return <thead {...rest} className={clsx(s.head, className)} ref={ref} />
+    return <thead {...rest} className={classNames.head} ref={ref} />
   }
 )
 
@@ -29,23 +35,32 @@ export const TableBody = forwardRef<ElementRef<'tbody'>, ComponentPropsWithoutRe
 export const TableDataCell = forwardRef<ElementRef<'td'>, ComponentPropsWithoutRef<'td'>>(
   (props, ref) => {
     const { className, ...rest } = props
+    const classNames = {
+      cell: clsx(s.cell, s.data, className),
+    }
 
-    return <td {...rest} className={clsx(s.cell, s.data, className)} ref={ref} />
+    return <td {...rest} className={classNames.cell} ref={ref} />
   }
 )
 
 export const TableRow = forwardRef<ElementRef<'tr'>, ComponentPropsWithoutRef<'tr'>>(
   (props, ref) => {
     const { className, ...rest } = props
+    const classNames = {
+      row: clsx(s.row, className),
+    }
 
-    return <tr {...rest} className={clsx(s.row, className)} ref={ref} />
+    return <tr {...rest} className={classNames.row} ref={ref} />
   }
 )
 
 export const TableHeadCell = forwardRef<ElementRef<'th'>, ComponentPropsWithoutRef<'th'>>(
   (props, ref) => {
     const { className, ...rest } = props
+    const classNames = {
+      headCell: clsx(s.headCell, s.cell, className),
+    }
 
-    return <th {...rest} className={clsx(s.headCell, s.cell, className)} ref={ref} />
+    return <th {...rest} className={classNames.headCell} ref={ref} />
   }
 )
