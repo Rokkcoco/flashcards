@@ -33,6 +33,7 @@ export const TextField = forwardRef<HTMLInputElement, Props>((props, ref) => {
     className,
     disabled,
     error,
+    id,
     label,
     onChange,
     onKeyDown,
@@ -45,7 +46,7 @@ export const TextField = forwardRef<HTMLInputElement, Props>((props, ref) => {
 
   const [showPassword, setShowPassword] = useState(false)
   const [hoverForInput, setHoverForInput] = useState(false)
-  const inputId = useId()
+  const inputId = id || useId()
   const passwordType = type === 'password'
   const searchType = type === 'search'
   const notATextType = type !== 'text'
@@ -119,7 +120,7 @@ export const TextField = forwardRef<HTMLInputElement, Props>((props, ref) => {
   }
 
   const classNames = {
-    error: clsx(s.error),
+    error: s.error,
     input: clsx(
       s.input,
       error && s.inputError,
@@ -129,17 +130,17 @@ export const TextField = forwardRef<HTMLInputElement, Props>((props, ref) => {
       className
     ),
     label: clsx(s.label, disabled && s.disabled),
-    root: clsx(s.root),
-    search: clsx(s.searchButton),
+    root: s.root,
+    search: clsx(s.button, s.searchButton),
     secondButton: clsx(
+      s.button,
       searchType && s.cancelButton,
       passwordType && s.passwordButton,
       value.length > 0 && s.showCancelButton
     ),
-    wrapper: clsx(s.wrapper),
+    wrapper: s.wrapper,
   }
 
-  //todo useId for id or user id
   return (
     <div className={classNames.root}>
       {label && (
