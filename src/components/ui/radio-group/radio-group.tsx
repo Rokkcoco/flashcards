@@ -14,6 +14,7 @@ type RadioItemProps = {
 const RadioItem = forwardRef<ElementRef<typeof RadioGroupRadix.Item>, RadioItemProps>(
   (props: RadioItemProps, ref) => {
     const { disabled, label, ...rest } = props
+
     const classNames = {
       icon: s.icon,
       indicator: s.indicator,
@@ -41,14 +42,18 @@ type Props = {
   ComponentPropsWithoutRef<typeof RadioGroupRadix.Root>,
   'asChild' | 'onChange' | 'onValueChange' | 'value'
 >
-//а могу ли я прокинуть реф дальше? если цепляю его уже тут
+
 export const RadioGroup = forwardRef<ElementRef<typeof RadioGroupRadix.Root>, Props>(
   (props: Props, ref) => {
-    const { onChange, options, ...rest } = props
+    const { className, onChange, options, ...rest } = props
+
+    const classNames = {
+      root: clsx(s.root, className),
+    }
 
     return (
       <RadioGroupRadix.Root
-        className={s.root}
+        className={classNames.root}
         ref={ref}
         {...rest}
         aria-label={'View density'}

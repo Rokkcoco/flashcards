@@ -8,6 +8,7 @@ import {
 } from 'react'
 
 import { InferType } from '@/common'
+import { clsx } from 'clsx'
 
 import s from './button.module.scss'
 
@@ -24,13 +25,11 @@ const Button = forwardRef(
   ) => {
     const { as: Component = 'button', className, fullWidth, variant = 'primary', ...rest } = props
 
-    return (
-      <Component
-        className={`${s.button} ${s[variant]} ${fullWidth ? s.fullWidth : ''} ${className}`}
-        ref={ref}
-        {...rest}
-      />
-    )
+    const classNames = {
+      button: clsx(s.button, s[variant], fullWidth && s.fullWidth, className),
+    }
+
+    return <Component className={classNames.button} ref={ref} {...rest} />
   }
 )
 
