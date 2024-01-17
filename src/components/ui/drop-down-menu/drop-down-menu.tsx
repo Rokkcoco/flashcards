@@ -5,7 +5,10 @@ import { clsx } from 'clsx'
 
 import s from './drop-down-menu.module.scss'
 
-type DropdownItemProps = {} & ComponentPropsWithoutRef<typeof DropdownMenuRadix.Item>
+type DropdownItemProps = {} & Omit<
+  ComponentPropsWithoutRef<typeof DropdownMenuRadix.Item>,
+  'asChild'
+>
 
 export const DropdownItem = forwardRef<
   ElementRef<typeof DropdownMenuRadix.Item>,
@@ -41,7 +44,7 @@ export const DropdownSeparator = forwardRef<
 type Props = {
   align?: 'center' | 'end' | 'start'
   trigger: ReactNode
-} & ComponentPropsWithoutRef<typeof DropdownMenuRadix.Content>
+} & Omit<ComponentPropsWithoutRef<typeof DropdownMenuRadix.Content>, 'asChild'>
 export const DropdownMenu = forwardRef<ElementRef<typeof DropdownMenuRadix.Content>, Props>(
   (props, ref) => {
     const { align = 'end', children, className, trigger, ...rest } = props

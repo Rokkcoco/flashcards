@@ -8,7 +8,8 @@ import s from './avatar.module.scss'
 type Props = {
   alt?: string
   src?: string
-} & ComponentPropsWithoutRef<typeof AvatarRadix.Root>
+} & ComponentPropsWithoutRef<typeof AvatarRadix.Root> &
+  ComponentPropsWithoutRef<'img'>
 
 export const Avatar = forwardRef<ElementRef<typeof AvatarRadix.Root>, Props>((props, ref) => {
   const { alt, children, className, src, ...rest } = props
