@@ -5,10 +5,8 @@ import { clsx } from 'clsx'
 
 import s from './drop-down-menu.module.scss'
 
-type DropdownItemProps = {} & Omit<
-  ComponentPropsWithoutRef<typeof DropdownMenuRadix.Item>,
-  'asChild'
->
+type DropdownItemProps = {} & ComponentPropsWithoutRef<typeof DropdownMenuRadix.Item>
+
 export const DropdownItem = forwardRef<
   ElementRef<typeof DropdownMenuRadix.Item>,
   DropdownItemProps
@@ -55,7 +53,7 @@ export const DropdownMenu = forwardRef<ElementRef<typeof DropdownMenuRadix.Conte
     }
 
     return (
-      <DropdownMenuRadix.Root {...rest}>
+      <DropdownMenuRadix.Root>
         <DropdownMenuRadix.Trigger asChild className={classNames.trigger}>
           {trigger}
         </DropdownMenuRadix.Trigger>

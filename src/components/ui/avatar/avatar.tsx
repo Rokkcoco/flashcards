@@ -13,8 +13,8 @@ type Props = {
 export const Avatar = forwardRef<ElementRef<typeof AvatarRadix.Root>, Props>((props, ref) => {
   const { alt, children, className, src, ...rest } = props
   const classNames = {
-    fallback: clsx(s.fallback),
-    image: clsx(s.image),
+    fallback: s.fallback,
+    image: s.image,
     root: clsx(s.root, className),
   }
 

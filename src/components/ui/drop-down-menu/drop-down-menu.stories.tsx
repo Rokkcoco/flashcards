@@ -1,5 +1,12 @@
-import { CloseOutline, Edit2Outline, PlayCircleOutline, TrashOutline } from '@/assets'
+import {
+  CloseOutline,
+  Edit2Outline,
+  MoreVerticalOutline,
+  PlayCircleOutline,
+  TrashOutline,
+} from '@/assets'
 import { Avatar } from '@/components/ui/avatar'
+import Button from '@/components/ui/button/button'
 import { Meta, StoryObj } from '@storybook/react'
 
 import { DropdownItem, DropdownMenu, DropdownSeparator } from './'
@@ -26,15 +33,16 @@ export const DropdownMenuStory: Story = {
       <div style={{ marginLeft: '150px' }}>
         <DropdownMenu {...args}>
           <DropdownItem>
-            YOooooooo <CloseOutline />
+            Sup sup sup
+            <CloseOutline />
           </DropdownItem>
           <DropdownSeparator />
           <DropdownItem>
-            COOLOOOOoooooo <CloseOutline />
+            Click click click <CloseOutline />
           </DropdownItem>
           <DropdownSeparator />
           <DropdownItem>
-            <Avatar>DG</Avatar>
+            <Button>LogOut</Button>
           </DropdownItem>
         </DropdownMenu>
       </div>
@@ -44,8 +52,14 @@ export const DropdownMenuStory: Story = {
 export const DropdownMenuWithoutTriggerStory: Story = {
   args: {
     trigger: (
-      <button>
-        <Avatar>John</Avatar>
+      <button
+        style={{
+          borderRadius: '50%',
+          display: 'inline-flex',
+          fill: 'white',
+        }}
+      >
+        <MoreVerticalOutline />
       </button>
     ),
   },

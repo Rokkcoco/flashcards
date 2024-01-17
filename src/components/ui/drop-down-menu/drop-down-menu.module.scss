@@ -1,15 +1,12 @@
 .trigger {
   cursor: pointer;
 
-  &:hover {
-    opacity: 0.8;
-  }
 }
 
 .arrow {
   position: absolute;
 top: -4px;
-  left: calc(50% - 3px);
+  left: 1.5px;
 transform: rotate(45deg);
 
   width: 9px;
@@ -37,6 +34,7 @@ border-top: none;
 
 .item {
   cursor: pointer;
+  user-select: none;
 
   display: flex;
   gap: 6px;
@@ -57,16 +55,9 @@ border-top: none;
   &:hover {
     background-color: var(--color-dark-500);
     border-radius: 1px;;
-    box-shadow: 0 0 0 8px var(--color-dark-500);
+    box-shadow: 0 0 0 6px var(--color-dark-500);
   }
 
-  &:first-child:hover {
-    background-color: var(--color-dark-500);
-    border-radius: 1px;;
-    box-shadow: 0 0 0 8px var(--color-dark-500);
-
-
-  }
 }
 
 .separator {
