@@ -3,6 +3,7 @@ import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
 import Typography from '@/components/ui/typography/typography'
 import * as Label from '@radix-ui/react-label'
 import * as TabsRadix from '@radix-ui/react-tabs'
+import { clsx } from 'clsx'
 
 import s from './tabs.module.scss'
 
@@ -14,7 +15,7 @@ const TabItem = forwardRef<ElementRef<typeof TabsRadix.Trigger>, TabItemProps>((
   const { children, value, ...rest } = props
 
   return (
-    <TabsRadix.Trigger asChild className={s.trigger} {...rest} ref={ref} value={value}>
+    <TabsRadix.Trigger {...rest} asChild className={s.trigger} ref={ref} value={value}>
       <Typography as={'button'} variant={'body_1'}>
         {children}
       </Typography>
@@ -27,9 +28,9 @@ TabItem.displayName = 'TabItem'
 type Props = {
   disabled?: boolean
   indexToDisable?: number[]
+  label: string
   onChange: (value: string) => void
   options: Record<string, string>
-  title: string
   value: string
 } & Omit<
   ComponentPropsWithoutRef<typeof TabsRadix.Root>,
@@ -37,21 +38,33 @@ type Props = {
 >
 
 export const Tabs = forwardRef<ElementRef<typeof TabsRadix.Root>, Props>((props, ref) => {
-  const { defaultValue, disabled, indexToDisable, onChange, options, title, value, ...rest } = props
+  const {
+    className,
+    defaultValue,
+    disabled,
+    indexToDisable,
+    label,
+    onChange,
+    options,
+    value,
+    ...rest
+  } = props
 
   //todo object => array
+  //todo maybe refactor same as dropdown
+
   return (
     <TabsRadix.Root
-      className={s.root}
+      className={clsx(s.root, className)}
       defaultValue={value}
       onValueChange={onChange}
       ref={ref}
       {...rest}
     >
-      {title && (
+      {label && (
         <Label.Root asChild className={s.label}>
           <Typography as={'label'} variant={'body_2'}>
-            {title}
+            {label}
           </Typography>
         </Label.Root>
       )}

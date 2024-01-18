@@ -57,11 +57,11 @@ export const Slider = forwardRef<ElementRef<typeof SliderRadix.Root>, Props>((pr
       </div>
 
       <SliderRadix.Root
-        {...rest}
         className={clsx(s.root, className)}
         onValueChange={onChange}
         ref={ref}
         value={value}
+        {...rest}
       >
         <SliderRadix.Track className={s.track}>
           <SliderRadix.Range className={s.range} />

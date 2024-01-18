@@ -21,7 +21,7 @@ export const DropdownItem = forwardRef<
   }
 
   return (
-    <DropdownMenuRadix.Item {...rest} className={classNames.item} ref={ref}>
+    <DropdownMenuRadix.Item className={classNames.item} ref={ref} {...rest}>
       {children}
     </DropdownMenuRadix.Item>
   )
@@ -66,10 +66,10 @@ export const DropdownMenu = forwardRef<ElementRef<typeof DropdownMenuRadix.Conte
         </DropdownMenuRadix.Trigger>
         <DropdownMenuRadix.Portal>
           <DropdownMenuRadix.Content
-            className={classNames.content}
-            {...rest}
             align={align}
+            className={classNames.content}
             ref={ref}
+            {...rest}
           >
             {children}
             <DropdownMenuRadix.Arrow className={classNames.arrow} />

@@ -15,9 +15,9 @@ type Story = StoryObj<typeof meta>
 
 export const TabsWithControl: Story = {
   args: {
+    label: 'Choose one',
     onChange: x => x,
     options: { '1': 'Test1', '2': 'Test2', '3': 'Test3', '4': 'Test4', '5': 'Test5', '6': 'Test6' },
-    title: 'Choose one',
     value: '1',
   },
   render: args => {
@@ -30,9 +30,9 @@ export const TabsWithControl: Story = {
 export const TabsDisabled: Story = {
   args: {
     disabled: true,
+    label: 'Choose one',
     onChange: x => x,
     options: { '1': 'Test1', '2': 'Test2', '3': 'Test3', '4': 'Test4', '5': 'Test5', '6': 'Test6' },
-    title: 'Choose one',
     value: '1',
   },
   render: args => {

@@ -11,7 +11,7 @@ import { InferType } from '@/common'
 
 import s from './typography.module.scss'
 
-type Props<T extends ElementType = 'p'> = {
+type Props<T extends ElementType> = {
   as?: T
   text?: string
   variant?:
@@ -29,41 +29,39 @@ type Props<T extends ElementType = 'p'> = {
     | 'overline'
     | 'subtitle_1'
     | 'subtitle_2'
-} & ComponentPropsWithoutRef<T>
-//todo
+}
+
+export type TypographyProps<T extends ElementType = 'p'> = Props<T> &
+  Omit<ComponentPropsWithoutRef<T>, keyof Props<T>>
+
+//todo сделать зависимость as к variant, чтобы по умолчанию уже было
 const Typography = forwardRef(
   <T extends ElementType = 'p'>(
-    props: Props<T> & Omit<ComponentPropsWithoutRef<T>, keyof Props<T>>,
+    props: TypographyProps<T> & Omit<ComponentPropsWithoutRef<T>, keyof TypographyProps<T>>,
     ref: ForwardedRef<InferType<T>>
   ) => {
     const {
       as: Component = 'p',
       children,
       className,
-      style,
+
       text = '',
       variant = 'body_1',
       ...rest
     } = props
 
     return (
-      <Component
-        className={`${s.typography} ${s[variant]} ${className}`}
-        ref={ref}
-        style={style}
-        {...rest}
-      >
-        {children || text}
+      <Component className={`${s.typography} ${s[variant]} ${className}`} ref={ref} {...rest}>
+        {children ?? text}
       </Component>
     )
   }
 )
 
 export default Typography as <T extends ElementType = 'p'>(
-  props: Props<T> &
-    Omit<ComponentPropsWithoutRef<T>, keyof Props<T>> & {
-      ref?: ForwardedRef<ElementRef<T>>
-    }
+  props: TypographyProps<T> & {
+    ref?: ForwardedRef<ElementRef<T>>
+  }
 ) => ReactElement
 
 Typography.displayName = 'Typography'

@@ -12,13 +12,16 @@ import { clsx } from 'clsx'
 
 import s from './card.module.scss'
 
-export type Props<T extends ElementType = 'div'> = {
+type Props<T extends ElementType> = {
   as?: T
-} & ComponentPropsWithoutRef<T>
+}
+
+export type CardProps<T extends ElementType = 'div'> = Props<T> &
+  Omit<ComponentPropsWithoutRef<T>, keyof Props<T>>
 
 const Card = forwardRef(
   <T extends ElementType = 'div'>(
-    props: Props<T> & Omit<ComponentPropsWithoutRef<T>, keyof Props<T>>,
+    props: CardProps<T> & Omit<ComponentPropsWithoutRef<T>, keyof CardProps<T>>,
     ref: ForwardedRef<InferType<T>>
   ) => {
     const { as: Component = 'div', className, ...rest } = props
@@ -32,10 +35,9 @@ const Card = forwardRef(
 )
 
 export default Card as <T extends ElementType = 'div'>(
-  props: Props<T> &
-    Omit<ComponentPropsWithoutRef<T>, keyof Props<T>> & {
-      ref?: ForwardedRef<ElementRef<T>>
-    }
+  props: CardProps<T> & {
+    ref?: ForwardedRef<ElementRef<T>>
+  }
 ) => ReactElement
 
 Card.displayName = 'Card'

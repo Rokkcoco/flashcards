@@ -16,18 +16,18 @@ type Props = {
   ComponentPropsWithoutRef<'div'>
 
 export const Modal = forwardRef<ElementRef<typeof Dialog.Content>, Props>((props, ref) => {
-  const { children, controlButtons, onChange, open, title, trigger, ...rest } = props
+  const { children, controlButtons, onChange, title, trigger, ...rest } = props
 
   return (
-    <Dialog.Root onOpenChange={onChange} open={open} style={{ border: 'none' }} {...rest}>
+    <Dialog.Root onOpenChange={onChange} {...rest}>
       <Dialog.Trigger asChild>{trigger}</Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Overlay className={s.overlay} />
-        <Dialog.Content className={s.contentBox} ref={ref}>
+        <Dialog.Content asChild className={s.contentBox} ref={ref}>
           <Card>
             {title && (
               <div className={s.header}>
-                <Dialog.Title asChild style={{ margin: '0px' }}>
+                <Dialog.Title asChild>
                   <Typography as={'h2'} variant={'h2'}>
                     {title}
                   </Typography>

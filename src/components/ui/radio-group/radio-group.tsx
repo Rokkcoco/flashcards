@@ -24,7 +24,7 @@ const RadioItem = forwardRef<ElementRef<typeof RadioGroupRadix.Item>, RadioItemP
     return (
       <Label.Root asChild>
         <Typography as={'label'} className={classNames.label} variant={'body_2'}>
-          <RadioGroupRadix.Item ref={ref} {...rest} className={classNames.icon} disabled={disabled}>
+          <RadioGroupRadix.Item {...rest} className={classNames.icon} disabled={disabled} ref={ref}>
             <RadioGroupRadix.Indicator className={classNames.indicator} />
           </RadioGroupRadix.Item>
           {label}
@@ -36,7 +36,7 @@ const RadioItem = forwardRef<ElementRef<typeof RadioGroupRadix.Item>, RadioItemP
 
 RadioItem.displayName = 'RadioItem'
 
-type Props = {
+export type RadioGroupProps = {
   onChange: (value: string) => void
   options: RadioItemProps[]
   value: string
@@ -45,8 +45,8 @@ type Props = {
   'asChild' | 'onChange' | 'onValueChange' | 'value'
 >
 
-export const RadioGroup = forwardRef<ElementRef<typeof RadioGroupRadix.Root>, Props>(
-  (props: Props, ref) => {
+export const RadioGroup = forwardRef<ElementRef<typeof RadioGroupRadix.Root>, RadioGroupProps>(
+  (props, ref) => {
     const { className, onChange, options, ...rest } = props
 
     const classNames = {
@@ -55,11 +55,11 @@ export const RadioGroup = forwardRef<ElementRef<typeof RadioGroupRadix.Root>, Pr
 
     return (
       <RadioGroupRadix.Root
+        aria-label={'View density'}
         className={classNames.root}
+        onValueChange={onChange}
         ref={ref}
         {...rest}
-        aria-label={'View density'}
-        onValueChange={onChange}
       >
         {options.map(t => (
           <RadioItem key={t.value} {...t} />

@@ -17,8 +17,8 @@ const SelectItem = forwardRef<ElementRef<typeof SelectRadix.Item>, SelectItemPro
     return (
       <Typography as={'label'} variant={VariantIsPagination(variant) ? 'body_2' : 'body_1'}>
         <SelectRadix.Item
-          className={clsx(s.SelectItem, VariantIsPagination(variant) && s.PaginationSelectItem)}
           {...rest}
+          className={clsx(s.SelectItem, VariantIsPagination(variant) && s.PaginationSelectItem)}
           ref={ref}
         >
           <SelectRadix.ItemText>{children}</SelectRadix.ItemText>
@@ -51,7 +51,8 @@ export const Select = forwardRef<ElementRef<typeof SelectRadix.Trigger>, SelectP
       return <ArrowIosDownOutline />
     }
 
-    //todo rotate svg with styles, not with function
+    //todo rotate svg with styles, not with function. Data-state='open'
+    //todo check shadcn select, maybe refactor
     return (
       <>
         {title && (

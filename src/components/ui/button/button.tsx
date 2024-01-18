@@ -12,17 +12,17 @@ import { clsx } from 'clsx'
 
 import s from './button.module.scss'
 
-type Props<T extends ElementType = 'button'> = {
+type Props<T extends ElementType> = {
   as?: T
   fullWidth?: boolean
   variant?: 'link' | 'primary' | 'secondary' | 'tertiary'
-} & ComponentPropsWithoutRef<T>
+}
+
+export type ButtonProps<T extends ElementType = 'button'> = Props<T> &
+  Omit<ComponentPropsWithoutRef<T>, keyof Props<T>>
 
 const Button = forwardRef(
-  <T extends ElementType = 'button'>(
-    props: Props<T> & Omit<ComponentPropsWithoutRef<T>, keyof Props<T>>,
-    ref: ForwardedRef<InferType<T>>
-  ) => {
+  <T extends ElementType = 'button'>(props: ButtonProps, ref: ForwardedRef<InferType<T>>) => {
     const { as: Component = 'button', className, fullWidth, variant = 'primary', ...rest } = props
 
     const classNames = {
@@ -34,10 +34,9 @@ const Button = forwardRef(
 )
 
 export default Button as <T extends ElementType = 'button'>(
-  props: Props<T> &
-    Omit<ComponentPropsWithoutRef<T>, keyof Props<T>> & {
-      ref?: ForwardedRef<ElementRef<T>>
-    }
+  props: ButtonProps<T> & {
+    ref?: ForwardedRef<ElementRef<T>>
+  }
 ) => ReactElement
 
 Button.displayName = 'Button'

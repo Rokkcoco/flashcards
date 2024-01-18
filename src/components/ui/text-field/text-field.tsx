@@ -4,6 +4,7 @@ import {
   KeyboardEvent,
   RefObject,
   forwardRef,
+  useId,
   useRef,
   useState,
 } from 'react'
@@ -13,11 +14,10 @@ import { Tooltip } from '@/components/ui/tooltip'
 import Typography from '@/components/ui/typography/typography'
 import * as Label from '@radix-ui/react-label'
 import { clsx } from 'clsx'
-import { v4 } from 'uuid'
 
 import s from './text-field.module.scss'
 
-type TextFieldProps = {
+type Props = {
   error?: string
   label: string
   onChange?: (value: string) => void
@@ -27,8 +27,8 @@ type TextFieldProps = {
   type?: 'password' | 'search' | 'text'
   value?: string
 }
-type Props = TextFieldProps & Omit<ComponentPropsWithoutRef<'input'>, keyof TextFieldProps>
-export const TextField = forwardRef<HTMLInputElement, Props>((props, ref) => {
+export type TextFieldProps = Props & Omit<ComponentPropsWithoutRef<'input'>, keyof Props>
+export const TextField = forwardRef<HTMLInputElement, TextFieldProps>((props, ref) => {
   const {
     className,
     disabled,
@@ -46,15 +46,16 @@ export const TextField = forwardRef<HTMLInputElement, Props>((props, ref) => {
 
   const [showPassword, setShowPassword] = useState(false)
   const [hoverForInput, setHoverForInput] = useState(false)
-  const inputId = id || v4()
+  const defaultId = useId()
+  const inputId = id ?? defaultId
   const passwordType = type === 'password'
   const searchType = type === 'search'
   const notATextType = type !== 'text'
+
+  const disabledTooltip = disabled && 'Text field disabled'
   const showPasswordHandler = () => setShowPassword(prevState => !prevState)
 
   const clearField = () => onChange?.('')
-
-  const disabledTooltip = disabled && 'Text field disabled'
 
   const secondButtonHandler =
     (passwordType && showPasswordHandler) || (searchType && clearField) || (() => {})
