@@ -20,7 +20,7 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const DropdownMenuStory: Story = {
+export const DropdownMenuWithAvatarStory: Story = {
   args: {
     trigger: (
       <button>
@@ -49,7 +49,7 @@ export const DropdownMenuStory: Story = {
     )
   },
 }
-export const DropdownMenuWithoutTriggerStory: Story = {
+export const DropdownMenuWithIconrStory: Story = {
   args: {
     trigger: (
       <button

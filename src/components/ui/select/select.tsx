@@ -29,6 +29,8 @@ const SelectItem = forwardRef<ElementRef<typeof SelectRadix.Item>, SelectItemPro
   }
 )
 
+SelectItem.displayName = 'SelectItem'
+
 export type SelectProps = {
   onChange: (value: string) => void
   options: Record<string, string>
@@ -100,3 +102,5 @@ export const Select = forwardRef<ElementRef<typeof SelectRadix.Trigger>, SelectP
 function VariantIsPagination(variant: 'default' | 'pagination'): boolean {
   return variant === 'pagination'
 }
+
+Select.displayName = 'Select'

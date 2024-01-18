@@ -83,3 +83,5 @@ export const Slider = forwardRef<ElementRef<typeof SliderRadix.Root>, Props>((pr
     </div>
   )
 })
+
+Slider.displayName = 'Slider'

@@ -13,7 +13,6 @@ type TabItemProps = {
 const TabItem = forwardRef<ElementRef<typeof TabsRadix.Trigger>, TabItemProps>((props, ref) => {
   const { children, value, ...rest } = props
 
-  //Наверное совсем дичь
   return (
     <TabsRadix.Trigger asChild className={s.trigger} {...rest} ref={ref} value={value}>
       <Typography as={'button'} variant={'body_1'}>
@@ -22,6 +21,8 @@ const TabItem = forwardRef<ElementRef<typeof TabsRadix.Trigger>, TabItemProps>((
     </TabsRadix.Trigger>
   )
 })
+
+TabItem.displayName = 'TabItem'
 
 type Props = {
   disabled?: boolean
@@ -64,3 +65,5 @@ export const Tabs = forwardRef<ElementRef<typeof TabsRadix.Root>, Props>((props,
     </TabsRadix.Root>
   )
 })
+
+Tabs.displayName = 'Tabs'

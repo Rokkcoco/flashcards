@@ -39,3 +39,5 @@ export default Button as <T extends ElementType = 'button'>(
       ref?: ForwardedRef<ElementRef<T>>
     }
 ) => ReactElement
+
+Button.displayName = 'Button'

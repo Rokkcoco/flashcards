@@ -34,3 +34,5 @@ export const Tooltip = forwardRef<ElementRef<typeof TooltipRadix.Content>, Props
     </TooltipRadix.Provider>
   )
 })
+
+Tooltip.displayName = 'Tooltip'

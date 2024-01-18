@@ -4,7 +4,6 @@ import {
   KeyboardEvent,
   RefObject,
   forwardRef,
-  useId,
   useRef,
   useState,
 } from 'react'
@@ -14,6 +13,7 @@ import { Tooltip } from '@/components/ui/tooltip'
 import Typography from '@/components/ui/typography/typography'
 import * as Label from '@radix-ui/react-label'
 import { clsx } from 'clsx'
+import { v4 } from 'uuid'
 
 import s from './text-field.module.scss'
 
@@ -46,7 +46,7 @@ export const TextField = forwardRef<HTMLInputElement, Props>((props, ref) => {
 
   const [showPassword, setShowPassword] = useState(false)
   const [hoverForInput, setHoverForInput] = useState(false)
-  const inputId = id || useId()
+  const inputId = id || v4()
   const passwordType = type === 'password'
   const searchType = type === 'search'
   const notATextType = type !== 'text'
@@ -210,3 +210,5 @@ export const TextField = forwardRef<HTMLInputElement, Props>((props, ref) => {
     </div>
   )
 })
+
+TextField.displayName = 'TextField'

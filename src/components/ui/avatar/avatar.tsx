@@ -28,3 +28,5 @@ export const Avatar = forwardRef<ElementRef<typeof AvatarRadix.Root>, Props>((pr
     </AvatarRadix.Root>
   )
 })
+
+Avatar.displayName = 'Avatar'

@@ -34,6 +34,8 @@ const RadioItem = forwardRef<ElementRef<typeof RadioGroupRadix.Item>, RadioItemP
   }
 )
 
+RadioItem.displayName = 'RadioItem'
+
 type Props = {
   onChange: (value: string) => void
   options: RadioItemProps[]
@@ -66,3 +68,5 @@ export const RadioGroup = forwardRef<ElementRef<typeof RadioGroupRadix.Root>, Pr
     )
   }
 )
+
+RadioGroup.displayName = 'RadioGroup'

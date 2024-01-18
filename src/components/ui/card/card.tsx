@@ -37,3 +37,5 @@ export default Card as <T extends ElementType = 'div'>(
       ref?: ForwardedRef<ElementRef<T>>
     }
 ) => ReactElement
+
+Card.displayName = 'Card'

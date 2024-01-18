@@ -110,7 +110,7 @@ button {
   &[data-highlighted]{
     color: var(--color-accent-300);
     background-color: var(--color-accent-900);
-    outline: none;
+    outline: transparent;
   }
 }
 

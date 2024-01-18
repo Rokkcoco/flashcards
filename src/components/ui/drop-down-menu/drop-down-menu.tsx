@@ -27,6 +27,8 @@ export const DropdownItem = forwardRef<
   )
 })
 
+DropdownItem.displayName = 'DropdownItem'
+
 type DropdownSeparatorProps = {} & ComponentPropsWithoutRef<typeof DropdownMenuRadix.Separator>
 export const DropdownSeparator = forwardRef<
   ElementRef<typeof DropdownMenuRadix.Separator>,
@@ -40,6 +42,8 @@ export const DropdownSeparator = forwardRef<
 
   return <DropdownMenuRadix.Separator className={classNames.item} ref={ref} {...rest} />
 })
+
+DropdownSeparator.displayName = 'DropdownSeparator'
 
 type Props = {
   align?: 'center' | 'end' | 'start'
@@ -75,3 +79,5 @@ export const DropdownMenu = forwardRef<ElementRef<typeof DropdownMenuRadix.Conte
     )
   }
 )
+
+DropdownMenu.displayName = 'DropdownMenu'

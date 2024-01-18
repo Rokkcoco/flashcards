@@ -45,3 +45,5 @@ export const Modal = forwardRef<ElementRef<typeof Dialog.Content>, Props>((props
     </Dialog.Root>
   )
 })
+
+Modal.displayName = 'Modal'

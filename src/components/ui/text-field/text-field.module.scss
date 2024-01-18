@@ -77,7 +77,7 @@
 
       &:active:not(&:disabled) {
         border-color: var(--color-light-100);
-        outline: none;
+        outline: transparent;
 
         &::placeholder {
           color: var(--color-light-100);
@@ -103,8 +103,6 @@
 
 
     .searchButton {
-
-
       color: var(--color-dark-100);
 
       svg {
@@ -125,8 +123,6 @@
     }
 
     .cancelButton {
-
-
       top: 0;
       right: 0;
       display: none;
@@ -143,8 +139,6 @@
     }
 
     .passwordButton {
-
-
       top: 0;
       right: 0;
 

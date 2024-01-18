@@ -65,3 +65,5 @@ export default Typography as <T extends ElementType = 'p'>(
       ref?: ForwardedRef<ElementRef<T>>
     }
 ) => ReactElement
+
+Typography.displayName = 'Typography'

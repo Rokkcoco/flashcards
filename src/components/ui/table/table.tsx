@@ -15,6 +15,8 @@ export const TableRoot = forwardRef<HTMLTableElement, ComponentPropsWithoutRef<'
   }
 )
 
+TableRoot.displayName = 'TableRoot'
+
 export const TableHead = forwardRef<ElementRef<'thead'>, ComponentPropsWithoutRef<'thead'>>(
   (props, ref) => {
     const { className, ...rest } = props
@@ -26,11 +28,15 @@ export const TableHead = forwardRef<ElementRef<'thead'>, ComponentPropsWithoutRe
   }
 )
 
+TableHead.displayName = 'TableHead'
+
 export const TableBody = forwardRef<ElementRef<'tbody'>, ComponentPropsWithoutRef<'tbody'>>(
   (props, ref) => {
     return <tbody {...props} ref={ref} />
   }
 )
+
+TableBody.displayName = 'TableBody'
 
 export const TableDataCell = forwardRef<ElementRef<'td'>, ComponentPropsWithoutRef<'td'>>(
   (props, ref) => {
@@ -43,6 +49,8 @@ export const TableDataCell = forwardRef<ElementRef<'td'>, ComponentPropsWithoutR
   }
 )
 
+TableDataCell.displayName = 'TableDataCell'
+
 export const TableRow = forwardRef<ElementRef<'tr'>, ComponentPropsWithoutRef<'tr'>>(
   (props, ref) => {
     const { className, ...rest } = props
@@ -54,6 +62,8 @@ export const TableRow = forwardRef<ElementRef<'tr'>, ComponentPropsWithoutRef<'t
   }
 )
 
+TableRow.displayName = 'TableRow'
+
 export const TableHeadCell = forwardRef<ElementRef<'th'>, ComponentPropsWithoutRef<'th'>>(
   (props, ref) => {
     const { className, ...rest } = props
@@ -64,3 +74,5 @@ export const TableHeadCell = forwardRef<ElementRef<'th'>, ComponentPropsWithoutR
     return <th {...rest} className={classNames.headCell} ref={ref} />
   }
 )
+
+TableHeadCell.displayName = 'TableHeadCell'
