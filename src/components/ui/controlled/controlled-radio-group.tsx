@@ -6,7 +6,7 @@ type Props<T extends FieldValues> = Omit<
   UseControllerProps<T>,
   'defaultValue' | 'disabled' | 'rules'
 > &
-  Omit<RadioGroupProps, 'checked' | 'id' | 'onChange'>
+  Omit<RadioGroupProps, 'id' | 'onChange' | 'value'>
 
 export const ControlledRadioGroup = <T extends FieldValues>(props: Props<T>) => {
   const { control, name, shouldUnregister, ...rest } = props
