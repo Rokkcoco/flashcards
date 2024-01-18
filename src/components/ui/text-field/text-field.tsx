@@ -23,10 +23,12 @@ type Props = {
   onChange?: (value: string) => void
   onKeyDown?: () => void
   onKeyUp?: () => void
-  placeholder: string
+  placeholder?: string
   type?: 'password' | 'search' | 'text'
   value?: string
 }
+
+//todo add email type
 export type TextFieldProps = Props & Omit<ComponentPropsWithoutRef<'input'>, keyof Props>
 export const TextField = forwardRef<HTMLInputElement, TextFieldProps>((props, ref) => {
   const {
