@@ -59,10 +59,7 @@ export const TextField = forwardRef<HTMLInputElement, Props>((props, ref) => {
   const secondButtonHandler =
     (passwordType && showPasswordHandler) || (searchType && clearField) || (() => {})
 
-  const inputTypeDefine = (
-    type: ComponentPropsWithoutRef<'input'>['type'],
-    showPassword: boolean
-  ) => {
+  const inputTypeDefine = (type: Props['type'], showPassword: boolean) => {
     if (showPassword && passwordType) {
       return 'text'
     }

@@ -51,6 +51,7 @@ export const Select = forwardRef<ElementRef<typeof SelectRadix.Trigger>, SelectP
       return <ArrowIosDownOutline />
     }
 
+    //todo rotate svg with styles, not with function
     return (
       <>
         {title && (

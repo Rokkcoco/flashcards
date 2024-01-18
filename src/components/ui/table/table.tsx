@@ -4,7 +4,7 @@ import { clsx } from 'clsx'
 
 import s from './table.module.scss'
 
-export const TableRoot = forwardRef<HTMLTableElement, ComponentPropsWithoutRef<'table'>>(
+export const TableRoot = forwardRef<ElementRef<'table'>, ComponentPropsWithoutRef<'table'>>(
   (props, ref) => {
     const { className, ...rest } = props
     const classNames = {
