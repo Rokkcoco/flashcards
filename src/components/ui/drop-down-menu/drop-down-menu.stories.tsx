@@ -6,7 +6,7 @@ import {
   TrashOutline,
 } from '@/assets'
 import { Avatar } from '@/components/ui/avatar'
-import Button from '@/components/ui/button/button'
+import { Button } from '@/components/ui/button/button'
 import { Meta, StoryObj } from '@storybook/react'
 
 import { DropdownItem, DropdownMenu, DropdownSeparator } from './'

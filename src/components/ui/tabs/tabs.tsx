@@ -1,6 +1,6 @@
 import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
 
-import Typography from '@/components/ui/typography/typography'
+import { Typography } from '@/components/ui'
 import * as Label from '@radix-ui/react-label'
 import * as TabsRadix from '@radix-ui/react-tabs'
 import { clsx } from 'clsx'

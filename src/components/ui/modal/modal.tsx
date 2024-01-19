@@ -1,8 +1,7 @@
 import { ComponentPropsWithoutRef, ElementRef, ReactNode, forwardRef } from 'react'
 
 import { CloseOutline } from '@/assets'
-import Card from '@/components/ui/card/card'
-import Typography from '@/components/ui/typography/typography'
+import { Card, Typography } from '@/components/ui'
 import * as Dialog from '@radix-ui/react-dialog'
 
 import s from './modal.module.scss'

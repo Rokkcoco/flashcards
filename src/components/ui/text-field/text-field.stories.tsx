@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { ChangeEvent, useState } from 'react'
 
 import { Meta, StoryObj } from '@storybook/react'
 
@@ -22,12 +22,21 @@ export const SearchTextFieldWithError: Story = {
   },
   render: args => {
     const [text, setText] = useState('')
-    const changeInputValue = (value: string) => {
-      setText(value)
+    const changeInputValue = (e: ChangeEvent<HTMLInputElement>) => {
+      setText(e.currentTarget.value)
     }
-    const onKey = () => console.log('alert')
+    const onClear = () => setText('')
+    const onKey = () => console.log(text)
 
-    return <TextField {...args} onChange={changeInputValue} onKeyDown={onKey} value={text} />
+    return (
+      <TextField
+        {...args}
+        onChange={changeInputValue}
+        onInputClear={onClear}
+        onKeyEnter={onKey}
+        value={text}
+      />
+    )
   },
 }
 export const SearchTextFieldWithoutError: Story = {
@@ -38,12 +47,21 @@ export const SearchTextFieldWithoutError: Story = {
   },
   render: args => {
     const [text, setText] = useState('')
-    const changeInputValue = (value: string) => {
-      setText(value)
+    const changeInputValue = (e: ChangeEvent<HTMLInputElement>) => {
+      setText(e.currentTarget.value)
     }
+    const onClear = () => setText('')
     const onKey = () => console.log(text)
 
-    return <TextField {...args} onChange={changeInputValue} onKeyDown={onKey} value={text} />
+    return (
+      <TextField
+        {...args}
+        onChange={changeInputValue}
+        onInputClear={onClear}
+        onKeyEnter={onKey}
+        value={text}
+      />
+    )
   },
 }
 export const SearchTextFieldDisabled: Story = {
@@ -54,13 +72,20 @@ export const SearchTextFieldDisabled: Story = {
   },
   render: args => {
     const [text, setText] = useState('')
-    const changeInputValue = (value: string) => {
-      setText(value)
+    const changeInputValue = (e: ChangeEvent<HTMLInputElement>) => {
+      setText(e.currentTarget.value)
     }
+    const onClear = () => setText('')
     const onKey = () => console.log(text)
 
     return (
-      <TextField {...args} disabled onChange={changeInputValue} onKeyDown={onKey} value={text} />
+      <TextField
+        {...args}
+        onChange={changeInputValue}
+        onInputClear={onClear}
+        onKeyEnter={onKey}
+        value={text}
+      />
     )
   },
 }
@@ -73,11 +98,21 @@ export const PasswordTextFieldWithError: Story = {
   },
   render: args => {
     const [text, setText] = useState('')
-    const changeInputValue = (value: string) => {
-      setText(value)
+    const changeInputValue = (e: ChangeEvent<HTMLInputElement>) => {
+      setText(e.currentTarget.value)
     }
+    const onClear = () => setText('')
+    const onKey = () => console.log(text)
 
-    return <TextField {...args} onChange={changeInputValue} value={text} />
+    return (
+      <TextField
+        {...args}
+        onChange={changeInputValue}
+        onInputClear={onClear}
+        onKeyEnter={onKey}
+        value={text}
+      />
+    )
   },
 }
 export const PasswordTextFieldWithoutError: Story = {
@@ -88,11 +123,21 @@ export const PasswordTextFieldWithoutError: Story = {
   },
   render: args => {
     const [text, setText] = useState('')
-    const changeInputValue = (value: string) => {
-      setText(value)
+    const changeInputValue = (e: ChangeEvent<HTMLInputElement>) => {
+      setText(e.currentTarget.value)
     }
+    const onClear = () => setText('')
+    const onKey = () => console.log(text)
 
-    return <TextField {...args} onChange={changeInputValue} value={text} />
+    return (
+      <TextField
+        {...args}
+        onChange={changeInputValue}
+        onInputClear={onClear}
+        onKeyEnter={onKey}
+        value={text}
+      />
+    )
   },
 }
 export const PasswordTextFieldDisabled: Story = {
@@ -103,11 +148,21 @@ export const PasswordTextFieldDisabled: Story = {
   },
   render: args => {
     const [text, setText] = useState('')
-    const changeInputValue = (value: string) => {
-      setText(value)
+    const changeInputValue = (e: ChangeEvent<HTMLInputElement>) => {
+      setText(e.currentTarget.value)
     }
+    const onClear = () => setText('')
+    const onKey = () => console.log(text)
 
-    return <TextField {...args} disabled onChange={changeInputValue} value={text} />
+    return (
+      <TextField
+        {...args}
+        onChange={changeInputValue}
+        onInputClear={onClear}
+        onKeyEnter={onKey}
+        value={text}
+      />
+    )
   },
 }
 export const DefaultTextFieldWithError: Story = {
@@ -118,11 +173,21 @@ export const DefaultTextFieldWithError: Story = {
   },
   render: args => {
     const [text, setText] = useState('')
-    const changeInputValue = (value: string) => {
-      setText(value)
+    const changeInputValue = (e: ChangeEvent<HTMLInputElement>) => {
+      setText(e.currentTarget.value)
     }
+    const onClear = () => setText('')
+    const onKey = () => console.log(text)
 
-    return <TextField {...args} onChange={changeInputValue} value={text} />
+    return (
+      <TextField
+        {...args}
+        onChange={changeInputValue}
+        onInputClear={onClear}
+        onKeyEnter={onKey}
+        value={text}
+      />
+    )
   },
 }
 export const DefaultTextFieldWithoutError: Story = {
@@ -132,11 +197,21 @@ export const DefaultTextFieldWithoutError: Story = {
   },
   render: args => {
     const [text, setText] = useState('')
-    const changeInputValue = (value: string) => {
-      setText(value)
+    const changeInputValue = (e: ChangeEvent<HTMLInputElement>) => {
+      setText(e.currentTarget.value)
     }
+    const onClear = () => setText('')
+    const onKey = () => console.log(text)
 
-    return <TextField {...args} onChange={changeInputValue} value={text} />
+    return (
+      <TextField
+        {...args}
+        onChange={changeInputValue}
+        onInputClear={onClear}
+        onKeyEnter={onKey}
+        value={text}
+      />
+    )
   },
 }
 export const DefaultTextFieldDisabled: Story = {
@@ -146,10 +221,20 @@ export const DefaultTextFieldDisabled: Story = {
   },
   render: args => {
     const [text, setText] = useState('')
-    const changeInputValue = (value: string) => {
-      setText(value)
+    const changeInputValue = (e: ChangeEvent<HTMLInputElement>) => {
+      setText(e.currentTarget.value)
     }
+    const onClear = () => setText('')
+    const onKey = () => console.log(text)
 
-    return <TextField {...args} disabled onChange={changeInputValue} value={text} />
+    return (
+      <TextField
+        {...args}
+        onChange={changeInputValue}
+        onInputClear={onClear}
+        onKeyEnter={onKey}
+        value={text}
+      />
+    )
   },
 }

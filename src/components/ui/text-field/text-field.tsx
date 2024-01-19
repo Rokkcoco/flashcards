@@ -1,5 +1,4 @@
 import {
-  ChangeEvent,
   ComponentPropsWithoutRef,
   KeyboardEvent,
   RefObject,
@@ -10,8 +9,8 @@ import {
 } from 'react'
 
 import { CloseOutline, EyeOffOutline, EyeOutline, SearchOutline } from '@/assets'
+import { Typography } from '@/components/ui'
 import { Tooltip } from '@/components/ui/tooltip'
-import Typography from '@/components/ui/typography/typography'
 import * as Label from '@radix-ui/react-label'
 import { clsx } from 'clsx'
 
@@ -19,16 +18,12 @@ import s from './text-field.module.scss'
 
 type Props = {
   error?: string
-  label: string
-  onChange?: (value: string) => void
-  onKeyDown?: () => void
-  onKeyUp?: () => void
-  placeholder?: string
-  type?: 'password' | 'search' | 'text'
-  value?: string
+  label?: string
+  onInputClear?: () => void
+  onKeyEnter?: () => void
+  type?: 'email' | 'password' | 'search' | 'text'
 }
 
-//todo add email type
 export type TextFieldProps = Props & Omit<ComponentPropsWithoutRef<'input'>, keyof Props>
 export const TextField = forwardRef<HTMLInputElement, TextFieldProps>((props, ref) => {
   const {
@@ -37,12 +32,11 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>((props, re
     error,
     id,
     label,
-    onChange,
+    onInputClear,
     onKeyDown,
-    onKeyUp,
-    placeholder,
+    onKeyEnter,
     type = 'text',
-    value = '',
+    value,
     ...rest
   } = props
 
@@ -57,7 +51,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>((props, re
   const disabledTooltip = disabled && 'Text field disabled'
   const showPasswordHandler = () => setShowPassword(prevState => !prevState)
 
-  const clearField = () => onChange?.('')
+  const clearField = () => onInputClear?.()
 
   const secondButtonHandler =
     (passwordType && showPasswordHandler) || (searchType && clearField) || (() => {})
@@ -74,10 +68,6 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>((props, re
   const internalInputRef = useRef<HTMLInputElement | null>(null)
   const inputRef = (ref || internalInputRef) as RefObject<HTMLInputElement>
 
-  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    onChange?.(e.currentTarget.value)
-  }
-
   const focusOnEmptyInput = () => {
     if (inputRef && inputRef.current?.value === '') {
       inputRef.current.focus()
@@ -87,29 +77,19 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>((props, re
 
     return false
   }
-  const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (focusOnEmptyInput()) {
-      return
-    }
-    if (onKeyDown && e.key === 'Enter') {
-      onKeyDown?.()
-    }
-  }
-  const onKeyUpHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (focusOnEmptyInput()) {
-      return
-    }
-    if (onKeyUp && e.key === 'Enter') {
-      onKeyUp?.()
-    }
-  }
 
   const onSearchHandler = () => {
     if (focusOnEmptyInput()) {
       return
     }
-    onKeyDown?.()
-    onKeyUp?.()
+    onKeyEnter?.()
+  }
+
+  const onKeyPressHander = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      onKeyEnter?.()
+    }
+    onKeyDown?.(e)
   }
 
   const handleMouseEnter = () => {
@@ -136,7 +116,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>((props, re
       s.button,
       searchType && s.cancelButton,
       passwordType && s.passwordButton,
-      value.length > 0 && s.showCancelButton
+      value !== '' && s.showCancelButton
     ),
     wrapper: s.wrapper,
   }
@@ -170,10 +150,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>((props, re
           className={classNames.input}
           disabled={disabled}
           id={inputId}
-          onChange={onChangeHandler}
-          onKeyDown={onKeyDownHandler}
-          onKeyUp={onKeyUpHandler}
-          placeholder={placeholder}
+          onKeyDown={onKeyPressHander}
           ref={inputRef}
           type={inputType}
           value={value}

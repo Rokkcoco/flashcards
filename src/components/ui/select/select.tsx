@@ -1,7 +1,7 @@
 import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
 
 import { ArrowIosDownOutline, ArrowIosUp, KeyboardArrowDown } from '@/assets'
-import Typography from '@/components/ui/typography/typography'
+import { Typography } from '@/components/ui'
 import * as Label from '@radix-ui/react-label'
 import * as SelectRadix from '@radix-ui/react-select'
 import clsx from 'clsx'
@@ -32,14 +32,14 @@ const SelectItem = forwardRef<ElementRef<typeof SelectRadix.Item>, SelectItemPro
 SelectItem.displayName = 'SelectItem'
 
 export type SelectProps = {
+  label?: string
   onChange: (value: string) => void
   options: Record<string, string>
-  title?: string
   value: string
   variant?: 'default' | 'pagination'
 } & Omit<ComponentPropsWithoutRef<typeof SelectRadix.Root>, 'onValueChange' | 'value'>
 export const Select = forwardRef<ElementRef<typeof SelectRadix.Trigger>, SelectProps>(
-  ({ onChange, open, options, title, value, variant = 'default', ...rest }, ref) => {
+  ({ label, onChange, open, options, value, variant = 'default', ...rest }, ref) => {
     const GetTopicalIcon = (variant: 'default' | 'pagination', open: false | true | undefined) => {
       if (VariantIsPagination(variant)) {
         return <KeyboardArrowDown />
@@ -53,12 +53,13 @@ export const Select = forwardRef<ElementRef<typeof SelectRadix.Trigger>, SelectP
 
     //todo rotate svg with styles, not with function. Data-state='open'
     //todo check shadcn select, maybe refactor
+    //todo split selectItem with selectItemText
     return (
       <>
-        {title && (
+        {label && (
           <Label.Root className={s.label}>
             <Typography as={'label'} variant={'body_2'}>
-              {title}
+              {label}
             </Typography>
           </Label.Root>
         )}

@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
 import { Logout } from '@/assets'
-import Button from '@/components/ui/button/button'
+import { Button } from '@/components/ui'
 
 const meta = {
   argTypes: {
@@ -70,8 +70,9 @@ export const Tertiary: Story = {
 }
 export const Link: Story = {
   args: {
+    as: 'a',
     children: 'Link-button',
-    disabled: false,
+    href: 'https://google.com',
     variant: 'link',
   },
 }

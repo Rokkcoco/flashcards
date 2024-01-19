@@ -1,8 +1,7 @@
 import { useForm } from 'react-hook-form'
 
-import Button from '@/components/ui/button/button'
-import Card from '@/components/ui/card/card'
-import { ControlledTextField } from '@/components/ui/controlled'
+import { Button, Card } from '@/components/ui'
+import { ControlledCheckbox, ControlledTextField } from '@/components/ui/controlled'
 import Typography from '@/components/ui/typography/typography'
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -13,43 +12,41 @@ import s from './sign-in.module.scss'
 const schema = z.object({
   email: z.string().email('Enter your email'),
   password: z.string().min(3),
-  passwordConfirm: z.string(),
+  rememberMe: z.boolean().optional(),
 })
 
-type FormValues = z.infer<typeof schema>
-export const SignIn = () => {
+type FormTypes = z.infer<typeof schema>
+type Props = { onSubmit: (data: FormTypes) => void }
+export const SignIn = ({ onSubmit }: Props) => {
   const {
     control,
     formState: { errors },
     handleSubmit,
-  } = useForm<FormValues>({
+  } = useForm<FormTypes>({
     defaultValues: {
       email: '',
       password: '',
-      passwordConfirm: '',
+      rememberMe: false,
     },
     resolver: zodResolver(schema),
   })
 
-  const onSubmit = (data: FormValues) => {
-    console.log(data)
-  }
-
-  //todo add type email for 1st textfield
   return (
     <Card className={s.root}>
       <form className={s.title} onSubmit={handleSubmit(onSubmit)}>
         <DevTool control={control} />
         <Typography as={'h1'} variant={'h1'}>
-          Sign Up
+          Sign In
         </Typography>
         <div className={s.inputContainer}>
           <ControlledTextField
+            autoComplete={'email'}
             control={control}
             error={errors?.email?.message}
             label={'Email'}
             name={'email'}
             placeholder={'Enter your email'}
+            type={'email'}
           />
           <ControlledTextField
             control={control}
@@ -59,14 +56,10 @@ export const SignIn = () => {
             placeholder={'Enter your password'}
             type={'password'}
           />
-          <ControlledTextField
-            control={control}
-            error={errors?.passwordConfirm?.message}
-            label={'Confirm password'}
-            name={'passwordConfirm'}
-            placeholder={'Confirm your password'}
-            type={'password'}
-          />
+
+          <span className={s.checkbox}>
+            <ControlledCheckbox control={control} label={'Remember Me'} name={'rememberMe'} />
+          </span>
         </div>
         <Button className={s.buttonContainer} fullWidth type={'submit'}>
           Sign Up

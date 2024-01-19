@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 import { Checkbox } from '@/components/ui'
-import Button from '@/components/ui/button/button'
+import { Button } from '@/components/ui/button/button'
 import { Meta, StoryObj } from '@storybook/react'
 
 import { Modal } from './'

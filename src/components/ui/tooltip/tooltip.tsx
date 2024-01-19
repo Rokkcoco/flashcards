@@ -1,6 +1,6 @@
 import { ComponentPropsWithoutRef, ElementRef, ReactNode, forwardRef } from 'react'
 
-import Typography from '@/components/ui/typography/typography'
+import { Typography } from '@/components/ui'
 import * as TooltipRadix from '@radix-ui/react-tooltip'
 import { clsx } from 'clsx'
 

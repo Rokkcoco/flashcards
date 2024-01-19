@@ -77,6 +77,12 @@
   background-color: transparent;
   border-radius: 20px;
 
+  &:focus-visible {
+    color: red !important;
+    text-decoration: red !important;
+    outline: none !important;
+  }
+
   &:hover:enabled {
     color: var(--color-accent-300);
   }
@@ -90,5 +96,5 @@
 
 .fullWidth {
   width: 100%;
-
+  padding: 6px 0;
 }

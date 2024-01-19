@@ -45,12 +45,12 @@ export const Pagination: React.FC<PaginationProps> = ({
     onPageChange({ currentPage: currentPage + 1 })
   }
 
-  const buttons = paginationRange.map((item: number | string) => {
+  const buttons = paginationRange.map((item: number | string, index) => {
     return (
       <DefaultNavigateButton
         currentPage={currentPage}
         item={item}
-        key={v4()}
+        key={index}
         onPageChange={onPageChange}
       />
     )
