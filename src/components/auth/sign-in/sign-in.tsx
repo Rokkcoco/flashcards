@@ -33,7 +33,7 @@ export const SignIn = ({ onSubmit }: Props) => {
 
   return (
     <Card className={s.root}>
-      <form className={s.title} onSubmit={handleSubmit(onSubmit)}>
+      <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
         <DevTool control={control} />
         <Typography as={'h1'} variant={'h1'}>
           Sign In

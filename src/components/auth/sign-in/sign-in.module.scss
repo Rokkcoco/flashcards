@@ -1,9 +1,9 @@
 .root {
-  width: fit-content;
+  width: 420px;
   padding: 33px 36px 29px;
 }
 
-.title {
+.form {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -17,6 +17,7 @@
   align-items: flex-start;
   justify-content: center;
 
+  width: 100%;
   margin-bottom: 6px;
 }
 
