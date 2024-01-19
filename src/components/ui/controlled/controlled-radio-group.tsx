@@ -18,5 +18,5 @@ export const ControlledRadioGroup = <T extends FieldValues>(props: Props<T>) => 
     shouldUnregister,
   })
 
-  return <RadioGroup {...rest} {...field} />
+  return <RadioGroup {...{ ...rest, ...field }} />
 }

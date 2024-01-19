@@ -11,9 +11,6 @@ import { z } from 'zod'
 import s from './sign-in.module.scss'
 
 const schema = z.object({
-  checkbox: z.string().refine(value => value, {
-    message: 'This field is required',
-  }),
   email: z.string().email('Enter your email'),
   password: z.string().min(3),
   passwordConfirm: z.string(),

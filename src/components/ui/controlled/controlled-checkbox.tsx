@@ -20,5 +20,5 @@ export const ControlledCheckbox = <T extends FieldValues>(props: Props<T>) => {
     shouldUnregister,
   })
 
-  return <Checkbox {...rest} {...field} checked={value} />
+  return <Checkbox {...{ ...rest, ...field, checked: value }} />
 }

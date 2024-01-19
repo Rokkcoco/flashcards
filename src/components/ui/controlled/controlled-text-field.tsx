@@ -18,5 +18,5 @@ export const ControlledTextField = <T extends FieldValues>(props: Props<T>) => {
     shouldUnregister,
   })
 
-  return <TextField {...rest} {...field} />
+  return <TextField {...{ ...rest, ...field }} />
 }
