@@ -20,7 +20,7 @@ export const Default: Story = {
     pageSize: 3,
     totalCount: 20,
   },
-  render: args => {
+  render: () => {
     const [currentPage, setCurrentPage] = useState(1)
     const [pageSize, setPageSize] = useState(10)
 

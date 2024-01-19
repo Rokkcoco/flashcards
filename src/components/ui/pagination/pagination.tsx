@@ -1,7 +1,6 @@
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@/assets'
 import { usePagination } from '@/common/hooks/usePagination'
 import clsx from 'clsx'
-import { v4 } from 'uuid'
 
 import s from './pagination.module.scss'
 

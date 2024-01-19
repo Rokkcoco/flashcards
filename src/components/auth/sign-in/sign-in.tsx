@@ -45,15 +45,16 @@ export const SignIn = ({ onSubmit }: Props) => {
             error={errors?.email?.message}
             label={'Email'}
             name={'email'}
-            placeholder={'Enter your email'}
+            placeholder={'example@yourmail.com'}
             type={'email'}
           />
           <ControlledTextField
+            autoComplete={'current-password'}
             control={control}
             error={errors?.password?.message}
             label={'Password'}
             name={'password'}
-            placeholder={'Enter your password'}
+            placeholder={''}
             type={'password'}
           />
 
@@ -61,13 +62,18 @@ export const SignIn = ({ onSubmit }: Props) => {
             <ControlledCheckbox control={control} label={'Remember Me'} name={'rememberMe'} />
           </span>
         </div>
-        <Button className={s.buttonContainer} fullWidth type={'submit'}>
+        <Typography as={'span'} className={s.passwordForgot} variant={'body_2'}>
+          <Button as={'a'} className={s.buttonForgot} href={'https://google.com'} variant={'link'}>
+            Forgot password?
+          </Button>
+        </Typography>
+        <Button className={s.buttonSignUp} fullWidth type={'submit'}>
           Sign Up
         </Button>
         <Typography as={'span'} className={s.isUser} variant={'body_2'}>
           Already have an account?
         </Typography>
-        <Button as={'a'} className={s.buttonSignIn} variant={'link'}>
+        <Button as={'a'} className={s.buttonSignIn} href={'https://google.com'} variant={'link'}>
           Sign In
         </Button>
       </form>

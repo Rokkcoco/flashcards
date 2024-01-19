@@ -16,10 +16,12 @@
   gap: 24px;
   align-items: flex-start;
   justify-content: center;
+
+  margin-bottom: 6px;
 }
 
-.buttonContainer {
-  margin: 60px 0 20px;
+.buttonSignUp {
+  margin: 0 0 20px;
 }
 
 .isUser {
@@ -33,4 +35,19 @@
 
 .checkbox {
   margin-left: -8.5px;
+}
+
+.passwordForgot {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  padding: 0 12px 66px;
+}
+
+.buttonForgot {
+  color: var(--color-light-100);
+
+  &:visited {
+    color: var(--color-light-100);
+  }
 }

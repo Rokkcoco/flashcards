@@ -14,6 +14,8 @@ type Story = StoryObj<typeof meta>
 export const SignInStory: Story = {
   args: {},
   render: args => {
-    return <SignIn {...args} />
+    const callback = (data: any) => console.log(data)
+
+    return <SignIn {...args} onSubmit={callback} />
   },
 }

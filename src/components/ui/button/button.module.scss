@@ -72,16 +72,20 @@
 }
 
 .link {
-  padding: 6px 10px;
+  padding: 0;
   color: var(--color-accent-500);
   background-color: transparent;
-  border-radius: 20px;
+
+  &:visited {
+    color: var(--color-accent-500);
+    background-color: transparent;
+    border-radius: 20px;
+  }
 
   &:focus-visible {
-    color: red !important;
-    text-decoration: red !important;
-    outline: none !important;
+    outline: 2px solid var(--color-info-500);
   }
+
 
   &:hover:enabled {
     color: var(--color-accent-300);
