@@ -9,9 +9,9 @@ import { clsx } from 'clsx'
 import s from './checkbox.module.scss'
 
 export type CheckboxProps = {
-  checked: boolean
+  checked?: boolean
   label?: string
-  onChange: (checked: boolean) => void
+  onChange?: (checked: boolean) => void
 } & Omit<ComponentPropsWithoutRef<typeof CheckboxRadix.Root>, 'checked' | 'onCheckedChange'>
 
 export const Checkbox = forwardRef<ElementRef<typeof CheckboxRadix.Root>, CheckboxProps>(

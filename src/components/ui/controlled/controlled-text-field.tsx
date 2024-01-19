@@ -6,7 +6,7 @@ type Props<T extends FieldValues> = Omit<
   UseControllerProps<T>,
   'defaultValue' | 'disabled' | 'rules'
 > &
-  Omit<TextFieldProps, 'id' | 'onChange' | 'value'>
+  Omit<TextFieldProps, 'onChange' | 'value'>
 
 export const ControlledTextField = <T extends FieldValues>(props: Props<T>) => {
   const { control, name, shouldUnregister, ...rest } = props
@@ -18,5 +18,5 @@ export const ControlledTextField = <T extends FieldValues>(props: Props<T>) => {
     shouldUnregister,
   })
 
-  return <TextField {...rest} {...field} id={name} />
+  return <TextField {...rest} {...field} />
 }
