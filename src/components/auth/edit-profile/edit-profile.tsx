@@ -38,10 +38,10 @@ export const EditProfile = (props: Props) => {
     resolver: zodResolver(schema),
   })
 
-  //    <DevTool control={control} />
   return (
     <Card className={s.root}>
       <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
+        <DevTool control={control} />
         <Typography as={'h1'} className={s.title} variant={'h1'}>
           Personal Information
         </Typography>
