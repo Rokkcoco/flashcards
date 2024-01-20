@@ -7,16 +7,17 @@ import s from './avatar.module.scss'
 
 type Props = {
   alt?: string
+  size: 'large' | 'small'
   src?: string
 } & ComponentPropsWithoutRef<typeof AvatarRadix.Root> &
   ComponentPropsWithoutRef<'img'>
 
 export const Avatar = forwardRef<ElementRef<typeof AvatarRadix.Root>, Props>((props, ref) => {
-  const { alt, children, className, src, ...rest } = props
+  const { alt, children, className, size, src, ...rest } = props
   const classNames = {
     fallback: s.fallback,
     image: s.image,
-    root: clsx(s.root, className),
+    root: clsx(s.root, size === 'small' && s.small, size === 'large' && s.large, className),
   }
 
   return (

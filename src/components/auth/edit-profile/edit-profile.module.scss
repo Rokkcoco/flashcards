@@ -1,6 +1,6 @@
 .root {
   width: 420px;
-  padding: 33px 36px 60px;
+  padding: 33px 36px 41px;
 }
 
 .form {
@@ -8,22 +8,81 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+
 }
 
 .title {
-  margin-bottom: 51px;
+  margin-bottom: 27px;
 }
 
-.wrapper {
+.profileWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
   width: 100%;
-  margin-bottom: 19px;
 }
 
-.instructions {
-  margin-bottom: 41px;
-  color: var(--color-light-900);
-  word-wrap: break-word;
-  opacity: 0.5;
+.name {
+  color: var(--color-light-100);
+}
+
+.email {
+  margin-bottom: 13px;
+  color: var(--color-dark-100);
 }
 
 
+
+.textFieldWrapper {
+  width: 100%;
+  margin-bottom: 36px;
+}
+
+.nameButton {
+  cursor: pointer;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.nameWrapper {
+  display: flex;
+  gap: 9px;
+  align-items: center;
+}
+
+.avatarWrapper {
+  position: relative;
+  margin-bottom: 6px;
+}
+
+.avatarButton {
+  cursor: pointer;
+
+  position: absolute;
+  right: 0;
+  bottom: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 24px;
+  height: 24px;
+
+  background-color: var(--color-dark-300);
+border-radius: 4px;
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+}

@@ -10,10 +10,20 @@
 
   padding: 6px 28px;
 
+  font-size: 14px;
+  font-weight: 700;
+  font-style: normal;
+  line-height: 24px;
+
 
   border-radius: 4px;
 
   transition: 0.2s;
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
 
   &:focus-visible {
     outline: 2px solid var(--color-info-500);

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { LogOut } from '@/assets'
+import { Edit2Outline, LogOut } from '@/assets'
 import { Button, Card } from '@/components/ui'
 import { Avatar } from '@/components/ui/avatar'
 import { ControlledTextField } from '@/components/ui/controlled'
@@ -38,17 +38,24 @@ export const EditProfile = (props: Props) => {
     resolver: zodResolver(schema),
   })
 
+  //    <DevTool control={control} />
   return (
     <Card className={s.root}>
       <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
-        <DevTool control={control} />
         <Typography as={'h1'} className={s.title} variant={'h1'}>
           Personal Information
         </Typography>
-        <Avatar alt={alt} src={src}>
-          {name}
-        </Avatar>
-        <div className={s.wrapper}>{editableProfile(edit, name, email, control, errors)}</div>
+        <div className={s.avatarWrapper}>
+          <Avatar alt={alt} size={'large'} src={src}>
+            {name}
+          </Avatar>
+          <button className={s.avatarButton}>
+            <Edit2Outline />
+          </button>
+        </div>
+        <div className={s.profileWrapper}>
+          {editableProfile(edit, name, email, control, errors)}
+        </div>
       </form>
     </Card>
   )
@@ -58,10 +65,16 @@ function editableProfile(edit: boolean, name: string, email: string, control: an
   if (!edit) {
     return (
       <>
-        <Typography as={'h2'} className={s.instructions} variant={'h2'}>
-          {name}
-        </Typography>
-        <Typography as={'span'} className={s.instructions} variant={'body_2'}>
+        <div className={s.nameWrapper}>
+          <Typography as={'h2'} className={s.name} variant={'h2'}>
+            {name}
+          </Typography>
+          <button className={s.nameButton}>
+            <Edit2Outline />
+          </button>
+        </div>
+
+        <Typography as={'span'} className={s.email} variant={'body_2'}>
           {email}
         </Typography>
         <Button variant={'secondary'}>
@@ -74,14 +87,18 @@ function editableProfile(edit: boolean, name: string, email: string, control: an
 
   return (
     <>
-      <ControlledTextField
-        control={control}
-        error={errors?.name?.message}
-        name={'Nickname'}
-        placeholder={'Minimum X symbols'}
-      />
+      <div className={s.textFieldWrapper}>
+        <ControlledTextField
+          className={s.textField}
+          control={control}
+          error={errors?.name?.message}
+          label={'Nickname'}
+          name={'nickname'}
+          placeholder={'Minimum X symbols'}
+        />
+      </div>
+
       <Button fullWidth variant={'primary'}>
-        <LogOut />
         Save Changes
       </Button>
     </>
