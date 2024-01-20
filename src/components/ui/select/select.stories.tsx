@@ -7,7 +7,7 @@ import { Select } from './'
 const meta = {
   component: Select,
   tags: ['autodocs'],
-  title: 'Components/Select',
+  title: 'Components/Ui/Select',
 } satisfies Meta<typeof Select>
 
 export default meta
@@ -15,8 +15,8 @@ type Story = StoryObj<typeof meta>
 
 export const SelectStory: Story = {
   args: {
+    label: 'Select one answer',
     options: { audio: 'Audio', picture: 'Picture', video: 'Video' },
-    title: 'Select one answer',
     value: 'picture',
   },
   render: args => {
@@ -28,8 +28,8 @@ export const SelectStory: Story = {
 export const Disabled: Story = {
   args: {
     disabled: true,
+    label: 'Select one answer',
     options: { audio: 'Audio', picture: 'Picture', video: 'Video' },
-    title: 'Select one answer',
     value: 'picture',
   },
   render: args => {

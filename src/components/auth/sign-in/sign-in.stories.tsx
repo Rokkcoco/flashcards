@@ -5,7 +5,7 @@ import { SignIn } from './'
 const meta = {
   component: SignIn,
   tags: ['autodocs'],
-  title: 'Components/SignIn',
+  title: 'Components/Auth/SignIn',
 } satisfies Meta<typeof SignIn>
 
 export default meta

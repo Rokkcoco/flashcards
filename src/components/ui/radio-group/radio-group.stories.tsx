@@ -7,7 +7,7 @@ import { RadioGroup } from './'
 const meta = {
   component: RadioGroup,
   tags: ['autodocs'],
-  title: 'Components/RadioGroup',
+  title: 'Components/Ui/RadioGroup',
 } satisfies Meta<typeof RadioGroup>
 
 export default meta
