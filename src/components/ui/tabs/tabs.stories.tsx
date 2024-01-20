@@ -7,7 +7,7 @@ import { Tabs } from './'
 const meta = {
   component: Tabs,
   tags: ['autodocs'],
-  title: 'Components/Tabs',
+  title: 'Components/Ui/Tabs',
 } satisfies Meta<typeof Tabs>
 
 export default meta

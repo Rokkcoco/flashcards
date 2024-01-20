@@ -7,7 +7,7 @@ import { OnPageChangeArgs, Pagination } from './pagination'
 const meta = {
   component: Pagination,
   tags: ['autodocs'],
-  title: 'Components/Pagination',
+  title: 'Components/Ui/Pagination',
 } satisfies Meta<typeof Pagination>
 
 export default meta

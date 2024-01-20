@@ -7,7 +7,7 @@ import { Slider } from './'
 const meta = {
   component: Slider,
   tags: ['autodocs'],
-  title: 'Components/Slider',
+  title: 'Components/Ui/Slider',
 } satisfies Meta<typeof Slider>
 
 export default meta

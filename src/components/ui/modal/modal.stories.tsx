@@ -9,7 +9,7 @@ import { Modal } from './'
 const meta = {
   component: Modal,
   tags: ['autodocs'],
-  title: 'Components/Modal',
+  title: 'Components/Ui/Modal',
 } satisfies Meta<typeof Modal>
 
 export default meta
