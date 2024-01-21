@@ -21,7 +21,7 @@ type Props<T extends ElementType> = {
 export type ButtonProps<T extends ElementType = 'button'> = Props<T> &
   Omit<ComponentPropsWithoutRef<T>, keyof Props<T>>
 
-export const Button = forwardRef(
+const Button = forwardRef(
   <T extends ElementType = 'button'>(props: ButtonProps, ref: ForwardedRef<InferType<T>>) => {
     const { as: Component = 'button', className, fullWidth, variant = 'primary', ...rest } = props
 

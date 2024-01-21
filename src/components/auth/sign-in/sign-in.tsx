@@ -54,7 +54,7 @@ export const SignIn = ({ onSubmit }: Props) => {
             error={errors?.password?.message}
             label={'Password'}
             name={'password'}
-            placeholder={''}
+            placeholder={'Minimum X symbols'}
             type={'password'}
           />
 
