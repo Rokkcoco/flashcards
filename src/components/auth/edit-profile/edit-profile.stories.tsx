@@ -11,7 +11,7 @@ const meta = {
   },
   component: EditProfile,
   tags: ['autodocs'],
-  title: 'Components/EditProfile',
+  title: 'Components/Auth/EditProfile',
 } satisfies Meta<typeof EditProfile>
 
 export default meta
