@@ -64,25 +64,18 @@
   margin-bottom: 6px;
 }
 
-.avatarButton {
-  cursor: pointer;
 
+.avatarButton {
   position: absolute;
   right: 0;
   bottom: 0;
+  padding: 6px;
+}
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
 
-  width: 24px;
-  height: 24px;
-
-  background-color: var(--color-dark-300);
-border-radius: 4px;
-
-  svg {
-    width: 16px;
-    height: 16px;
-  }
+.fileLoader{
+position: absolute;
+  right: 0;
+  bottom: 0;
+  display: none;
 }

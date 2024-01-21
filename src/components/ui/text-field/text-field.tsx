@@ -1,4 +1,5 @@
 import {
+  ChangeEvent,
   ComponentPropsWithoutRef,
   KeyboardEvent,
   RefObject,
@@ -21,6 +22,7 @@ type Props = {
   label?: string
   onInputClear?: () => void
   onKeyEnter?: () => void
+  onTextFieldChange: (value: string) => void
   type?: 'email' | 'password' | 'search' | 'text'
 }
 
@@ -32,11 +34,14 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>((props, re
     error,
     id,
     label,
+    onChange,
     onInputClear,
     onKeyDown,
     onKeyEnter,
+    onTextFieldChange,
     type = 'text',
     value,
+
     ...rest
   } = props
 
@@ -83,6 +88,11 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>((props, re
       return
     }
     onKeyEnter?.()
+  }
+
+  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    onChange?.(e)
+    onTextFieldChange?.(e.currentTarget.value)
   }
 
   const onKeyPressHander = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -150,6 +160,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>((props, re
           className={classNames.input}
           disabled={disabled}
           id={inputId}
+          onChange={onChangeHandler}
           onKeyDown={onKeyPressHander}
           ref={inputRef}
           type={inputType}

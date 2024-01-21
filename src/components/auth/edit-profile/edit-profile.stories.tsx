@@ -1,8 +1,14 @@
+import { useState } from 'react'
+
+import { action } from '@storybook/addon-actions'
 import { Meta, StoryObj } from '@storybook/react'
 
 import { EditProfile } from './'
 
 const meta = {
+  args: {
+    onLogOut: action('Log out'),
+  },
   component: EditProfile,
   tags: ['autodocs'],
   title: 'Components/EditProfile',
@@ -13,15 +19,15 @@ type Story = StoryObj<typeof meta>
 
 export const EditProfileStory: Story = {
   args: {
-    alt: '',
+    alt: 'ye',
     email: 'youremail@email.com',
-    name: 'John',
-    onSubmit: x => x,
-    src: '',
+    name: '',
+    src: 'https://xsgames.co/randomusers/avatar.php?g=female',
   },
   render: args => {
-    const callback = (data: any) => console.log(data)
+    const [firstName, setFirstName] = useState('Lisa')
+    const callback = (data: any) => setFirstName(data.name)
 
-    return <EditProfile {...args} onSubmit={callback} />
+    return <EditProfile {...args} name={firstName} onSubmit={callback} />
   },
 }
