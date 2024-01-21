@@ -8,6 +8,7 @@ import { ControlledTextField } from '@/components/ui/controlled'
 import Typography from '@/components/ui/typography/typography'
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { clsx } from 'clsx'
 import { z } from 'zod'
 
 import s from './edit-profile.module.scss'
@@ -30,7 +31,7 @@ export const EditProfile = (props: Props) => {
   const [editMode, setEditMode] = useState(false)
   const {
     control,
-    formState: { errors },
+    formState: { errors, isDirty },
     handleSubmit,
   } = useForm<FormTypes>({
     defaultValues: {
@@ -38,26 +39,32 @@ export const EditProfile = (props: Props) => {
     },
     resolver: zodResolver(schema),
   })
-
+  const classNames = {
+    avatarWrapper: clsx(
+      s.avatarWrapper,
+      editMode ? s.avatarWrapperEditMode : s.avatarWrapperNotEditMode
+    ),
+    root: clsx(s.root, editMode && s.rootEditMode),
+  }
   const inputRef = useRef<HTMLInputElement | null>(null)
   const avatarUploaderButtonClick = () => {
     inputRef.current?.click()
   }
 
+  console.log(isDirty)
   const setEditModeTrue = () => setEditMode(true)
   const handlerOnSubmit = (data: FormTypes) => {
-    onSubmit(data)
+    isDirty && onSubmit(data)
     setEditMode(false)
   }
 
   return (
-    <Card className={s.root}>
-      <form className={s.form} onSubmit={handleSubmit(handlerOnSubmit)}>
-        <DevTool control={control} />
+    <Card className={classNames.root}>
+      <div className={s.contentWrapper}>
         <Typography as={'h1'} className={s.title} variant={'h1'}>
           Personal Information
         </Typography>
-        <div className={s.avatarWrapper}>
+        <div className={classNames.avatarWrapper}>
           <Avatar alt={alt} size={'large'} src={src}>
             {name[0].toUpperCase()}
           </Avatar>
@@ -76,7 +83,7 @@ export const EditProfile = (props: Props) => {
           )}
         </div>
         <div className={s.profileWrapper}>{editableProfile()}</div>
-      </form>
+      </div>
     </Card>
   )
 
@@ -105,7 +112,8 @@ export const EditProfile = (props: Props) => {
     }
 
     return (
-      <>
+      <form className={s.formWrapper} onSubmit={handleSubmit(handlerOnSubmit)}>
+        <DevTool control={control} />
         <div className={s.textFieldWrapper}>
           <ControlledTextField
             className={s.textField}
@@ -119,7 +127,7 @@ export const EditProfile = (props: Props) => {
         <Button fullWidth type={'submit'} variant={'primary'}>
           Save Changes
         </Button>
-      </>
+      </form>
     )
   }
 }

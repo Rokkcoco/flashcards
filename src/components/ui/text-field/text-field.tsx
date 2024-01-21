@@ -22,7 +22,7 @@ type Props = {
   label?: string
   onInputClear?: () => void
   onKeyEnter?: () => void
-  onTextFieldChange: (value: string) => void
+  onTextFieldChange?: (value: string) => void
   type?: 'email' | 'password' | 'search' | 'text'
 }
 
