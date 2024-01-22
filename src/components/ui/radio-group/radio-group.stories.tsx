@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import { Meta, StoryObj } from '@storybook/react'
 
-import { RadioGroup } from './'
+import { RadioGroup, RadioItem } from './'
 
 const meta = {
   component: RadioGroup,
@@ -13,21 +13,23 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 export const RadioStory: Story = {
-  args: {
-    onChange: x => x,
-    options: [
-      { label: 'Value1', value: '1' },
-      { label: 'Value2', value: '2' },
-      { disabled: true, label: 'Value3', value: '3' },
-      { checked: true, disabled: true, label: 'Value4', value: '4' },
-    ],
-    value: '1',
-  },
-  render: args => {
+  args: {},
+  render: () => {
     const [value, setValue] = useState('1')
 
     const onChangeHandler = (newValue: string) => setValue(newValue)
 
-    return <RadioGroup {...args} onChange={onChangeHandler} value={value} />
+    return (
+      <RadioGroup defaultValue={value} onValueChange={onChangeHandler}>
+        <RadioItem value={'1'}>Value1</RadioItem>
+        <RadioItem value={'2'}>Value2</RadioItem>
+        <RadioItem disabled value={'3'}>
+          Value3
+        </RadioItem>
+        <RadioItem disabled value={'4'}>
+          Value4
+        </RadioItem>
+      </RadioGroup>
+    )
   },
 }

@@ -17,13 +17,13 @@ type PaginationProps = {
   totalCount: number
 }
 
-export const Pagination: React.FC<PaginationProps> = ({
+export const Pagination = ({
   currentPage,
   onPageChange,
   pageSize,
   selectOptions = { 10: '10', 20: '20', 30: '30', 50: '50', 100: '100' },
   totalCount,
-}) => {
+}: PaginationProps) => {
   const paginationRange = usePagination({
     currentPage,
     pageSize,
@@ -80,11 +80,7 @@ type NavigateButtonProps = {
   onPageChange?: ({ currentPage, pageSize }: OnPageChangeArgs) => void
 }
 
-const DefaultNavigateButton: React.FC<NavigateButtonProps> = ({
-  currentPage,
-  item,
-  onPageChange,
-}) => {
+const DefaultNavigateButton = ({ currentPage, item, onPageChange }: NavigateButtonProps) => {
   return (
     <button
       className={clsx(s.defaultButton, s.navigateButton, currentPage === item ? s.active : '')}
@@ -99,7 +95,7 @@ const DefaultNavigateButton: React.FC<NavigateButtonProps> = ({
   )
 }
 
-const PaginationPrevButton: React.FC<NavigateButtonProps> = ({ disabled, onClick }) => {
+const PaginationPrevButton = ({ disabled, onClick }: NavigateButtonProps) => {
   return (
     <button className={s.navigateButton} disabled={disabled} onClick={onClick}>
       <KeyboardArrowLeft />
@@ -107,7 +103,7 @@ const PaginationPrevButton: React.FC<NavigateButtonProps> = ({ disabled, onClick
   )
 }
 
-const PaginationNextButton: React.FC<NavigateButtonProps> = ({ disabled, onClick }) => {
+const PaginationNextButton = ({ disabled, onClick }: NavigateButtonProps) => {
   return (
     <button className={s.navigateButton} disabled={disabled} onClick={onClick}>
       <KeyboardArrowRight />

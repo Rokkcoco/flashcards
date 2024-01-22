@@ -5,8 +5,7 @@ import {
   PlayCircleOutline,
   TrashOutline,
 } from '@/assets'
-import { Avatar } from '@/components/ui/avatar'
-import { Button } from '@/components/ui/button/button'
+import { Avatar, Button } from '@/components/ui'
 import { Meta, StoryObj } from '@storybook/react'
 
 import { DropdownItem, DropdownMenu, DropdownSeparator } from './'
@@ -24,7 +23,7 @@ export const DropdownMenuWithAvatarStory: Story = {
   args: {
     trigger: (
       <button>
-        <Avatar>John</Avatar>
+        <Avatar size={'small'}>John</Avatar>
       </button>
     ),
   },

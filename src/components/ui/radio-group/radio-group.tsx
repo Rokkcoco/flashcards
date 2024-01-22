@@ -7,13 +7,13 @@ import { clsx } from 'clsx'
 
 import s from './radio-group.module.scss'
 type RadioItemProps = {
-  label: string
+  label?: string
   value: number | string
 } & Omit<ComponentPropsWithoutRef<typeof RadioGroupRadix.Item>, 'asChild'>
 
-const RadioItem = forwardRef<ElementRef<typeof RadioGroupRadix.Item>, RadioItemProps>(
+export const RadioItem = forwardRef<ElementRef<typeof RadioGroupRadix.Item>, RadioItemProps>(
   (props: RadioItemProps, ref) => {
-    const { disabled, label, ...rest } = props
+    const { children, disabled, label, ...rest } = props
 
     const classNames = {
       icon: s.icon,
@@ -27,7 +27,7 @@ const RadioItem = forwardRef<ElementRef<typeof RadioGroupRadix.Item>, RadioItemP
           <RadioGroupRadix.Item {...rest} className={classNames.icon} disabled={disabled} ref={ref}>
             <RadioGroupRadix.Indicator className={classNames.indicator} />
           </RadioGroupRadix.Item>
-          {label}
+          {label ?? children}
         </Typography>
       </Label.Root>
     )
@@ -36,18 +36,14 @@ const RadioItem = forwardRef<ElementRef<typeof RadioGroupRadix.Item>, RadioItemP
 
 RadioItem.displayName = 'RadioItem'
 
-export type RadioGroupProps = {
-  onChange: (value: string) => void
-  options: RadioItemProps[]
-  value: string
-} & Omit<
+export type RadioGroupProps = Omit<
   ComponentPropsWithoutRef<typeof RadioGroupRadix.Root>,
-  'asChild' | 'onChange' | 'onValueChange' | 'value'
+  'asChild' | 'onChange' | 'value'
 >
 
 export const RadioGroup = forwardRef<ElementRef<typeof RadioGroupRadix.Root>, RadioGroupProps>(
   (props, ref) => {
-    const { className, onChange, options, ...rest } = props
+    const { children, className, ...rest } = props
 
     const classNames = {
       root: clsx(s.root, className),
@@ -57,13 +53,10 @@ export const RadioGroup = forwardRef<ElementRef<typeof RadioGroupRadix.Root>, Ra
       <RadioGroupRadix.Root
         aria-label={'View density'}
         className={classNames.root}
-        onValueChange={onChange}
         ref={ref}
         {...rest}
       >
-        {options.map(t => (
-          <RadioItem key={t.value} {...t} />
-        ))}
+        {children}
       </RadioGroupRadix.Root>
     )
   }

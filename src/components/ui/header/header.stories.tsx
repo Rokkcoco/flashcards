@@ -11,9 +11,25 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const HeaderStory: Story = {
+export const HeaderAuthorizedStory: Story = {
   args: {
+    alt: 'ye',
+    authorized: true,
+    email: 'coolguy88@coolmail.usa',
+    name: 'Liza',
+    src: 'https://xsgames.co/randomusers/avatar.php?g=female',
+  },
+  render: args => {
+    return <Header {...args} />
+  },
+}
+export const HeaderNotAuthorizedStory: Story = {
+  args: {
+    alt: 'ye',
     authorized: false,
+    email: 'coolguy88@coolmail.usa',
+    name: 'Liza',
+    src: 'https://xsgames.co/randomusers/avatar.php?g=female',
   },
   render: args => {
     return <Header {...args} />

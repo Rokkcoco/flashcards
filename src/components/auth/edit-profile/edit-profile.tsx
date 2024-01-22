@@ -46,12 +46,14 @@ export const EditProfile = (props: Props) => {
     ),
     root: clsx(s.root, editMode && s.rootEditMode),
   }
-  const inputRef = useRef<HTMLInputElement | null>(null)
+  const inputRef = useRef<HTMLInputElement>(null)
   const avatarUploaderButtonClick = () => {
     inputRef.current?.click()
   }
 
-  console.log(isDirty)
+  const result = 1
+
+  console.log(result)
   const setEditModeTrue = () => setEditMode(true)
   const handlerOnSubmit = (data: FormTypes) => {
     isDirty && onSubmit(data)
@@ -99,7 +101,6 @@ export const EditProfile = (props: Props) => {
               <Edit2Outline />
             </button>
           </div>
-
           <Typography as={'span'} className={s.email} variant={'body_2'}>
             {email}
           </Typography>

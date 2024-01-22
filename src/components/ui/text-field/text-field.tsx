@@ -70,7 +70,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>((props, re
   }
 
   const inputType = inputTypeDefine(type, showPassword)
-  const internalInputRef = useRef<HTMLInputElement | null>(null)
+  const internalInputRef = useRef<HTMLInputElement>(null)
   const inputRef = (ref || internalInputRef) as RefObject<HTMLInputElement>
 
   const focusOnEmptyInput = () => {

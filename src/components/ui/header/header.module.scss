@@ -11,10 +11,39 @@
   border-bottom: 1px solid var(--color-dark-500);
 }
 
+.logoButton {
+  cursor: pointer;
+}
+
 .authorized {
   padding: 12px 136px;
 }
 
 .notAuthorized {
   padding: 12px 137.5px 12px 136px;
+}
+
+.avatarWrapper {
+  display: flex;
+  gap:14px;
+  align-items: center;
+}
+
+.name {
+  border-bottom: 1px dashed var(--color-light-100);
+}
+
+.avatarRoot {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.userWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.email {
+  color: var(--color-dark-100);
 }
