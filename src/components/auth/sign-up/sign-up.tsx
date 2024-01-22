@@ -50,7 +50,7 @@ export const SignUp = () => {
           <ControlledTextField
             autoComplete={'email'}
             control={control}
-            error={errors?.email?.message}
+            errorMessage={errors?.email?.message}
             label={'Email'}
             name={'email'}
             placeholder={'example@yourmail.com'}
@@ -59,7 +59,7 @@ export const SignUp = () => {
           <ControlledTextField
             autoComplete={'password'}
             control={control}
-            error={errors?.password?.message}
+            errorMessage={errors?.password?.message}
             label={'Password'}
             name={'password'}
             placeholder={'**********'}
@@ -68,7 +68,7 @@ export const SignUp = () => {
           <ControlledTextField
             autoComplete={'password'}
             control={control}
-            error={errors?.confirmPassword?.message}
+            errorMessage={errors?.confirmPassword?.message}
             label={'Password'}
             name={'confirmPassword'}
             placeholder={'**********'}

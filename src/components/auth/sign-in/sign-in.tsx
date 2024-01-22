@@ -42,7 +42,7 @@ export const SignIn = ({ onSubmit }: Props) => {
           <ControlledTextField
             autoComplete={'email'}
             control={control}
-            error={errors?.email?.message}
+            errorMessage={errors?.email?.message}
             label={'Email'}
             name={'email'}
             placeholder={'example@yourmail.com'}
@@ -51,7 +51,7 @@ export const SignIn = ({ onSubmit }: Props) => {
           <ControlledTextField
             autoComplete={'current-password'}
             control={control}
-            error={errors?.password?.message}
+            errorMessage={errors?.password?.message}
             label={'Password'}
             name={'password'}
             placeholder={'Minimum X symbols'}

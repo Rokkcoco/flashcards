@@ -18,7 +18,7 @@ import { clsx } from 'clsx'
 import s from './text-field.module.scss'
 
 type Props = {
-  error?: string
+  errorMessage?: string
   label?: string
   onInputClear?: () => void
   onKeyEnter?: () => void
@@ -31,7 +31,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>((props, re
   const {
     className,
     disabled,
-    error,
+    errorMessage,
     id,
     label,
     onChange,
@@ -113,7 +113,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>((props, re
     error: s.error,
     input: clsx(
       s.input,
-      error && s.inputError,
+      errorMessage && s.inputError,
       searchType && s.search,
       passwordType && s.password,
       hoverForInput && s.hoverForInput,
@@ -188,10 +188,10 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>((props, re
           </Tooltip>
         )}
       </div>
-      {error && (
+      {errorMessage && (
         <Label.Root asChild className={classNames.error} htmlFor={inputId}>
           <Typography as={'label'} variant={'caption'}>
-            {error}
+            {errorMessage}
           </Typography>
         </Label.Root>
       )}

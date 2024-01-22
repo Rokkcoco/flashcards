@@ -39,7 +39,7 @@ export const CreateNewPassword = ({ onSubmit }: Props) => {
             autoComplete={'new-password'}
             className={s.textfield}
             control={control}
-            error={errors?.password?.message}
+            errorMessage={errors?.password?.message}
             label={'Password'}
             name={'password'}
             placeholder={'Minimum X symbols'}

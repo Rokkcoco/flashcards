@@ -39,7 +39,7 @@ export const ForgotPassword = ({ onSubmit }: Props) => {
             autoComplete={'email'}
             className={s.textfield}
             control={control}
-            error={errors?.email?.message}
+            errorMessage={errors?.email?.message}
             label={'Email'}
             name={'email'}
             placeholder={'example@yourmail.com'}

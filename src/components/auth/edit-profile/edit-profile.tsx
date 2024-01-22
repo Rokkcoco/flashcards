@@ -116,7 +116,7 @@ export const EditProfile = (props: Props) => {
           <ControlledTextField
             className={s.textField}
             control={control}
-            error={errors?.name?.message}
+            errorMessage={errors?.name?.message}
             label={'Nickname'}
             name={'name'}
             placeholder={'Minimum X symbols'}
