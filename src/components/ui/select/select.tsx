@@ -33,13 +33,12 @@ SelectItem.displayName = 'SelectItem'
 
 export type SelectProps = {
   label?: string
-  onChange: (value: string) => void
   options: Record<string, string>
   value: string
   variant?: 'default' | 'pagination'
-} & Omit<ComponentPropsWithoutRef<typeof SelectRadix.Root>, 'onValueChange' | 'value'>
+} & ComponentPropsWithoutRef<typeof SelectRadix.Root>
 export const Select = forwardRef<ElementRef<typeof SelectRadix.Trigger>, SelectProps>(
-  ({ label, onChange, open, options, value, variant = 'default', ...rest }, ref) => {
+  ({ label, open, options, value, variant = 'default', ...rest }, ref) => {
     const GetTopicalIcon = (variant: 'default' | 'pagination', open: false | true | undefined) => {
       if (VariantIsPagination(variant)) {
         return <KeyboardArrowDown />
@@ -64,7 +63,7 @@ export const Select = forwardRef<ElementRef<typeof SelectRadix.Trigger>, SelectP
           </Label.Root>
         )}
         <Typography as={'label'} variant={VariantIsPagination(variant) ? 'body_2' : 'body_1'}>
-          <SelectRadix.Root onValueChange={onChange} open={open} value={value} {...rest}>
+          <SelectRadix.Root open={open} {...rest}>
             <SelectRadix.Trigger
               className={clsx(
                 s.SelectTrigger,

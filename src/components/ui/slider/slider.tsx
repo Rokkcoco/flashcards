@@ -5,20 +5,14 @@ import { clsx } from 'clsx'
 
 import s from './slider.module.scss'
 
-type Props = {
-  onChange: (number: number[]) => void
-  value: number[]
-} & Omit<
-  ComponentPropsWithoutRef<typeof SliderRadix.Root>,
-  'asChild' | 'onChange' | 'onValueChange' | 'value'
->
+type Props = Omit<ComponentPropsWithoutRef<typeof SliderRadix.Root>, 'asChild' | 'onChange'>
 
 export const Slider = forwardRef<ElementRef<typeof SliderRadix.Root>, Props>((props, ref) => {
-  const { className, onChange, value, ...rest } = props
+  const { className, onValueChange, value, ...rest } = props
   //default Radix Slider Values
-  const minRange = props.min ? props.min : 0
-  const maxRange = props.max ? props.max : 100
-  const stepChange = props.step ? props.step : 1
+  const minRange = props.min ?? 0
+  const maxRange = props.max ?? 100
+  const stepChange = props.step ?? 1
 
   const disableOnKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key !== 'ArrowUp' && e.key !== 'ArrowDown' && e.key !== 'Tab') {
@@ -27,17 +21,17 @@ export const Slider = forwardRef<ElementRef<typeof SliderRadix.Root>, Props>((pr
   }
 
   const inputMinChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    if (value && onChange) {
+    if (value && onValueChange) {
       if (e.currentTarget.valueAsNumber <= value[1]) {
-        onChange([e.currentTarget.valueAsNumber, value[1]])
+        onValueChange([e.currentTarget.valueAsNumber, value[1]])
       }
     }
   }
 
   const inputMaxChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    if (value && onChange) {
+    if (value && onValueChange) {
       if (e.currentTarget.valueAsNumber >= value[0]) {
-        onChange([value[0], e.currentTarget.valueAsNumber])
+        onValueChange([value[0], e.currentTarget.valueAsNumber])
       }
     }
   }
@@ -58,7 +52,7 @@ export const Slider = forwardRef<ElementRef<typeof SliderRadix.Root>, Props>((pr
 
       <SliderRadix.Root
         className={clsx(s.root, className)}
-        onValueChange={onChange}
+        onValueChange={onValueChange}
         ref={ref}
         value={value}
         {...rest}

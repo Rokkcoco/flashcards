@@ -45,7 +45,7 @@ DropdownSeparator.displayName = 'DropdownSeparator'
 type Props = {
   align?: 'center' | 'end' | 'start'
   trigger: ReactNode
-} & Omit<ComponentPropsWithoutRef<typeof DropdownMenuRadix.Content>, 'asChild'>
+} & ComponentPropsWithoutRef<typeof DropdownMenuRadix.Content>
 export const DropdownMenu = forwardRef<ElementRef<typeof DropdownMenuRadix.Content>, Props>(
   (props, ref) => {
     const { align = 'end', children, className, trigger, ...rest } = props

@@ -6,9 +6,7 @@ import { clsx } from 'clsx'
 import s from './avatar.module.scss'
 
 type Props = {
-  alt?: string
   size: 'large' | 'small'
-  src?: string
 } & ComponentPropsWithoutRef<typeof AvatarRadix.Root> &
   ComponentPropsWithoutRef<'img'>
 

@@ -6,14 +6,11 @@ import * as RadioGroupRadix from '@radix-ui/react-radio-group'
 import { clsx } from 'clsx'
 
 import s from './radio-group.module.scss'
-type RadioItemProps = {
-  label?: string
-  value: number | string
-} & Omit<ComponentPropsWithoutRef<typeof RadioGroupRadix.Item>, 'asChild'>
+type RadioItemProps = Omit<ComponentPropsWithoutRef<typeof RadioGroupRadix.Item>, 'asChild'>
 
 export const RadioItem = forwardRef<ElementRef<typeof RadioGroupRadix.Item>, RadioItemProps>(
   (props: RadioItemProps, ref) => {
-    const { children, disabled, label, ...rest } = props
+    const { children, disabled, ...rest } = props
 
     const classNames = {
       icon: s.icon,
@@ -27,7 +24,7 @@ export const RadioItem = forwardRef<ElementRef<typeof RadioGroupRadix.Item>, Rad
           <RadioGroupRadix.Item {...rest} className={classNames.icon} disabled={disabled} ref={ref}>
             <RadioGroupRadix.Indicator className={classNames.indicator} />
           </RadioGroupRadix.Item>
-          {label ?? children}
+          {children}
         </Typography>
       </Label.Root>
     )
@@ -38,7 +35,7 @@ RadioItem.displayName = 'RadioItem'
 
 export type RadioGroupProps = Omit<
   ComponentPropsWithoutRef<typeof RadioGroupRadix.Root>,
-  'asChild' | 'onChange' | 'value'
+  'asChild' | 'onChange'
 >
 
 export const RadioGroup = forwardRef<ElementRef<typeof RadioGroupRadix.Root>, RadioGroupProps>(
