@@ -23,15 +23,15 @@
 .data {
   background-color: var(--color-dark-900);
 
-    &:last-child {
-      display: flex;
-      flex-direction: row-reverse;
-      gap: 10px;
+  &:last-child {
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 10px;
 
-      margin-right: 0;
+    margin-right: 0;
 
-      text-align: right;
-    }
+    text-align: right;
+  }
 }
 
 .icons {

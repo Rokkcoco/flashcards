@@ -1,87 +1,80 @@
 button {
-    all: unset;
+  all: unset;
 }
 
 .container {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .label {
-    cursor: pointer;
-    display: flex;
-    gap: 2px;
-    align-items: center;
+  cursor: pointer;
+  display: flex;
+  gap: 2px;
+  align-items: center;
 
-    &.disabled {
-        cursor: initial;
-        color: var(--color-dark-100);
-
-    }
+  &.disabled {
+    cursor: initial;
+    color: var(--color-dark-100);
+  }
 }
 
 .root {
-    cursor: pointer;
+  cursor: pointer;
 
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  box-sizing: border-box;
+  width: 18px;
+  height: 18px;
 
-    box-sizing: border-box;
+  background-color: var(--color-dark-900);
+  border: 2px solid var(--color-light-900);
+  border-radius: 2px;
+
+  &:disabled {
+    cursor: initial;
+    background-color: var(--color-light-700);
+    border-color: var(--color-dark-100);
+  }
+
+  &:disabled:not([data-state='checked']) {
+    background-color: var(--color-dark-900);
+  }
+
+  span {
     width: 18px;
     height: 18px;
-
-    background-color: var(--color-dark-900);
-    border: 2px solid var(--color-light-900);
-    border-radius: 2px;
-
-    &:disabled {
-        cursor: initial;
-        background-color: var(--color-light-700);
-        border-color: var(--color-dark-100);
-    }
-
-    &:disabled:not([data-state='checked']) {
-        background-color: var(--color-dark-900);
-    };
-
-    span {
-        width: 18px;
-        height: 18px;
-    }
+  }
 }
-
 
 .buttonWrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-    width: 36px;
-    height: 36px;
+  width: 36px;
+  height: 36px;
 
-    background-color: transparent;
-    border-radius: 50%;
+  background-color: transparent;
+  border-radius: 50%;
 
-    &.disabled {
-        cursor: initial;
-    }
+  &.disabled {
+    cursor: initial;
+  }
 
-    &:focus-within,
-    .root:not([data-state='checked']):focus-within{
-        background-color: var(--color-dark-100);
-    }
+  &:focus-within,
+  .root:not([data-state='checked']):focus-within {
+    background-color: var(--color-dark-100);
+  }
 
-    &:hover:not(.disabled),
-    {
-        background-color: var(--color-dark-500);
-    }
-
-    &:hover:not(.disabled) .root:not([data-state='checked']) {
+  &:hover:not(.disabled) {
     background-color: var(--color-dark-500);
+  }
+
+  &:hover:not(.disabled) .root:not([data-state='checked']) {
+    background-color: var(--color-dark-500);
+  }
 }
-
-}
-
-

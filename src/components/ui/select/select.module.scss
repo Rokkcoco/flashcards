@@ -3,7 +3,7 @@ button {
 }
 
 .label {
-  color: var(--color-dark-100)
+  color: var(--color-dark-100);
 }
 
 .SelectTrigger {
@@ -22,10 +22,9 @@ button {
 
   &[data-state='open'] {
     border-radius: 2px 2px 0 0;
-
   }
 
-  &[data-highlighted]:hover  {
+  &[data-highlighted]:hover {
     color: var(--color-accent-300);
     background-color: var(--color-accent-900);
   }
@@ -40,25 +39,22 @@ button {
     opacity: 0.5;
   }
 
- &:hover:enabled {
-   background-color: var(--color-dark-500);
- }
+  &:hover:enabled {
+    background-color: var(--color-dark-500);
+  }
 
-    span {
-      margin-left: 12px ;
-    }
+  span {
+    margin-left: 12px;
+  }
 
-    svg {
-      width: 16px;
-      height: 16px;
-      margin: 12px 10px;
-    }
-
-
-
+  svg {
+    width: 16px;
+    height: 16px;
+    margin: 12px 10px;
+  }
 }
 
-.PaginationSelectTrigger{
+.PaginationSelectTrigger {
   width: 50px;
   height: 24px;
   margin: 0 9px 0 6px;
@@ -67,7 +63,7 @@ button {
   border: 1px solid var(--color-dark-500);
 
   span {
-    margin-left: 6px ;
+    margin-left: 6px;
   }
 
   svg {
@@ -83,7 +79,7 @@ button {
   width: var(--radix-select-trigger-width);
   max-height: var(--radix-select-content-available-height);
 
-  background-color:var(--color-dark-900);
+  background-color: var(--color-dark-900);
   border: 1px solid var(--color-dark-300);
   border-top: none;
   border-radius: 0 0 2px 2px;
@@ -93,7 +89,7 @@ button {
   }
 }
 
-.PaginationSelectContent{
+.PaginationSelectContent {
   background-color: var(--color-dark-700);
   border: 1px solid var(--color-dark-500);
   border-top: none;
@@ -107,7 +103,7 @@ button {
   cursor: pointer;
   padding: 6px 0;
 
-  &[data-highlighted]{
+  &[data-highlighted] {
     color: var(--color-accent-300);
     background-color: var(--color-accent-900);
     outline: transparent;
@@ -117,10 +113,10 @@ button {
 .PaginationSelectItem {
   width: auto;
   height: 24px;
-  padding:0;
+  padding: 0;
 }
 
-.SelectIcon{
+.SelectIcon {
   margin: 0;
   padding: 0;
 }

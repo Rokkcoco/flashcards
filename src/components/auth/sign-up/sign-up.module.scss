@@ -8,7 +8,7 @@
   justify-content: center;
 }
 
-.inputsContainer{
+.inputsContainer {
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -19,17 +19,17 @@
   margin-bottom: 60px;
 }
 
-.buttonsContainer{
+.buttonsContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.signInButton{
+.signInButton {
   margin-bottom: 20px;
 }
 
-.buttonSubTitle{
+.buttonSubTitle {
   margin-bottom: 11px;
   color: var(--color-light-900);
 }

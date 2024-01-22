@@ -72,8 +72,6 @@
         background-color: var(--color-dark-700);
       }
 
-
-
       &:active:not(&:disabled) {
         border-color: var(--color-light-100);
         outline: transparent;
@@ -82,14 +80,11 @@
           color: var(--color-light-100);
         }
       }
-
-
     }
 
     .hoverForInput {
-      background-color:var(--color-dark-700);
+      background-color: var(--color-dark-700);
     }
-
 
     input[type='search'] {
       &::-webkit-search-decoration,
@@ -100,7 +95,6 @@
       }
     }
 
-
     .searchButton {
       color: var(--color-dark-100);
 
@@ -109,7 +103,6 @@
         width: 20px;
         height: 20px;
       }
-
     }
 
     .inputError {
@@ -145,7 +138,6 @@
         width: 20px;
         height: 20px;
       }
-
     }
 
     .search {
@@ -153,24 +145,16 @@
     }
 
     &:active .searchButton:not(:disabled),
-  &:active .cancelButton:not(:disabled){
+    &:active .cancelButton:not(:disabled) {
       display: inline-flex;
       color: var(--color-light-100);
     }
-
-
-
   }
-
-
-
 
   .disabled {
     cursor: default;
     color: var(--color-dark-300);
-
   }
-
 
   // Для того, чтобы ваши поля не были стандартного цвета, при выборе из списка ранее вводимых значений, нужно добавить:
   // где вместо transparent можно указать любой цвет.
@@ -184,17 +168,18 @@
   select:-webkit-autofill,
   select:-webkit-autofill:hover,
   select:-webkit-autofill:focus {
-    background: linear-gradient(top,  rgb(255 255 255 / 0%) 0%,rgb(0 174 255 / 4%) 50%,rgb(255 255 255 / 0%) 51%,rgb(0 174 255 / 3%) 100%);
-    border: 1px solid  var(--color-dark-300);
+    background: linear-gradient(
+      top,
+      rgb(255 255 255 / 0%) 0%,
+      rgb(0 174 255 / 4%) 50%,
+      rgb(255 255 255 / 0%) 51%,
+      rgb(0 174 255 / 3%) 100%
+    );
+    border: 1px solid var(--color-dark-300);
     box-shadow: 0 0 0 1000px var(--color-dark-700) inset;
 
     transition: background-color 5000s ease-in-out 0s;
 
     -webkit-text-fill-color: var(--color-light-100);
   }
-
 }
-
-
-
-

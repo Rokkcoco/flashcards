@@ -51,9 +51,6 @@ export const EditProfile = (props: Props) => {
     inputRef.current?.click()
   }
 
-  const result = 1
-
-  console.log(result)
   const setEditModeTrue = () => setEditMode(true)
   const handlerOnSubmit = (data: FormTypes) => {
     isDirty && onSubmit(data)

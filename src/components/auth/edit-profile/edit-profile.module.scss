@@ -12,8 +12,6 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
-
 }
 
 .title {
@@ -37,8 +35,6 @@
   margin-bottom: 13px;
   color: var(--color-dark-100);
 }
-
-
 
 .textFieldWrapper {
   width: 100%;
@@ -66,7 +62,6 @@
 .avatarWrapper {
   position: relative;
   height: 96px;
-
 }
 
 .avatarWrapperEditMode {
@@ -84,9 +79,8 @@
   padding: 6px;
 }
 
-
-.fileLoader{
-position: absolute;
+.fileLoader {
+  position: absolute;
   right: 0;
   bottom: 0;
   display: none;
