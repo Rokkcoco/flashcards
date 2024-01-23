@@ -10,7 +10,7 @@ import s from './checkbox.module.scss'
 
 export type CheckboxProps = {
   label?: string
-} & ComponentPropsWithoutRef<typeof CheckboxRadix.Root>
+} & Omit<ComponentPropsWithoutRef<typeof CheckboxRadix.Root>, 'onChange'>
 
 export const Checkbox = forwardRef<ElementRef<typeof CheckboxRadix.Root>, CheckboxProps>(
   (props, ref) => {

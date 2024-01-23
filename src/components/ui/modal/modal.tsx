@@ -8,17 +8,16 @@ import s from './modal.module.scss'
 
 type Props = {
   controlButtons?: ReactNode
-  onChange: (status: boolean) => void
-  open: boolean
+
   trigger?: ReactNode
-} & Omit<ComponentPropsWithoutRef<typeof Dialog.Root>, 'onOpenChange' | 'open'> &
-  ComponentPropsWithoutRef<'div'>
+} & ComponentPropsWithoutRef<typeof Dialog.Root> &
+  Omit<ComponentPropsWithoutRef<'div'>, 'onChange'>
 
 export const Modal = forwardRef<ElementRef<typeof Dialog.Content>, Props>((props, ref) => {
-  const { children, controlButtons, onChange, title, trigger, ...rest } = props
+  const { children, controlButtons, title, trigger, ...rest } = props
 
   return (
-    <Dialog.Root onOpenChange={onChange} {...rest}>
+    <Dialog.Root {...rest}>
       <Dialog.Trigger asChild>{trigger}</Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Overlay className={s.overlay} />

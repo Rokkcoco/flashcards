@@ -28,11 +28,9 @@ export const ModalWithTitleAndButtons: Story = {
           ipsum magni minima nihil nobis non nostrum placeat provident quas quasi, similique
           suscipit temporibus, velit veniam. Aliquid, aspernatur, dignissimos.
         </div>
-        <Checkbox checked label={'Check'} onChange={x => x} />
+        <Checkbox checked label={'Check'} />
       </>
     ),
-    onChange: x => !x,
-    open: false,
     title: 'Card',
     trigger: <Button variant={'primary'}>Click me</Button>,
   },
@@ -53,7 +51,7 @@ export const ModalWithTitleAndButtons: Story = {
             </Button>
           </>
         }
-        onChange={openHandler}
+        onOpenChange={openHandler}
         open={open}
       />
     )
@@ -71,8 +69,6 @@ export const ModalTextWithTitle: Story = {
         </div>
       </>
     ),
-    onChange: x => !x,
-    open: false,
     title: 'Lorem ipsum',
     trigger: <Button variant={'primary'}>Click me</Button>,
   },
@@ -80,7 +76,7 @@ export const ModalTextWithTitle: Story = {
     const [open, setOpen] = useState(false)
     const openHandler = () => setOpen(prevState => !prevState)
 
-    return <Modal {...args} onChange={openHandler} open={open} />
+    return <Modal {...args} onOpenChange={openHandler} open={open} />
   },
 }
 
@@ -95,15 +91,14 @@ export const ModalOnlyText: Story = {
         </div>
       </>
     ),
-    onChange: x => !x,
-    open: false,
+
     trigger: <Button variant={'primary'}>Click me</Button>,
   },
   render: args => {
     const [open, setOpen] = useState(false)
     const openHandler = () => setOpen(prevState => !prevState)
 
-    return <Modal {...args} onChange={openHandler} open={open} />
+    return <Modal {...args} onOpenChange={openHandler} open={open} />
   },
 }
 export const ModalTesting: Story = {
@@ -117,13 +112,11 @@ export const ModalTesting: Story = {
         </div>
       </>
     ),
-    onChange: x => !x,
-    open: false,
   },
   render: args => {
     const [open, setOpen] = useState(true)
     const openHandler = () => setOpen(prevState => !prevState)
 
-    return <Modal {...args} onChange={openHandler} open={open} />
+    return <Modal {...args} onOpenChange={openHandler} open={open} />
   },
 }

@@ -22,7 +22,7 @@ type Props = {
   label?: string
   onInputClear?: () => void
   onKeyEnter?: () => void
-  onTextFieldChange?: (value: string) => void
+  onValueChange?: (value: string) => void
   type?: 'email' | 'password' | 'search' | 'text'
 }
 
@@ -38,7 +38,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>((props, re
     onInputClear,
     onKeyDown,
     onKeyEnter,
-    onTextFieldChange,
+    onValueChange,
     type = 'text',
     value,
 
@@ -92,7 +92,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>((props, re
 
   const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     onChange?.(e)
-    onTextFieldChange?.(e.currentTarget.value)
+    onValueChange?.(e.currentTarget.value)
   }
 
   const onKeyPressHander = (e: KeyboardEvent<HTMLInputElement>) => {

@@ -35,7 +35,7 @@ RadioItem.displayName = 'RadioItem'
 
 export type RadioGroupProps = Omit<
   ComponentPropsWithoutRef<typeof RadioGroupRadix.Root>,
-  'asChild' | 'onChange'
+  'onChange'
 >
 
 export const RadioGroup = forwardRef<ElementRef<typeof RadioGroupRadix.Root>, RadioGroupProps>(
