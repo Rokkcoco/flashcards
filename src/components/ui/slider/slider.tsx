@@ -39,7 +39,7 @@ export const Slider = forwardRef<ElementRef<typeof SliderRadix.Root>, Props>((pr
       inputMaxRef?.current?.blur()
     }
   }
-
+  //todo fix input value = '00000'
   const onChangeInput = (newValue: number, side: 'left' | 'right') => {
     const temp = [...(value as number[])]
     const clampedValue = Math.floor(Math.abs(Math.min(newValue, 100)))
