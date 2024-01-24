@@ -63,18 +63,18 @@ export const SignIn = ({ onSubmit }: Props) => {
           </span>
         </div>
         <Typography as={'span'} className={s.passwordForgot} variant={'body_2'}>
-          <Button as={'a'} className={s.buttonForgot} href={'https://google.com'} variant={'link'}>
+          <Button as={'a'} className={s.buttonForgot} href={'/forgot-password'} variant={'link'}>
             Forgot password?
           </Button>
         </Typography>
-        <Button className={s.buttonSignUp} fullWidth type={'submit'}>
-          Sign Up
+        <Button className={s.buttonSignIn} fullWidth type={'submit'}>
+          Sign In
         </Button>
         <Typography as={'span'} className={s.isUser} variant={'body_2'}>
           Already have an account?
         </Typography>
-        <Button as={'a'} className={s.buttonSignIn} href={'https://google.com'} variant={'link'}>
-          Sign In
+        <Button as={'a'} className={s.buttonSignUp} href={'/sign-up'} variant={'link'}>
+          Sign Up
         </Button>
       </form>
     </Card>

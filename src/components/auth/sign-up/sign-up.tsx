@@ -82,7 +82,12 @@ export const SignUp = () => {
           <Typography className={s.buttonSubTitle} variant={'body_2'}>
             Already have an account?
           </Typography>
-          <Button as={'a'} href={'/'} style={{ textDecoration: 'underline' }} variant={'link'}>
+          <Button
+            as={'a'}
+            href={'/sign-in'}
+            style={{ textDecoration: 'underline' }}
+            variant={'link'}
+          >
             Sign in
           </Button>
         </div>

@@ -167,8 +167,8 @@ export const PasswordTextFieldDisabled: Story = {
 }
 export const DefaultTextFieldWithError: Story = {
   args: {
-    errorMessage: 'Wrong login!',
-    label: 'Enter your login',
+    errorMessage: 'Wrong sign-in-page!',
+    label: 'Enter your sign-in-page',
     placeholder: 'Input',
   },
   render: args => {
@@ -192,7 +192,7 @@ export const DefaultTextFieldWithError: Story = {
 }
 export const DefaultTextFieldWithoutError: Story = {
   args: {
-    label: 'Enter your login',
+    label: 'Enter your sign-in-page',
     placeholder: 'Input',
   },
   render: args => {
@@ -216,7 +216,7 @@ export const DefaultTextFieldWithoutError: Story = {
 }
 export const DefaultTextFieldDisabled: Story = {
   args: {
-    label: 'Enter your login',
+    label: 'Enter your sign-in-page',
     placeholder: 'Input',
   },
   render: args => {

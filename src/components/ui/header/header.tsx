@@ -1,4 +1,5 @@
 import { ComponentPropsWithoutRef } from 'react'
+import { redirect } from 'react-router-dom'
 
 import { HeaderLogo, LogOut, PersonOutline } from '@/assets'
 import { Avatar, Button, Typography } from '@/components/ui'
@@ -19,6 +20,7 @@ export const Header = ({ alt, authorized, className, email, name, src }: Props) 
   const classNames = {
     root: clsx(s.root, authorized ? s.authorized : s.notAuthorized, className),
   }
+
   const maxNameLenghtCharacter = 10
   const finalUserName =
     name.length >= maxNameLenghtCharacter ? `${name.slice(0, maxNameLenghtCharacter)}...` : name
@@ -41,7 +43,7 @@ export const Header = ({ alt, authorized, className, email, name, src }: Props) 
               </Avatar>
             }
           >
-            <DropdownItem>
+            <DropdownItem onClick={() => redirect('/profile')}>
               <AvatarItem alt={alt} email={email} name={name} src={src} />
             </DropdownItem>
             <DropdownSeparator />

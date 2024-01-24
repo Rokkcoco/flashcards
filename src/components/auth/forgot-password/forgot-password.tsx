@@ -56,7 +56,7 @@ export const ForgotPassword = ({ onSubmit }: Props) => {
         <Typography as={'span'} className={s.userPassword} variant={'body_2'}>
           Did you remember your password?
         </Typography>
-        <Button as={'a'} className={s.buttonLogIn} href={'https://google.com'} variant={'link'}>
+        <Button as={'a'} className={s.buttonLogIn} href={'/sign-in'} variant={'link'}>
           Try logging in
         </Button>
       </form>

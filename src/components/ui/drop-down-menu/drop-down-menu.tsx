@@ -5,7 +5,7 @@ import { clsx } from 'clsx'
 
 import s from './drop-down-menu.module.scss'
 
-type DropdownItemProps = Omit<ComponentPropsWithoutRef<typeof DropdownMenuRadix.Item>, 'asChild'>
+type DropdownItemProps = Omit<ComponentPropsWithoutRef<typeof DropdownMenuRadix.Item>, 'onChange'>
 
 export const DropdownItem = forwardRef<
   ElementRef<typeof DropdownMenuRadix.Item>,
@@ -26,7 +26,10 @@ export const DropdownItem = forwardRef<
 
 DropdownItem.displayName = 'DropdownItem'
 
-type DropdownSeparatorProps = ComponentPropsWithoutRef<typeof DropdownMenuRadix.Separator>
+type DropdownSeparatorProps = Omit<
+  ComponentPropsWithoutRef<typeof DropdownMenuRadix.Separator>,
+  'onChange'
+>
 export const DropdownSeparator = forwardRef<
   ElementRef<typeof DropdownMenuRadix.Separator>,
   DropdownSeparatorProps

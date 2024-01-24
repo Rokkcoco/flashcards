@@ -1,6 +1,7 @@
+import { useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
-import { Button, Page, TextField, Typography } from '@/components/ui'
+import { Button, Page, Slider, TextField, Typography } from '@/components/ui'
 import {
   Table,
   TableBody,
@@ -22,6 +23,8 @@ export const Decks = () => {
   //     setSearchParams(searchParams)
   // }
 
+  const minMaxSliderValues = [0, 62]
+  const [sliderValue, setSliderValue] = useState([0, 62])
   const setName = (name: string) => {
     if (name === '') {
       searchParams.delete('name')
@@ -68,7 +71,12 @@ export const Decks = () => {
           <Button>My decks</Button>
           <Button>All decks</Button>
         </div>
-        <input type={'range'} />
+        <Slider
+          max={minMaxSliderValues[1]}
+          min={minMaxSliderValues[0]}
+          onValueChange={setSliderValue}
+          value={sliderValue}
+        />
         <Button variant={'secondary'}>Clear</Button>
       </div>
       <Table width={'100%'}>
