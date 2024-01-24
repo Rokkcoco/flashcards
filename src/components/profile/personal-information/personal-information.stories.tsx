@@ -1,23 +1,22 @@
 import { useState } from 'react'
 
+import { PersonalInformation } from '@/components/profile/personal-information/personal-information'
 import { action } from '@storybook/addon-actions'
 import { Meta, StoryObj } from '@storybook/react'
-
-import { EditProfile } from './'
 
 const meta = {
   args: {
     onLogOut: action('Log out'),
   },
-  component: EditProfile,
+  component: PersonalInformation,
   tags: ['autodocs'],
-  title: 'Components/Auth/EditProfile',
-} satisfies Meta<typeof EditProfile>
+  title: 'Components/Auth/PersonalInformation',
+} satisfies Meta<typeof PersonalInformation>
 
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const EditProfileStory: Story = {
+export const PersonalInformationStory: Story = {
   args: {
     alt: 'ye',
     email: 'youremail@email.com',
@@ -28,6 +27,6 @@ export const EditProfileStory: Story = {
     const [firstName, setFirstName] = useState('Lisa')
     const callback = (data: any) => setFirstName(data.name)
 
-    return <EditProfile {...args} name={firstName} onSubmit={callback} />
+    return <PersonalInformation {...args} name={firstName} onSubmit={callback} />
   },
 }

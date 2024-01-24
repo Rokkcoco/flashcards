@@ -53,6 +53,7 @@ export const Select = forwardRef<ElementRef<typeof SelectRadix.Trigger>, SelectP
     //todo rotate svg with styles, not with function. Data-state='open'
     //todo check shadcn select, maybe refactor
     //todo split selectItem with selectItemText
+    //todo create new component for label
     return (
       <>
         {label && (

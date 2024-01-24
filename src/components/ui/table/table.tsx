@@ -4,7 +4,7 @@ import { clsx } from 'clsx'
 
 import s from './table.module.scss'
 
-export const TableRoot = forwardRef<ElementRef<'table'>, ComponentPropsWithoutRef<'table'>>(
+export const Table = forwardRef<ElementRef<'table'>, ComponentPropsWithoutRef<'table'>>(
   (props, ref) => {
     const { className, ...rest } = props
 
@@ -16,7 +16,7 @@ export const TableRoot = forwardRef<ElementRef<'table'>, ComponentPropsWithoutRe
   }
 )
 
-TableRoot.displayName = 'TableRoot'
+Table.displayName = 'Table'
 
 export const TableHead = forwardRef<ElementRef<'thead'>, ComponentPropsWithoutRef<'thead'>>(
   (props, ref) => {
@@ -40,7 +40,7 @@ export const TableBody = forwardRef<ElementRef<'tbody'>, ComponentPropsWithoutRe
 
 TableBody.displayName = 'TableBody'
 
-export const TableDataCell = forwardRef<ElementRef<'td'>, ComponentPropsWithoutRef<'td'>>(
+export const TableCell = forwardRef<ElementRef<'td'>, ComponentPropsWithoutRef<'td'>>(
   (props, ref) => {
     const { className, ...rest } = props
 
@@ -52,7 +52,7 @@ export const TableDataCell = forwardRef<ElementRef<'td'>, ComponentPropsWithoutR
   }
 )
 
-TableDataCell.displayName = 'TableDataCell'
+TableCell.displayName = 'TableCell'
 
 export const TableRow = forwardRef<ElementRef<'tr'>, ComponentPropsWithoutRef<'tr'>>(
   (props, ref) => {

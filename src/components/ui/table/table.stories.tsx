@@ -1,19 +1,19 @@
 import { Edit2Outline, PlayCircleOutline, TrashOutline } from '@/assets'
 import {
+  Table,
   TableBody,
-  TableDataCell,
+  TableCell,
   TableHead,
   TableHeadCell,
-  TableRoot,
   TableRow,
 } from '@/components/ui/table/table'
 import { Meta, StoryObj } from '@storybook/react'
 
 const meta = {
-  component: TableRoot,
+  component: Table,
   tags: ['autodocs'],
   title: 'Components/Ui/Table',
-} satisfies Meta<typeof TableRoot>
+} satisfies Meta<typeof Table>
 
 export default meta
 type Story = StoryObj<typeof meta>
@@ -49,7 +49,7 @@ export const TableStory: Story = {
     ]
 
     return (
-      <TableRoot {...args}>
+      <Table {...args}>
         <TableHead>
           <TableRow>
             <TableHeadCell>Name</TableHeadCell>
@@ -62,21 +62,21 @@ export const TableStory: Story = {
         <TableBody>
           {options.map(t => (
             <TableRow key={t.lastUpdated}>
-              <TableDataCell>{t.name}</TableDataCell>
-              <TableDataCell>{t.cardsNumber}</TableDataCell>
-              <TableDataCell>{t.name}</TableDataCell>
-              <TableDataCell>
+              <TableCell>{t.name}</TableCell>
+              <TableCell>{t.cardsNumber}</TableCell>
+              <TableCell>{t.name}</TableCell>
+              <TableCell>
                 {new Date(t.lastUpdated).toLocaleString('ru', { dateStyle: 'short' })}
-              </TableDataCell>
-              <TableDataCell>
+              </TableCell>
+              <TableCell>
                 <TrashOutline />
                 <Edit2Outline />
                 <PlayCircleOutline />
-              </TableDataCell>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
-      </TableRoot>
+      </Table>
     )
   },
 }

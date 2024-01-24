@@ -11,7 +11,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { clsx } from 'clsx'
 import { z } from 'zod'
 
-import s from './edit-profile.module.scss'
+import s from './personal-information.module.scss'
 
 const schema = z.object({
   name: z.string().min(3),
@@ -26,7 +26,7 @@ type Props = {
   onSubmit: (data: FormTypes) => void
   src: string
 }
-export const EditProfile = (props: Props) => {
+export const PersonalInformation = (props: Props) => {
   const { alt, email, name, onLogOut, onSubmit, src } = props
   const [editMode, setEditMode] = useState(false)
   const {

@@ -62,7 +62,7 @@ export const Pagination = ({
       <PaginationNextButton disabled={currentPage === totalPageCount} onClick={forward} />
       <Typography variant={'body_2'}>Показать</Typography>
       <Select
-        onChange={onChangePageSize}
+        onValueChange={onChangePageSize}
         options={selectOptions}
         value={pageSize.toString()}
         variant={'pagination'}
