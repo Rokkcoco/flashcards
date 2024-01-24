@@ -13,7 +13,7 @@ import { DropdownItem, DropdownMenu, DropdownSeparator } from './'
 const meta = {
   component: DropdownMenu,
   tags: ['autodocs'],
-  title: 'Components/Ui/DropdownMenu',
+  title: 'Components/UI/DropdownMenu',
 } satisfies Meta<typeof DropdownMenu>
 
 export default meta

@@ -1,6 +1,6 @@
-import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
+import { ComponentPropsWithoutRef, ElementRef, forwardRef, useId } from 'react'
 
-import { ArrowIosDownOutline, ArrowIosUp, KeyboardArrowDown } from '@/assets'
+import { ArrowIosDownOutline } from '@/assets'
 import { Typography } from '@/components/ui'
 import * as Label from '@radix-ui/react-label'
 import * as SelectRadix from '@radix-ui/react-select'
@@ -8,102 +8,97 @@ import clsx from 'clsx'
 
 import s from './select.module.scss'
 
-type SelectItemProps = { variant?: 'default' | 'pagination' } & ComponentPropsWithoutRef<
-  typeof SelectRadix.Item
+type SelectItemWithoutTextProps = { isPagination?: boolean } & Omit<
+  ComponentPropsWithoutRef<typeof SelectRadix.Item>,
+  'onChange'
 >
 
-const SelectItem = forwardRef<ElementRef<typeof SelectRadix.Item>, SelectItemProps>(
-  ({ children, variant = 'default', ...rest }, ref) => {
-    return (
-      <Typography as={'label'} variant={VariantIsPagination(variant) ? 'body_2' : 'body_1'}>
-        <SelectRadix.Item
-          {...rest}
-          className={clsx(s.SelectItem, VariantIsPagination(variant) && s.PaginationSelectItem)}
-          ref={ref}
-        >
-          <SelectRadix.ItemText>{children}</SelectRadix.ItemText>
-          <SelectRadix.ItemIndicator className={s.SelectItemIndicators}></SelectRadix.ItemIndicator>
-        </SelectRadix.Item>
-      </Typography>
-    )
+export const SelectItemWithoutText = forwardRef<
+  ElementRef<typeof SelectRadix.Item>,
+  SelectItemWithoutTextProps
+>(({ children, className, isPagination, ...rest }, ref) => {
+  const classNames = {
+    item: clsx(s.selectItem, isPagination && s.paginationSelectItem, className),
   }
-)
 
-SelectItem.displayName = 'SelectItem'
+  return (
+    <SelectRadix.Item {...rest} className={classNames.item} ref={ref}>
+      {children}
+      <SelectRadix.ItemIndicator />
+    </SelectRadix.Item>
+  )
+})
+
+SelectItemWithoutText.displayName = 'SelectItemWithoutText'
+
+type SelectItemWithTextProps = { isPagination?: boolean } & Omit<
+  ComponentPropsWithoutRef<typeof SelectRadix.Item>,
+  'onChange'
+>
+
+export const SelectItemWithText = forwardRef<
+  ElementRef<typeof SelectRadix.Item>,
+  SelectItemWithTextProps
+>(({ children, className, isPagination, ...rest }, ref) => {
+  const classNames = {
+    item: clsx(s.selectItem, isPagination && s.paginationSelectItem, className),
+  }
+
+  return (
+    <SelectRadix.Item {...rest} className={classNames.item} ref={ref}>
+      <SelectRadix.ItemText>{children}</SelectRadix.ItemText>
+      <SelectRadix.ItemIndicator />
+    </SelectRadix.Item>
+  )
+})
+
+SelectItemWithText.displayName = 'SelectItemWithText'
 
 export type SelectProps = {
   label?: string
-  options: Record<string, string>
-  value: string
   variant?: 'default' | 'pagination'
 } & ComponentPropsWithoutRef<typeof SelectRadix.Root>
-export const Select = forwardRef<ElementRef<typeof SelectRadix.Trigger>, SelectProps>(
-  ({ label, open, options, value, variant = 'default', ...rest }, ref) => {
-    const GetTopicalIcon = (variant: 'default' | 'pagination', open: false | true | undefined) => {
-      if (VariantIsPagination(variant)) {
-        return <KeyboardArrowDown />
-      }
-      if (open) {
-        return <ArrowIosUp />
-      }
 
-      return <ArrowIosDownOutline />
+export const Select = forwardRef<ElementRef<typeof SelectRadix.Trigger>, SelectProps>(
+  ({ children, label, open, value, variant = 'default', ...rest }, ref) => {
+    const isPagination = variant === 'pagination'
+    const selectID = useId()
+
+    //todo create new component for label
+
+    const classNames = {
+      content: clsx(s.selectContent, isPagination && s.paginationSelectContent),
+      label: s.label,
+      selectIcon: clsx(s.selectIcon, isPagination && s.paginationSelectIcon),
+      selectViewport: s.s,
+      trigger: clsx(s.selectTrigger, isPagination && s.paginationSelectTrigger),
     }
 
-    //todo rotate svg with styles, not with function. Data-state='open'
-    //todo check shadcn select, maybe refactor
-    //todo split selectItem with selectItemText
-    //todo create new component for label
     return (
       <>
         {label && (
-          <Label.Root className={s.label}>
-            <Typography as={'label'} variant={'body_2'}>
+          <Label.Root asChild className={classNames.label}>
+            <Typography as={'label'} htmlFor={selectID} variant={'body_2'}>
               {label}
             </Typography>
           </Label.Root>
         )}
-        <Typography as={'label'} variant={VariantIsPagination(variant) ? 'body_2' : 'body_1'}>
-          <SelectRadix.Root open={open} {...rest}>
-            <SelectRadix.Trigger
-              className={clsx(
-                s.SelectTrigger,
-                VariantIsPagination(variant) && s.PaginationSelectTrigger
-              )}
-              ref={ref}
-            >
-              <SelectRadix.Value aria-label={value}>{options[value]}</SelectRadix.Value>
-              <SelectRadix.Icon asChild className={s.SelectIcon}>
-                {GetTopicalIcon(variant, open)}
-              </SelectRadix.Icon>
-            </SelectRadix.Trigger>
-            <SelectRadix.Portal>
-              <SelectRadix.Content
-                className={clsx(
-                  s.SelectContent,
-                  VariantIsPagination(variant) && s.PaginationSelectContent
-                )}
-                position={'popper'}
-                sideOffset={0}
-              >
-                <SelectRadix.Viewport className={s.SelectViewport}>
-                  {Object.keys(options).map(t => (
-                    <SelectItem key={t} value={t} variant={variant}>
-                      {options[t]}
-                    </SelectItem>
-                  ))}
-                </SelectRadix.Viewport>
-              </SelectRadix.Content>
-            </SelectRadix.Portal>
-          </SelectRadix.Root>
-        </Typography>
+        <SelectRadix.Root open={open} value={value} {...rest}>
+          <SelectRadix.Trigger className={classNames.trigger} id={selectID} ref={ref}>
+            <SelectRadix.Value aria-label={value} />
+            <SelectRadix.Icon asChild className={classNames.selectIcon}>
+              <ArrowIosDownOutline />
+            </SelectRadix.Icon>
+          </SelectRadix.Trigger>
+          <SelectRadix.Portal>
+            <SelectRadix.Content className={classNames.content} position={'popper'} sideOffset={0}>
+              <SelectRadix.Viewport>{children}</SelectRadix.Viewport>
+            </SelectRadix.Content>
+          </SelectRadix.Portal>
+        </SelectRadix.Root>
       </>
     )
   }
 )
-
-function VariantIsPagination(variant: 'default' | 'pagination'): boolean {
-  return variant === 'pagination'
-}
 
 Select.displayName = 'Select'

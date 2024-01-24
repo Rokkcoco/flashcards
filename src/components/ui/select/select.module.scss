@@ -3,10 +3,11 @@ button {
 }
 
 .label {
+  cursor: pointer;
   color: var(--color-dark-100);
 }
 
-.SelectTrigger {
+.selectTrigger {
   cursor: pointer;
 
   display: flex;
@@ -15,6 +16,11 @@ button {
 
   width: 100%;
   margin: 0;
+
+  font-size: 16px;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 24px;
 
   background-color: var(--color-dark-900);
   border: 1px solid var(--color-dark-300);
@@ -46,18 +52,14 @@ button {
   span {
     margin-left: 12px;
   }
-
-  svg {
-    width: 16px;
-    height: 16px;
-    margin: 12px 10px;
-  }
 }
 
-.PaginationSelectTrigger {
+.paginationSelectTrigger {
   width: 50px;
   height: 24px;
   margin: 0 9px 0 6px;
+
+  font-size: 14px;
 
   background-color: var(--color-dark-700);
   border: 1px solid var(--color-dark-500);
@@ -69,15 +71,20 @@ button {
   svg {
     width: 16px;
     height: 16px;
-    margin: 4px 2px;
+    margin: 4px;
   }
 }
 
-.SelectContent {
+.selectContent {
   cursor: pointer;
 
   width: var(--radix-select-trigger-width);
   max-height: var(--radix-select-content-available-height);
+
+  font-size: 16px;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 24px;
 
   background-color: var(--color-dark-900);
   border: 1px solid var(--color-dark-300);
@@ -89,7 +96,8 @@ button {
   }
 }
 
-.PaginationSelectContent {
+.paginationSelectContent {
+  font-size: 14px;
   background-color: var(--color-dark-700);
   border: 1px solid var(--color-dark-500);
   border-top: none;
@@ -99,7 +107,7 @@ button {
   }
 }
 
-.SelectItem {
+.selectItem {
   cursor: pointer;
   padding: 6px 0;
 
@@ -110,13 +118,43 @@ button {
   }
 }
 
-.PaginationSelectItem {
+.paginationSelectItem {
   width: auto;
   height: 24px;
   padding: 0;
 }
 
-.SelectIcon {
+@keyframes rotate-down {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(180deg);
+  }
+}
+
+@keyframes rotate-up {
+  0% {
+    transform: rotate(180deg);
+  }
+
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.selectIcon {
+  display: flex;
+  align-items: center;
   margin: 0;
   padding: 0;
+
+  [data-state='open'] & {
+    animation: rotate-down 0.2s linear forwards;
+  }
+
+  [data-state='closed'] & {
+    animation: rotate-up 0.2s linear forwards;
+  }
 }

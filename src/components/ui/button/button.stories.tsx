@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { Logout } from '@/assets'
+import { LogOut } from '@/assets'
 import { Button } from '@/components/ui'
 
 const meta = {
@@ -12,7 +12,7 @@ const meta = {
   },
   component: Button,
   tags: ['autodocs'],
-  title: 'Components/Ui/Button',
+  title: 'Components/UI/Button',
 } satisfies Meta<typeof Button>
 
 export default meta
@@ -29,7 +29,7 @@ export const PrimaryWithIcon: Story = {
   args: {
     children: (
       <>
-        <Logout />
+        <LogOut />
         Button primary
       </>
     ),
@@ -49,7 +49,7 @@ export const SecondaryWithIcon: Story = {
   args: {
     children: (
       <>
-        <Logout />
+        <LogOut />
         Button secondary
       </>
     ),

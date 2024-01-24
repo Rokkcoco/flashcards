@@ -7,7 +7,7 @@ import { TextField } from './'
 const meta = {
   component: TextField,
   tags: ['autodocs'],
-  title: 'Components/Ui/TextField',
+  title: 'Components/UI/TextField',
 } satisfies Meta<typeof TextField>
 
 export default meta
@@ -15,7 +15,7 @@ type Story = StoryObj<typeof meta>
 
 export const SearchTextFieldWithError: Story = {
   args: {
-    error: 'Error!',
+    errorMessage: 'Error!',
     label: 'Search field',
     placeholder: 'Input search',
     type: 'search',
@@ -91,7 +91,7 @@ export const SearchTextFieldDisabled: Story = {
 }
 export const PasswordTextFieldWithError: Story = {
   args: {
-    error: 'Wrong password!',
+    errorMessage: 'Wrong password!',
     label: 'Enter your password',
     placeholder: 'Input',
     type: 'password',
@@ -167,7 +167,7 @@ export const PasswordTextFieldDisabled: Story = {
 }
 export const DefaultTextFieldWithError: Story = {
   args: {
-    error: 'Wrong login!',
+    errorMessage: 'Wrong login!',
     label: 'Enter your login',
     placeholder: 'Input',
   },
