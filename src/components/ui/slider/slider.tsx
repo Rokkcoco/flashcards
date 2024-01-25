@@ -50,7 +50,7 @@ export const Slider = forwardRef<ElementRef<typeof SliderRadix.Root>, Props>((pr
   }
   const onChangeInput = (newValue: number, side: 'left' | 'right') => {
     const temp = [...(value as number[])]
-    const clampedValue = Math.floor(Math.abs(Math.min(newValue, 100)))
+    const clampedValue = Math.floor(Math.abs(Math.min(newValue, max ?? 100)))
 
     if (side === 'left') {
       temp[0] = clampedValue

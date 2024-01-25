@@ -1,8 +1,18 @@
 import { useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
-import { Edit2Outline, PlayCircleOutline, TrashOutline } from '@/assets'
-import { Button, Page, Slider, TabItem, Tabs, TextField, Typography } from '@/components/ui'
+import { Edit2Outline, ImageOutline, PlayCircleOutline, TrashOutline } from '@/assets'
+import {
+  Button,
+  Checkbox,
+  Modal,
+  Page,
+  Slider,
+  TabItem,
+  Tabs,
+  TextField,
+  Typography,
+} from '@/components/ui'
 import {
   Table,
   TableBody,
@@ -11,7 +21,7 @@ import {
   TableHeadCell,
   TableRow,
 } from '@/components/ui/table'
-import { useCreateDeckMutation, useGetDecksQuery } from '@/services/decks'
+import { useCreateDeckMutation, useDeleteDeckMutation, useGetDecksQuery } from '@/services/decks'
 
 import s from './decks.module.scss'
 
@@ -38,6 +48,8 @@ export const Decks = () => {
   const minMaxSliderValues = [0, 62]
   const [sliderValue, setSliderValue] = useState([0, 62])
   const [tabsValue, setTabsValue] = useState('allCards')
+  const [textFieldValueForNewDeck, setTextFieldValueForNewDeck] = useState('')
+  const [checkboxValueForNewDeck, setCheckboxValueForNewDeck] = useState(false)
 
   const setName = (name: string) => {
     if (name === '') {
@@ -55,6 +67,7 @@ export const Decks = () => {
   })
 
   const [createDeck] = useCreateDeckMutation()
+  const [deleteDeck] = useDeleteDeckMutation()
 
   if (isLoading) {
     return <div>Loading...</div>
@@ -64,6 +77,37 @@ export const Decks = () => {
     console.error(error)
 
     return <div>Error</div>
+  }
+
+  const AddDeckModal = () => {
+    return (
+      <Modal
+        controlButtons={
+          <>
+            <Button>Add New Pack</Button>
+            <Button variant={'secondary'}>Cancel</Button>
+          </>
+        }
+        title={'Add New Deck'}
+        trigger={<Button>Add New Deck</Button>}
+      >
+        <TextField
+          label={'Name Pack'}
+          onValueChange={setTextFieldValueForNewDeck}
+          placeholder={'Minimum X symbols'}
+          value={textFieldValueForNewDeck}
+        />
+        <Button fullWidth variant={'secondary'}>
+          <ImageOutline />
+          Upload Image
+        </Button>
+        <Checkbox
+          checked={checkboxValueForNewDeck}
+          label={'Private pack'}
+          onCheckedChange={() => setCheckboxValueForNewDeck(prevState => !prevState)}
+        />
+      </Modal>
+    )
   }
 
   return (
@@ -93,6 +137,7 @@ export const Decks = () => {
           onValueChange={setSliderValue}
           value={sliderValue}
         />
+        <AddDeckModal />
         <Button variant={'secondary'}>
           <TrashOutline />
           Clear Field
@@ -120,7 +165,7 @@ export const Decks = () => {
                   <button>
                     <PlayCircleOutline />
                   </button>
-                  <button>
+                  <button onClick={() => deleteDeck({ id: deck.id })}>
                     <TrashOutline />
                   </button>
                   <button>

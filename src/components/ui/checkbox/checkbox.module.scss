@@ -2,15 +2,9 @@ button {
   all: unset;
 }
 
-.container {
-  display: flex;
-  align-items: center;
-}
-
 .label {
   cursor: pointer;
   display: flex;
-  gap: 2px;
   align-items: center;
 
   &.disabled {
@@ -21,6 +15,8 @@ button {
 
 .root {
   cursor: pointer;
+
+  position: relative;
 
   display: flex;
   align-items: center;
@@ -36,12 +32,51 @@ button {
 
   &:disabled {
     cursor: initial;
+    color: var(--color-dark-100);
     background-color: var(--color-light-700);
     border-color: var(--color-dark-100);
   }
 
+  &:hover:not([data-disabled], [data-state='checked']) {
+    background-color: var(--color-dark-500);
+  }
+
+  &:hover:not([data-disabled])::before {
+    content: '';
+
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    border-radius: 50%;
+    box-shadow: 0 0 0 9px var(--color-dark-500);
+  }
+
   &:disabled:not([data-state='checked']) {
     background-color: var(--color-dark-900);
+  }
+
+  &:focus-within:not([data-state='checked']) {
+    background-color: var(--color-dark-100);
+  }
+
+  &:focus-within:not([data-state='checked'])::before {
+    content: '';
+
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    border-radius: 50%;
+    box-shadow: 0 0 0 9px var(--color-dark-100);
   }
 
   span {
@@ -52,29 +87,11 @@ button {
 
 .buttonWrapper {
   display: flex;
+  gap: 11px;
   align-items: center;
-  justify-content: center;
-
-  width: 36px;
-  height: 36px;
-
-  background-color: transparent;
-  border-radius: 50%;
+  width: fit-content;
 
   &.disabled {
     cursor: initial;
-  }
-
-  &:focus-within,
-  .root:not([data-state='checked']):focus-within {
-    background-color: var(--color-dark-100);
-  }
-
-  &:hover:not(.disabled) {
-    background-color: var(--color-dark-500);
-  }
-
-  &:hover:not(.disabled) .root:not([data-state='checked']) {
-    background-color: var(--color-dark-500);
   }
 }
