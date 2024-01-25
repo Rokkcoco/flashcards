@@ -25,6 +25,13 @@ export const Slider = forwardRef<ElementRef<typeof SliderRadix.Root>, Props>((pr
   const inputMinElement = document.getElementById(inputMinID) as HTMLInputElement | null
   const inputMaxElement = document.getElementById(inputMaxID) as HTMLInputElement | null
 
+  const parseInputValues = () => {
+    if (inputMinElement?.value && inputMaxElement?.value) {
+      inputMinElement.value = String(parseInt(inputMinElement.value, 10))
+      inputMaxElement.value = String(parseInt(inputMaxElement.value, 10))
+    }
+  }
+
   const inputElementKeyDown = (e: KeyboardEvent<HTMLInputElement>, input: 'left' | 'right') => {
     if (input === 'left' && e.key === 'Backspace' && inputMinElement?.value.length === 1) {
       inputMinElement.value = ''
@@ -34,9 +41,11 @@ export const Slider = forwardRef<ElementRef<typeof SliderRadix.Root>, Props>((pr
     }
     if (input === 'left' && e.key === 'Enter') {
       inputMinRef?.current?.blur()
+      parseInputValues()
     }
     if (input === 'right' && e.key === 'Enter') {
       inputMaxRef?.current?.blur()
+      parseInputValues()
     }
   }
   //todo fix input value = '00000'
