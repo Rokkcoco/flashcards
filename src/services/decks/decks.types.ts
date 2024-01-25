@@ -57,3 +57,14 @@ export type CardResponse = {
   updated: string
   userId: string
 }
+export type GetDeckArgs = {
+  author: DeckAuthor
+  cardsCount: number
+  cover: string
+  created: string
+  id: string
+  isPrivate: boolean
+  name: string
+  updated: string
+  userId: string
+}

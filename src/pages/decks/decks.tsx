@@ -25,8 +25,8 @@ import {
 import {
   useCreateDeckMutation,
   useDeleteDeckMutation,
+  useGetDeckQuery,
   useGetDecksQuery,
-  useLazyGetCardQuery,
 } from '@/services/decks'
 import { CheckedState } from '@radix-ui/react-checkbox'
 
@@ -77,13 +77,14 @@ export const Decks = () => {
     minCardsCount: 3,
     name: searchName ?? undefined,
   })
-
+  const [deckId, setDeckId] = useState('')
+  const [skip, setSkip] = useState(true)
   const [createDeck] = useCreateDeckMutation()
   const [deleteDeck] = useDeleteDeckMutation()
-  const [getCard, { currentData: CardCurrentData, data: CardData }] = useLazyGetCardQuery()
+  // const { data: CardData } = useGetCardQuery({ id: cardId }, { skip })
+  const { data: DeckData } = useGetDeckQuery({ id: deckId }, { skip })
 
-  console.log(CardData)
-  console.log(CardCurrentData)
+  console.log(DeckData)
 
   if (isLoading) {
     return <div>Loading...</div>
@@ -188,7 +189,12 @@ export const Decks = () => {
                 <TableCell>{new Date(deck.updated).toLocaleDateString('ru')}</TableCell>
                 <TableCell>{deck.author.name}</TableCell>
                 <TableCell>
-                  <button onClick={() => getCard({ id: deck.id })}>
+                  <button
+                    onClick={() => {
+                      setDeckId(deck.id)
+                      setSkip(false)
+                    }}
+                  >
                     <PlayCircleOutline />
                   </button>
                   <button>
