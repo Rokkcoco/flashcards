@@ -11,10 +11,10 @@ type TabItemProps = ComponentPropsWithoutRef<typeof TabsRadix.Trigger>
 
 export const TabItem = forwardRef<ElementRef<typeof TabsRadix.Trigger>, TabItemProps>(
   (props, ref) => {
-    const { children, value, ...rest } = props
+    const { children, ...rest } = props
 
     return (
-      <TabsRadix.Trigger {...rest} asChild className={s.trigger} ref={ref} value={value}>
+      <TabsRadix.Trigger {...rest} asChild className={s.trigger} ref={ref}>
         <Typography as={'button'} variant={'body_1'}>
           {children}
         </Typography>

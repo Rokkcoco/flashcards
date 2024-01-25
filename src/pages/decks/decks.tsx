@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
-import { Button, Page, Slider, TextField, Typography } from '@/components/ui'
+import { Edit2Outline, PlayCircleOutline, TrashOutline } from '@/assets'
+import { Button, Page, Slider, TabItem, Tabs, TextField, Typography } from '@/components/ui'
 import {
   Table,
   TableBody,
@@ -22,9 +23,22 @@ export const Decks = () => {
   //     searchParams.set('page', page.toString())
   //     setSearchParams(searchParams)
   // }
+  //
+  // const orderBy = JSON.parse(search.get('orderBy') ?? 'null')
+  // const setOrderBy = (value: Sort) => {
+  //   search.set('orderBy', JSON.stringify(value))
+  //   setSearch(search)
+  // }
+  // const orderByString = useMemo(() => {
+  //   if (!orderBy) return null
+  //
+  //   return `${orderBy.key}-${orderBy.direction}`
+  // }, [orderBy])
 
   const minMaxSliderValues = [0, 62]
   const [sliderValue, setSliderValue] = useState([0, 62])
+  const [tabsValue, setTabsValue] = useState('allCards')
+
   const setName = (name: string) => {
     if (name === '') {
       searchParams.delete('name')
@@ -36,7 +50,7 @@ export const Decks = () => {
   }
   const { data, error, isLoading } = useGetDecksQuery({
     currentPage: page || 1,
-    itemsPerPage: 8,
+    itemsPerPage: 5,
     name: name ?? undefined,
   })
 
@@ -58,7 +72,7 @@ export const Decks = () => {
         <Typography as={'h1'} variant={'large'}>
           Decks
         </Typography>
-        <Button onClick={() => createDeck({ name: '123123' })}>Add new deck</Button>
+        <Button onClick={() => createDeck({ name: 'test deck' })}>Add new deck</Button>
       </div>
       <div className={s.filter}>
         <TextField
@@ -68,8 +82,10 @@ export const Decks = () => {
           value={name ?? ''}
         />
         <div className={s.tabs}>
-          <Button>My decks</Button>
-          <Button>All decks</Button>
+          <Tabs onValueChange={setTabsValue} value={tabsValue}>
+            <TabItem value={'myCards'}>My Cards</TabItem>
+            <TabItem value={'allCards'}>All Cards</TabItem>
+          </Tabs>
         </div>
         <Slider
           max={minMaxSliderValues[1]}
@@ -77,7 +93,10 @@ export const Decks = () => {
           onValueChange={setSliderValue}
           value={sliderValue}
         />
-        <Button variant={'secondary'}>Clear</Button>
+        <Button variant={'secondary'}>
+          <TrashOutline />
+          Clear Field
+        </Button>
       </div>
       <Table width={'100%'}>
         <TableHead>
@@ -86,6 +105,7 @@ export const Decks = () => {
             <TableHeadCell>Cards</TableHeadCell>
             <TableHeadCell>Last updated</TableHeadCell>
             <TableHeadCell>Created by</TableHeadCell>
+            <TableHeadCell></TableHeadCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -94,8 +114,19 @@ export const Decks = () => {
               <TableRow key={deck.id}>
                 <TableCell>{deck.name}</TableCell>
                 <TableCell>{deck.cardsCount}</TableCell>
-                <TableCell>{new Date(deck.updated).toLocaleDateString()}</TableCell>
+                <TableCell>{new Date(deck.updated).toLocaleDateString('ru')}</TableCell>
                 <TableCell>{deck.author.name}</TableCell>
+                <TableCell>
+                  <button>
+                    <PlayCircleOutline />
+                  </button>
+                  <button>
+                    <TrashOutline />
+                  </button>
+                  <button>
+                    <Edit2Outline />
+                  </button>
+                </TableCell>
               </TableRow>
             )
           })}

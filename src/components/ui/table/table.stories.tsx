@@ -69,9 +69,9 @@ export const TableStory: Story = {
                 {new Date(t.lastUpdated).toLocaleString('ru', { dateStyle: 'short' })}
               </TableCell>
               <TableCell>
-                <TrashOutline />
-                <Edit2Outline />
                 <PlayCircleOutline />
+                <Edit2Outline />
+                <TrashOutline />
               </TableCell>
             </TableRow>
           ))}

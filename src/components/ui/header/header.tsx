@@ -1,5 +1,5 @@
 import { ComponentPropsWithoutRef } from 'react'
-import { redirect } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import { HeaderLogo, LogOut, PersonOutline } from '@/assets'
 import { Avatar, Button, Typography } from '@/components/ui'
@@ -21,9 +21,9 @@ export const Header = ({ alt, authorized, className, email, name, src }: Props) 
     root: clsx(s.root, authorized ? s.authorized : s.notAuthorized, className),
   }
 
-  const maxNameLenghtCharacter = 10
+  const maxNameLengthCharacter = 10
   const finalUserName =
-    name.length >= maxNameLenghtCharacter ? `${name.slice(0, maxNameLenghtCharacter)}...` : name
+    name.length >= maxNameLengthCharacter ? `${name.slice(0, maxNameLengthCharacter)}...` : name
 
   return (
     <header className={classNames.root}>
@@ -43,14 +43,17 @@ export const Header = ({ alt, authorized, className, email, name, src }: Props) 
               </Avatar>
             }
           >
-            <DropdownItem onClick={() => redirect('/profile')}>
+            <DropdownItem>
               <AvatarItem alt={alt} email={email} name={name} src={src} />
             </DropdownItem>
             <DropdownSeparator />
-            <DropdownItem>
-              <PersonOutline />
-              My profile
-            </DropdownItem>
+            {/*можно ли так обернуть? */}
+            <Link to={'/profile'}>
+              <DropdownItem>
+                <PersonOutline />
+                My profile
+              </DropdownItem>
+            </Link>
             <DropdownSeparator />
             <DropdownItem>
               <LogOut />

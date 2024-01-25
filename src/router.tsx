@@ -1,11 +1,6 @@
-import {
-  Navigate,
-  Outlet,
-  RouteObject,
-  RouterProvider,
-  createBrowserRouter,
-} from 'react-router-dom'
+import { Navigate, RouteObject, RouterProvider, createBrowserRouter } from 'react-router-dom'
 
+import { Layout } from '@/components/ui'
 import { Decks, ForgotPasswordPage, ProfilePage, SignInPage, SignUpPage } from '@/pages'
 import { Error404 } from '@/pages/error-404'
 
@@ -52,5 +47,5 @@ export const Router = () => {
 function PrivateRoutes() {
   const isAuthenticated = true
 
-  return isAuthenticated ? <Outlet /> : <Navigate to={'/sign-in'} />
+  return isAuthenticated ? <Layout /> : <Navigate to={'/sign-in'} />
 }

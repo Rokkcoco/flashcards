@@ -1,4 +1,5 @@
 import { CSSProperties, ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
+import { Outlet } from 'react-router-dom'
 
 import { Header } from '@/components/ui/header'
 
@@ -18,7 +19,9 @@ export const Layout = forwardRef<ElementRef<'div'>, Props>(
           name={'Liza'}
           src={'https://xsgames.co/randomusers/avatar.php?g=female'}
         />
-        <main className={s.main}>{children}</main>
+        <main className={s.main}>
+          <Outlet />
+        </main>
       </div>
     )
   }

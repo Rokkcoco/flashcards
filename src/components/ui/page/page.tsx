@@ -8,9 +8,11 @@ type Props = ComponentPropsWithoutRef<'div'> & {
 }
 export const Page = forwardRef<ElementRef<'div'>, Props>(
   ({ className, mt = '33px', style, ...rest }, ref) => {
-    const classes = clsx(className, s.container)
+    const classNames = {
+      page: clsx(className, s.container),
+    }
     const styles: CSSProperties = { marginTop: mt, ...style }
 
-    return <div className={classes} ref={ref} style={styles} {...rest} />
+    return <div className={classNames.page} ref={ref} style={styles} {...rest} />
   }
 )

@@ -14,10 +14,18 @@
 }
 
 .cell {
+  width: fit-content;
+  height: 100%;
   padding: 6px 24px;
+
   font-size: var(--font-size-s);
   line-height: var(--line-height-m);
   text-align: left;
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
 }
 
 .data {
@@ -25,8 +33,8 @@
 
   &:last-child {
     display: flex;
-    flex-direction: row-reverse;
     gap: 10px;
+    align-content: center;
 
     margin-right: 0;
 
