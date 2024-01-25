@@ -1,6 +1,14 @@
 import { baseApi } from '@/services'
 
-import { CreateDeckArgs, Deck, DeckResponse, DeleteDeckArgs, GetDecksArgs } from '.'
+import {
+  CardResponse,
+  CreateDeckArgs,
+  Deck,
+  DeckResponse,
+  DeleteDeckArgs,
+  GetCardArgs,
+  GetDecksArgs,
+} from '.'
 
 export const DecksService = baseApi.injectEndpoints({
   endpoints: builder => {
@@ -20,6 +28,13 @@ export const DecksService = baseApi.injectEndpoints({
           url: `v1/decks/${args.id}`,
         }),
       }),
+      /*maybe not Decks for getCard*/
+      getCard: builder.query<CardResponse, GetCardArgs>({
+        query: args => ({
+          params: args,
+          url: `v1/cards/${args.id}`,
+        }),
+      }),
       getDecks: builder.query<DeckResponse, GetDecksArgs | void>({
         providesTags: ['Decks'],
         query: args => ({
@@ -30,4 +45,9 @@ export const DecksService = baseApi.injectEndpoints({
     }
   },
 })
-export const { useCreateDeckMutation, useDeleteDeckMutation, useGetDecksQuery } = DecksService
+export const {
+  useCreateDeckMutation,
+  useDeleteDeckMutation,
+  useGetDecksQuery,
+  useLazyGetCardQuery,
+} = DecksService

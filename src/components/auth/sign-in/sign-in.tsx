@@ -57,10 +57,7 @@ export const SignIn = ({ onSubmit }: Props) => {
             placeholder={'Minimum X symbols'}
             type={'password'}
           />
-
-          <span className={s.checkbox}>
-            <ControlledCheckbox control={control} label={'Remember Me'} name={'rememberMe'} />
-          </span>
+          <ControlledCheckbox control={control} label={'Remember Me'} name={'rememberMe'} />
         </div>
         <Typography as={'span'} className={s.passwordForgot} variant={'body_2'}>
           <Button as={'a'} className={s.buttonForgot} href={'/forgot-password'} variant={'link'}>

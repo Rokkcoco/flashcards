@@ -1,5 +1,6 @@
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@/assets'
 import { usePagination } from '@/common/hooks/usePagination'
+import { SelectItem } from '@radix-ui/react-select'
 import clsx from 'clsx'
 
 import s from './pagination.module.scss'
@@ -21,7 +22,7 @@ export const Pagination = ({
   currentPage,
   onPageChange,
   pageSize,
-  selectOptions = { 10: '10', 20: '20', 30: '30', 50: '50', 100: '100' },
+  selectOptions = { 5: '5', 7: '7', 10: '10', 15: '15', 20: '20' },
   totalCount,
 }: PaginationProps) => {
   const paginationRange = usePagination({
@@ -61,12 +62,13 @@ export const Pagination = ({
       {buttons}
       <PaginationNextButton disabled={currentPage === totalPageCount} onClick={forward} />
       <Typography variant={'body_2'}>Показать</Typography>
-      <Select
-        onValueChange={onChangePageSize}
-        options={selectOptions}
-        value={pageSize.toString()}
-        variant={'pagination'}
-      />
+      <Select onValueChange={onChangePageSize} value={pageSize.toString()} variant={'pagination'}>
+        <SelectItem value={selectOptions['5']}>{selectOptions['5']}</SelectItem>
+        <SelectItem value={selectOptions['7']}>{selectOptions['7']}</SelectItem>
+        <SelectItem value={selectOptions['10']}>{selectOptions['10']}</SelectItem>
+        <SelectItem value={selectOptions['15']}>{selectOptions['15']}</SelectItem>
+        <SelectItem value={selectOptions['20']}>{selectOptions['20']}</SelectItem>
+      </Select>
       <Typography variant={'body_2'}>на странице</Typography>
     </div>
   )

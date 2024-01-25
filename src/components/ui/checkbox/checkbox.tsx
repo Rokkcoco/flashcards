@@ -3,6 +3,7 @@ import { ComponentPropsWithoutRef, ElementRef, forwardRef, useId } from 'react'
 import { Vector } from '@/assets'
 import Typography from '@/components/ui/typography/typography'
 import * as CheckboxRadix from '@radix-ui/react-checkbox'
+import { CheckedState } from '@radix-ui/react-checkbox'
 import * as Label from '@radix-ui/react-label'
 import { clsx } from 'clsx'
 
@@ -14,12 +15,22 @@ export type CheckboxProps = {
 
 export const Checkbox = forwardRef<ElementRef<typeof CheckboxRadix.Root>, CheckboxProps>(
   (props, ref) => {
-    const { disabled, id, label, ...rest } = props
+    const { checked = false, disabled, id, label, onCheckedChange, ...rest } = props
 
     const classNames = {
       buttonWrapper: clsx(s.buttonWrapper, disabled && s.disabled),
       label: clsx(s.label, disabled && s.disabled),
       root: s.root,
+    }
+
+    const checkedIsBoolean = (checked: CheckedState): checked is boolean => {
+      return typeof checked === 'boolean'
+    }
+
+    const labelCallback = (checked: CheckedState) => {
+      if (checkedIsBoolean(checked)) {
+        onCheckedChange?.(!checked)
+      }
     }
 
     const useID = useId()
@@ -28,9 +39,11 @@ export const Checkbox = forwardRef<ElementRef<typeof CheckboxRadix.Root>, Checkb
     return (
       <div className={classNames.buttonWrapper}>
         <CheckboxRadix.Root
+          checked={checked}
           className={classNames.root}
           disabled={disabled}
           id={checkboxID}
+          onCheckedChange={onCheckedChange}
           ref={ref}
           {...rest}
         >
@@ -38,7 +51,7 @@ export const Checkbox = forwardRef<ElementRef<typeof CheckboxRadix.Root>, Checkb
             <Vector />
           </CheckboxRadix.CheckboxIndicator>
         </CheckboxRadix.Root>
-        <Label.Root asChild htmlFor={checkboxID}>
+        <Label.Root asChild htmlFor={checkboxID} onClick={() => labelCallback(checked)}>
           <Typography as={'label'} className={classNames.label} variant={'body_2'}>
             {label}
           </Typography>

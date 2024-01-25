@@ -1,11 +1,7 @@
 import { ForgotPassword } from '@/components/auth'
 import { Page } from '@/components/ui'
 
-type Props = {
-  p?: any
-}
-
-export const ForgotPasswordPage = (props: Props) => {
+export const ForgotPasswordPage = () => {
   return (
     <Page>
       <ForgotPassword onSubmit={x => x} />

@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
 import { Edit2Outline, ImageOutline, PlayCircleOutline, TrashOutline } from '@/assets'
+import { useDebounce } from '@/common/hooks'
 import {
   Button,
   Checkbox,
@@ -21,7 +22,13 @@ import {
   TableHeadCell,
   TableRow,
 } from '@/components/ui/table'
-import { useCreateDeckMutation, useDeleteDeckMutation, useGetDecksQuery } from '@/services/decks'
+import {
+  useCreateDeckMutation,
+  useDeleteDeckMutation,
+  useGetDecksQuery,
+  useLazyGetCardQuery,
+} from '@/services/decks'
+import { CheckedState } from '@radix-ui/react-checkbox'
 
 import s from './decks.module.scss'
 
@@ -29,11 +36,13 @@ export const Decks = () => {
   const [searchParams, setSearchParams] = useSearchParams({ name: '', page: '1' })
   const page = Number(searchParams.get('page'))
   const name = searchParams.get('name')
-  // const setPage = (page: number) => {
-  //     searchParams.set('page', page.toString())
-  //     setSearchParams(searchParams)
-  // }
-  //
+  const setPage = (page: number) => {
+    searchParams.set('page', page.toString())
+    setSearchParams(searchParams)
+  }
+
+  console.log(setPage)
+  console.log(name)
   // const orderBy = JSON.parse(search.get('orderBy') ?? 'null')
   // const setOrderBy = (value: Sort) => {
   //   search.set('orderBy', JSON.stringify(value))
@@ -47,11 +56,13 @@ export const Decks = () => {
 
   const minMaxSliderValues = [0, 62]
   const [sliderValue, setSliderValue] = useState([0, 62])
+  const [modalOpenStatus, setModalOpenStatus] = useState(false)
   const [tabsValue, setTabsValue] = useState('allCards')
   const [textFieldValueForNewDeck, setTextFieldValueForNewDeck] = useState('')
-  const [checkboxValueForNewDeck, setCheckboxValueForNewDeck] = useState(false)
-
-  const setName = (name: string) => {
+  const [searchValueTextField, setSearchValueTextField] = useState('')
+  const [checkboxValueForNewDeck, setCheckboxValueForNewDeck] = useState<CheckedState>(false)
+  const searchName = useDebounce(searchValueTextField, 1000)
+  /*  const setName = (name: string) => {
     if (name === '') {
       searchParams.delete('name')
     } else {
@@ -59,15 +70,20 @@ export const Decks = () => {
     }
     searchParams.set('page', '1')
     setSearchParams(searchParams)
-  }
+  }*/
   const { data, error, isLoading } = useGetDecksQuery({
     currentPage: page || 1,
     itemsPerPage: 5,
-    name: name ?? undefined,
+    minCardsCount: 3,
+    name: searchName ?? undefined,
   })
 
   const [createDeck] = useCreateDeckMutation()
   const [deleteDeck] = useDeleteDeckMutation()
+  const [getCard, { currentData: CardCurrentData, data: CardData }] = useLazyGetCardQuery()
+
+  console.log(CardData)
+  console.log(CardCurrentData)
 
   if (isLoading) {
     return <div>Loading...</div>
@@ -88,6 +104,8 @@ export const Decks = () => {
             <Button variant={'secondary'}>Cancel</Button>
           </>
         }
+        onOpenChange={setModalOpenStatus}
+        open={modalOpenStatus}
         title={'Add New Deck'}
         trigger={<Button>Add New Deck</Button>}
       >
@@ -104,11 +122,19 @@ export const Decks = () => {
         <Checkbox
           checked={checkboxValueForNewDeck}
           label={'Private pack'}
-          onCheckedChange={() => setCheckboxValueForNewDeck(prevState => !prevState)}
+          onCheckedChange={setCheckboxValueForNewDeck}
         />
       </Modal>
     )
   }
+
+  /* const GetCardModal = () => {
+    return (
+      <Modal>
+        <Button as={'a'}></Button>
+      </Modal>
+    )
+  }*/
 
   return (
     <Page>
@@ -116,14 +142,15 @@ export const Decks = () => {
         <Typography as={'h1'} variant={'large'}>
           Decks
         </Typography>
-        <Button onClick={() => createDeck({ name: 'test deck' })}>Add new deck</Button>
+        <Button onClick={() => createDeck({ name: 'new deck' })}>Add new deck</Button>
       </div>
       <div className={s.filter}>
         <TextField
-          onValueChange={setName}
+          onInputClear={() => setSearchValueTextField('')}
+          onValueChange={setSearchValueTextField}
           placeholder={'Search decks'}
           type={'search'}
-          value={name ?? ''}
+          value={searchValueTextField}
         />
         <div className={s.tabs}>
           <Tabs onValueChange={setTabsValue} value={tabsValue}>
@@ -150,7 +177,6 @@ export const Decks = () => {
             <TableHeadCell>Cards</TableHeadCell>
             <TableHeadCell>Last updated</TableHeadCell>
             <TableHeadCell>Created by</TableHeadCell>
-            <TableHeadCell></TableHeadCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -162,14 +188,19 @@ export const Decks = () => {
                 <TableCell>{new Date(deck.updated).toLocaleDateString('ru')}</TableCell>
                 <TableCell>{deck.author.name}</TableCell>
                 <TableCell>
-                  <button>
+                  <button onClick={() => getCard({ id: deck.id })}>
                     <PlayCircleOutline />
-                  </button>
-                  <button onClick={() => deleteDeck({ id: deck.id })}>
-                    <TrashOutline />
                   </button>
                   <button>
                     <Edit2Outline />
+                  </button>
+                  <button
+                    onClick={() => {
+                      console.log('click')
+                      deleteDeck({ id: deck.id })
+                    }}
+                  >
+                    <TrashOutline />
                   </button>
                 </TableCell>
               </TableRow>
