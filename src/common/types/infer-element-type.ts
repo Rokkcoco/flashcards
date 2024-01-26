@@ -1,3 +1,3 @@
-import { ElementType } from 'react'
+import { ComponentPropsWithRef, ElementType } from 'react'
 
-export type InferType<T> = T extends ElementType<infer U> ? U : never
+export type PolymorphicRef<T extends ElementType> = ComponentPropsWithRef<T>['ref']

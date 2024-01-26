@@ -1,13 +1,6 @@
-import {
-  ComponentPropsWithoutRef,
-  ElementRef,
-  ElementType,
-  ForwardedRef,
-  ReactElement,
-  forwardRef,
-} from 'react'
+import { ComponentPropsWithoutRef, ElementRef, ElementType, ReactNode, forwardRef } from 'react'
 
-import { InferType } from '@/common'
+import { PolymorphicRef } from '@/common'
 
 import s from './typography.module.scss'
 
@@ -31,24 +24,17 @@ type Props<T extends ElementType> = {
     | 'subtitle_2'
 }
 
-export type TypographyProps<T extends ElementType = 'p'> = Props<T> &
-  Omit<ComponentPropsWithoutRef<T>, keyof Props<T>>
+type TypographyProps<T extends ElementType> = Props<T> &
+  Omit<ComponentPropsWithoutRef<T>, keyof Props<T>> & { ref?: PolymorphicRef<T> }
+
+type TypographyComponent = <T extends ElementType = 'p'>(props: TypographyProps<T>) => ReactNode
 
 //todo сделать зависимость as к variant, чтобы по умолчанию уже было
-const Typography = forwardRef(
-  <T extends ElementType = 'p'>(
-    props: TypographyProps<T> & Omit<ComponentPropsWithoutRef<T>, keyof TypographyProps<T>>,
-    ref: ForwardedRef<InferType<T>>
-  ) => {
-    const {
-      as: Component = 'p',
-      children,
-      className,
+export const Typography: TypographyComponent = forwardRef(
+  <T extends ElementType = 'p'>(props: TypographyProps<T>, ref: ElementRef<T>) => {
+    const { as, children, className, text = '', variant = 'body_1', ...rest } = props
 
-      text = '',
-      variant = 'body_1',
-      ...rest
-    } = props
+    const Component = as || 'p'
 
     return (
       <Component className={`${s.typography} ${s[variant]} ${className}`} ref={ref} {...rest}>
@@ -57,11 +43,3 @@ const Typography = forwardRef(
     )
   }
 )
-
-export default Typography as <T extends ElementType = 'p'>(
-  props: TypographyProps<T> & {
-    ref?: ForwardedRef<ElementRef<T>>
-  }
-) => ReactElement
-
-Typography.displayName = 'Typography'

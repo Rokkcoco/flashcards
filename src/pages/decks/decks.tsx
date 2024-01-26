@@ -3,17 +3,7 @@ import { useSearchParams } from 'react-router-dom'
 
 import { Edit2Outline, ImageOutline, PlayCircleOutline, TrashOutline } from '@/assets'
 import { useDebounce } from '@/common/hooks'
-import {
-  Button,
-  Checkbox,
-  Modal,
-  Page,
-  Slider,
-  TabItem,
-  Tabs,
-  TextField,
-  Typography,
-} from '@/components/ui'
+import { Button, Checkbox, Modal, Page, Slider, TabItem, Tabs, TextField } from '@/components/ui'
 import {
   Table,
   TableBody,
@@ -22,6 +12,7 @@ import {
   TableHeadCell,
   TableRow,
 } from '@/components/ui/table'
+import { Typography } from '@/components/ui/typography/typography'
 import {
   useCreateDeckMutation,
   useDeleteDeckMutation,

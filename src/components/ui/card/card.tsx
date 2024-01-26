@@ -1,13 +1,6 @@
-import {
-  ComponentPropsWithoutRef,
-  ElementRef,
-  ElementType,
-  ForwardedRef,
-  ReactElement,
-  forwardRef,
-} from 'react'
+import { ComponentPropsWithoutRef, ElementRef, ElementType, ReactNode, forwardRef } from 'react'
 
-import { InferType } from '@/common'
+import { PolymorphicRef } from '@/common'
 import { clsx } from 'clsx'
 
 import s from './card.module.scss'
@@ -16,28 +9,21 @@ type Props<T extends ElementType> = {
   as?: T
 }
 
-export type CardProps<T extends ElementType = 'div'> = Props<T> &
-  Omit<ComponentPropsWithoutRef<T>, keyof Props<T>>
+type CardProps<T extends ElementType> = Props<T> &
+  Omit<ComponentPropsWithoutRef<T>, keyof Props<T>> & { ref?: PolymorphicRef<T> }
 
-const Card = forwardRef(
-  <T extends ElementType = 'div'>(
-    props: CardProps<T> & Omit<ComponentPropsWithoutRef<T>, keyof CardProps<T>>,
-    ref: ForwardedRef<InferType<T>>
-  ) => {
-    const { as: Component = 'div', className, ...rest } = props
+type CardComponent = <T extends ElementType = 'div'>(props: CardProps<T>) => ReactNode
+
+export const Card: CardComponent = forwardRef(
+  <T extends ElementType = 'div'>(props: CardProps<T>, ref: ElementRef<T>) => {
+    const { as, className, ...rest } = props
 
     const classNames = {
       root: clsx(s.root, className),
     }
 
+    const Component = as || 'div'
+
     return <Component className={classNames.root} ref={ref} {...rest} />
   }
 )
-
-export default Card as <T extends ElementType = 'div'>(
-  props: CardProps<T> & {
-    ref?: ForwardedRef<ElementRef<T>>
-  }
-) => ReactElement
-
-Card.displayName = 'Card'
