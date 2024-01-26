@@ -19,7 +19,6 @@ import {
   useGetDeckQuery,
   useGetDecksQuery,
 } from '@/services/decks'
-import { CheckedState } from '@radix-ui/react-checkbox'
 import { skipToken } from '@reduxjs/toolkit/query'
 
 import s from './decks.module.scss'
@@ -64,7 +63,7 @@ export const DecksPage = () => {
   const [tabsValue, setTabsValue] = useState('allCards')
   const [textFieldValueForNewDeck, setTextFieldValueForNewDeck] = useState('')
   const [searchValueTextField, setSearchValueTextField] = useState('')
-  const [checkboxValueForNewDeck, setCheckboxValueForNewDeck] = useState<CheckedState>(false)
+  const [checkboxValueForNewDeck, setCheckboxValueForNewDeck] = useState(false)
   const searchName = useDebounce(searchValueTextField, 1000)
   const setName = (name: string) => {
     if (name === '') {
@@ -127,7 +126,7 @@ export const DecksPage = () => {
         <Checkbox
           checked={checkboxValueForNewDeck}
           label={'Private pack'}
-          onCheckedChange={setCheckboxValueForNewDeck}
+          onCheckedChange={() => setCheckboxValueForNewDeck(!checkboxValueForNewDeck)}
         />
       </Modal>
     )
@@ -149,32 +148,7 @@ export const DecksPage = () => {
         </Typography>
         <Button onClick={() => createDeck({ name: 'new deck' })}>Add new deck</Button>
       </div>
-      <div className={s.filter}>
-        <TextField
-          onInputClear={() => setSearchValueTextField('')}
-          onValueChange={setSearchValueTextField}
-          placeholder={'Search decks'}
-          type={'search'}
-          value={searchValueTextField}
-        />
-        <div className={s.tabs}>
-          <Tabs onValueChange={setTabsValue} value={tabsValue}>
-            <TabItem value={'myCards'}>My Cards</TabItem>
-            <TabItem value={'allCards'}>All Cards</TabItem>
-          </Tabs>
-        </div>
-        <Slider
-          max={minMaxSliderValues[1]}
-          min={minMaxSliderValues[0]}
-          onValueChange={setSliderValue}
-          value={sliderValue}
-        />
-        <AddDeckModal />
-        <Button variant={'secondary'}>
-          <TrashOutline />
-          Clear Field
-        </Button>
-      </div>
+
       <Table width={'100%'}>
         <TableHead>
           <TableRow>
