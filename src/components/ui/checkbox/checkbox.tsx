@@ -14,7 +14,7 @@ export type CheckboxProps = {
 
 export const Checkbox = forwardRef<ElementRef<typeof CheckboxRadix.Root>, CheckboxProps>(
   (props, ref) => {
-    const { checked = false, disabled, id, label, onCheckedChange, ...rest } = props
+    const { disabled, id, label, ...rest } = props
 
     const classNames = {
       buttonWrapper: clsx(s.buttonWrapper, disabled && s.disabled),
@@ -28,11 +28,9 @@ export const Checkbox = forwardRef<ElementRef<typeof CheckboxRadix.Root>, Checkb
     return (
       <div className={classNames.buttonWrapper}>
         <CheckboxRadix.Root
-          checked={checked}
           className={classNames.root}
           disabled={disabled}
           id={checkboxID}
-          onCheckedChange={onCheckedChange}
           ref={ref}
           {...rest}
         >
