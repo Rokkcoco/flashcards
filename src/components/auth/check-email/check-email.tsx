@@ -1,6 +1,5 @@
 import { CheckEmailIcon } from '@/assets'
-import { Button, Card } from '@/components/ui'
-import Typography from '@/components/ui/typography/typography'
+import { Button, Card, Typography } from '@/components/ui'
 import { clsx } from 'clsx'
 
 import s from './check-email.module.scss'

@@ -1,13 +1,19 @@
-import { Navigate, RouteObject, RouterProvider, createBrowserRouter } from 'react-router-dom'
+import {
+  Navigate,
+  Outlet,
+  RouteObject,
+  RouterProvider,
+  createBrowserRouter,
+} from 'react-router-dom'
 
+import { SomethingWentWrong } from '@/assets'
 import { Layout } from '@/components/ui'
-import { Decks, ForgotPasswordPage, ProfilePage, SignInPage, SignUpPage } from '@/pages'
+import { DecksPage, ForgotPasswordPage, ProfilePage, SignInPage, SignUpPage } from '@/pages'
 import { Error404 } from '@/pages/error-404'
 
 const publicRoutes: RouteObject[] = [
   {
     element: <SignInPage />,
-    errorElement: <Error404 />,
     path: '/sign-in',
   },
   {
@@ -22,7 +28,7 @@ const publicRoutes: RouteObject[] = [
 
 const privateRoutes: RouteObject[] = [
   {
-    element: <Decks />,
+    element: <DecksPage />,
     path: '/',
   },
   {
@@ -31,13 +37,32 @@ const privateRoutes: RouteObject[] = [
   },
 ]
 
+// const router = createBrowserRouter([
+//   {
+//     children: [{ children: privateRoutes, element: <PrivateRoutes /> }, ...publicRoutes],
+//     element: <Layout />,
+//     errorElement: <Error404 />,
+//   },
+// ])
+
 const router = createBrowserRouter([
   {
-    children: privateRoutes,
-    element: <PrivateRoutes />,
-    errorElement: <Error404 />,
+    children: [
+      {
+        children: [
+          { children: privateRoutes, element: <PrivateRoutes /> },
+          ...publicRoutes,
+          {
+            element: <Error404 />,
+            path: '*',
+          },
+        ],
+        errorElement: <SomethingWentWrong />,
+      },
+    ],
+    element: <Layout />,
+    path: '/',
   },
-  ...publicRoutes,
 ])
 
 export const Router = () => {
@@ -47,5 +72,5 @@ export const Router = () => {
 function PrivateRoutes() {
   const isAuthenticated = true
 
-  return isAuthenticated ? <Layout /> : <Navigate to={'/sign-in'} />
+  return isAuthenticated ? <Outlet /> : <Navigate to={'/sign-in'} />
 }

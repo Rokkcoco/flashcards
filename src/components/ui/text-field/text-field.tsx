@@ -188,6 +188,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>((props, re
           </Tooltip>
         )}
       </div>
+      {/*todo span*/}
       {errorMessage && (
         <Label.Root asChild className={classNames.error} htmlFor={inputId}>
           <Typography as={'label'} variant={'caption'}>

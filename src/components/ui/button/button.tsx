@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, ElementRef, ElementType, ReactNode, forwardRef } from 'react'
+import { ComponentPropsWithoutRef, ElementType, ReactNode, forwardRef } from 'react'
 
 import { PolymorphicRef } from '@/common'
 import { clsx } from 'clsx'
@@ -12,12 +12,14 @@ type Props<T extends ElementType> = {
 }
 
 type ButtonProps<T extends ElementType> = Props<T> &
-  Omit<ComponentPropsWithoutRef<T>, keyof Props<T>> & { ref?: PolymorphicRef<T> }
+  Omit<ComponentPropsWithoutRef<T>, keyof Props<T>>
 
-type ButtonComponent = <T extends ElementType = 'button'>(props: ButtonProps<T>) => ReactNode
+type ButtonComponent = <T extends ElementType = 'button'>(
+  props: ButtonProps<T> & { ref?: PolymorphicRef<T> }
+) => ReactNode
 
 export const Button: ButtonComponent = forwardRef(
-  <T extends ElementType = 'button'>(props: ButtonProps<T>, ref: ElementRef<T>) => {
+  <T extends ElementType = 'button'>(props: ButtonProps<T>, ref: PolymorphicRef<T>) => {
     const { as, className, fullWidth, variant = 'primary', ...rest } = props
 
     const classNames = {

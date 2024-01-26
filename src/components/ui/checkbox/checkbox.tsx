@@ -23,16 +23,6 @@ export const Checkbox = forwardRef<ElementRef<typeof CheckboxRadix.Root>, Checkb
       root: s.root,
     }
 
-    const checkedIsBoolean = (checked: CheckedState): checked is boolean => {
-      return typeof checked === 'boolean'
-    }
-
-    const labelCallback = (checked: CheckedState) => {
-      if (checkedIsBoolean(checked)) {
-        onCheckedChange?.(!checked)
-      }
-    }
-
     const useID = useId()
     const checkboxID = id ?? useID
 
@@ -51,7 +41,7 @@ export const Checkbox = forwardRef<ElementRef<typeof CheckboxRadix.Root>, Checkb
             <Vector />
           </CheckboxRadix.CheckboxIndicator>
         </CheckboxRadix.Root>
-        <Label.Root asChild htmlFor={checkboxID} onClick={() => labelCallback(checked)}>
+        <Label.Root asChild htmlFor={checkboxID}>
           <Typography as={'label'} className={classNames.label} variant={'body_2'}>
             {label}
           </Typography>

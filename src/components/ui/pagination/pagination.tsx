@@ -1,12 +1,12 @@
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@/assets'
 import { usePagination } from '@/common/hooks/usePagination'
+import { Typography } from '@/components/ui'
 import { SelectItem } from '@radix-ui/react-select'
 import clsx from 'clsx'
 
 import s from './pagination.module.scss'
 
 import { Select } from '../select'
-import Typography from '../typography/typography'
 
 export type OnPageChangeArgs = { currentPage?: number; pageSize?: number }
 

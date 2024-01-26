@@ -20,10 +20,11 @@ import {
   useGetDecksQuery,
 } from '@/services/decks'
 import { CheckedState } from '@radix-ui/react-checkbox'
+import { skipToken } from '@reduxjs/toolkit/query'
 
 import s from './decks.module.scss'
 
-export const Decks = () => {
+export const DecksPage = () => {
   const [searchParams, setSearchParams] = useSearchParams({ name: '', page: '1' })
   const page = Number(searchParams.get('page'))
   const name = searchParams.get('name')
@@ -32,6 +33,8 @@ export const Decks = () => {
     setSearchParams(searchParams)
   }
 
+  //test@test.com
+  //test
   console.log(setPage)
   console.log(name)
   // const orderBy = JSON.parse(search.get('orderBy') ?? 'null')
@@ -45,6 +48,16 @@ export const Decks = () => {
   //   return `${orderBy.key}-${orderBy.direction}`
   // }, [orderBy])
 
+  // const changeSearchHandler = (search: string) => {
+  //   if (!search) {
+  //     params.delete('search')
+  //   } else {
+  //     params.set('search', search)
+  //   }
+  //   params.set('page', '1')
+  //   setParams(params)
+  // }
+
   const minMaxSliderValues = [0, 62]
   const [sliderValue, setSliderValue] = useState([0, 62])
   const [modalOpenStatus, setModalOpenStatus] = useState(false)
@@ -53,7 +66,7 @@ export const Decks = () => {
   const [searchValueTextField, setSearchValueTextField] = useState('')
   const [checkboxValueForNewDeck, setCheckboxValueForNewDeck] = useState<CheckedState>(false)
   const searchName = useDebounce(searchValueTextField, 1000)
-  /*  const setName = (name: string) => {
+  const setName = (name: string) => {
     if (name === '') {
       searchParams.delete('name')
     } else {
@@ -61,12 +74,12 @@ export const Decks = () => {
     }
     searchParams.set('page', '1')
     setSearchParams(searchParams)
-  }*/
+  }
   const { data, error, isLoading } = useGetDecksQuery({
     currentPage: page || 1,
     itemsPerPage: 5,
     minCardsCount: 3,
-    name: searchName ?? undefined,
+    name: searchName ?? skipToken,
   })
   const [deckId, setDeckId] = useState('')
   const [skip, setSkip] = useState(true)

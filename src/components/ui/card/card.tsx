@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, ElementRef, ElementType, ReactNode, forwardRef } from 'react'
+import { ComponentPropsWithoutRef, ElementType, ReactNode, forwardRef } from 'react'
 
 import { PolymorphicRef } from '@/common'
 import { clsx } from 'clsx'
@@ -9,13 +9,14 @@ type Props<T extends ElementType> = {
   as?: T
 }
 
-type CardProps<T extends ElementType> = Props<T> &
-  Omit<ComponentPropsWithoutRef<T>, keyof Props<T>> & { ref?: PolymorphicRef<T> }
+type CardProps<T extends ElementType> = Props<T> & Omit<ComponentPropsWithoutRef<T>, keyof Props<T>>
 
-type CardComponent = <T extends ElementType = 'div'>(props: CardProps<T>) => ReactNode
+type CardComponent = <T extends ElementType = 'div'>(
+  props: CardProps<T> & { ref?: PolymorphicRef<T> }
+) => ReactNode
 
 export const Card: CardComponent = forwardRef(
-  <T extends ElementType = 'div'>(props: CardProps<T>, ref: ElementRef<T>) => {
+  <T extends ElementType = 'div'>(props: CardProps<T>, ref: PolymorphicRef<T>) => {
     const { as, className, ...rest } = props
 
     const classNames = {
