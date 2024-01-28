@@ -3,7 +3,7 @@ import { useSearchParams } from 'react-router-dom'
 
 import { Edit2Outline, ImageOutline, PlayCircleOutline, TrashOutline } from '@/assets'
 import { useDebounce } from '@/common/hooks'
-import { Button, Checkbox, Modal, Page, Slider, TabItem, Tabs, TextField } from '@/components/ui'
+import { Button, Checkbox, Modal, Page, TextField } from '@/components/ui'
 import {
   Table,
   TableBody,
@@ -13,6 +13,7 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { Typography } from '@/components/ui/typography/typography'
+import { SearchSettings } from '@/features'
 import {
   useCreateDeckMutation,
   useDeleteDeckMutation,
@@ -65,6 +66,7 @@ export const DecksPage = () => {
   const [searchValueTextField, setSearchValueTextField] = useState('')
   const [checkboxValueForNewDeck, setCheckboxValueForNewDeck] = useState(false)
   const searchName = useDebounce(searchValueTextField, 1000)
+
   const setName = (name: string) => {
     if (name === '') {
       searchParams.delete('name')
@@ -80,6 +82,8 @@ export const DecksPage = () => {
     minCardsCount: 3,
     name: searchName ?? skipToken,
   })
+
+  console.log(data)
   const [deckId, setDeckId] = useState('')
   const [skip, setSkip] = useState(true)
   const [createDeck] = useCreateDeckMutation()
@@ -148,7 +152,7 @@ export const DecksPage = () => {
         </Typography>
         <Button onClick={() => createDeck({ name: 'new deck' })}>Add new deck</Button>
       </div>
-
+      <SearchSettings />
       <Table width={'100%'}>
         <TableHead>
           <TableRow>
@@ -180,7 +184,6 @@ export const DecksPage = () => {
                   </button>
                   <button
                     onClick={() => {
-                      console.log('click')
                       deleteDeck({ id: deck.id })
                     }}
                   >

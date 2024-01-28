@@ -60,7 +60,7 @@ export type SelectProps = {
 } & ComponentPropsWithoutRef<typeof SelectRadix.Root>
 
 export const Select = forwardRef<ElementRef<typeof SelectRadix.Trigger>, SelectProps>(
-  ({ children, label, open, value, variant = 'default', ...rest }, ref) => {
+  ({ children, label, value, variant = 'default', ...rest }, ref) => {
     const isPagination = variant === 'pagination'
     const selectID = useId()
 
@@ -83,7 +83,7 @@ export const Select = forwardRef<ElementRef<typeof SelectRadix.Trigger>, SelectP
             </Typography>
           </Label.Root>
         )}
-        <SelectRadix.Root open={open} value={value} {...rest}>
+        <SelectRadix.Root value={value} {...rest}>
           <SelectRadix.Trigger className={classNames.trigger} id={selectID} ref={ref}>
             <SelectRadix.Value aria-label={value} />
             <SelectRadix.Icon asChild className={classNames.selectIcon}>

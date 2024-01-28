@@ -16,7 +16,6 @@ export const Slider = forwardRef<ElementRef<typeof SliderRadix.Root>, Props>((pr
   const inputMinElement = document.getElementById(inputMinID) as HTMLInputElement | null
   const inputMaxElement = document.getElementById(inputMaxID) as HTMLInputElement | null
 
-  //todo react type number
   //todo onValueCommit
   const inputElementKeyDown = (e: KeyboardEvent<HTMLInputElement>, input: 'left' | 'right') => {
     if (e.key === ',' || e.key === 'e' || e.key === '-' || e.key === '.') {
@@ -41,6 +40,7 @@ export const Slider = forwardRef<ElementRef<typeof SliderRadix.Root>, Props>((pr
       e.currentTarget.blur()
     }
   }
+
   const onChangeInput = (newValue: number, side: 'left' | 'right') => {
     const temp = [...(value as number[])]
     const clampedValue = Math.min(newValue, max ?? 100)

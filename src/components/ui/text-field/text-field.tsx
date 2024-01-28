@@ -95,7 +95,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>((props, re
     onValueChange?.(e.currentTarget.value)
   }
 
-  const onKeyPressHander = (e: KeyboardEvent<HTMLInputElement>) => {
+  const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       onKeyEnter?.()
     }
@@ -161,7 +161,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>((props, re
           disabled={disabled}
           id={inputId}
           onChange={onChangeHandler}
-          onKeyDown={onKeyPressHander}
+          onKeyDown={onKeyPressHandler}
           ref={inputRef}
           type={inputType}
           value={value}
