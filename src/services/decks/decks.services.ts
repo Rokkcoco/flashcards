@@ -4,7 +4,6 @@ import {
   AuthMeResponse,
   CardResponse,
   CreateCardArgs,
-  CreateCardResponse,
   CreateDeckArgs,
   Deck,
   DeckResponse,
@@ -35,7 +34,7 @@ import {
 export const DecksService = baseApi.injectEndpoints({
   endpoints: builder => {
     return {
-      createCard: builder.mutation<CreateCardResponse, CreateCardArgs>({
+      createCard: builder.mutation<CardResponse, CreateCardArgs>({
         invalidatesTags: [''],
         query: args => ({
           method: 'POST',

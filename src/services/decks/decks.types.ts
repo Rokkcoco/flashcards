@@ -1,4 +1,4 @@
-import { PaginatedResponse } from '@/services'
+import { PaginatedResponse, Pagination } from '@/services'
 
 export type DeckResponse = PaginatedResponse<Deck[]>
 
@@ -74,29 +74,8 @@ export type GetMinMaxDeckCardsArgs = {
   min: number
 }
 export type GetCardsInADeckResponse = {
-  items: GetCardsInADeckResponseItems[]
-  pagination: GetCardsInADeckResponsePagination
-}
-export type GetCardsInADeckResponsePagination = {
-  currentPage: number
-  itemsPerPage: number
-  totalItems: number
-  totalPages: number
-}
-export type GetCardsInADeckResponseItems = {
-  answer: string
-  answerImg: string
-  answerVideo: string
-  created: string
-  deckId: string
-  grade: number
-  id: string
-  question: string
-  questionImg: string
-  questionVideo: string
-  shots: number
-  updated: string
-  userId: string
+  items: CardResponse[]
+  pagination: Pagination
 }
 
 export type GetCardsInADeckArgs = {
@@ -108,20 +87,6 @@ export type GetCardsInADeckArgs = {
   question?: string
 }
 
-export type CreateCardResponse = {
-  answer: string
-  answerImg: string
-  answerVideo: string
-  created: string
-  deckId: string
-  id: string
-  question: string
-  questionImg: string
-  questionVideo: string
-  shots: number
-  updated: string
-  userId: string
-}
 export type CreateCardArgs = {
   answer: string
   answerImg: string
