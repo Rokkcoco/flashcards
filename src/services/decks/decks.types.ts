@@ -149,8 +149,8 @@ export type AuthMeResponse = {
   updated: string
 }
 export type UpdateMeArgs = {
-  avatar: string
-  name: string
+  avatar?: string
+  name?: string
 }
 export type UpdateMeResponse = {
   avatar: string

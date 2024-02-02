@@ -190,7 +190,7 @@ export const DecksService = baseApi.injectEndpoints({
       updateMe: builder.mutation<UpdateMeResponse, UpdateMeArgs>({
         invalidatesTags: [''],
         query: args => ({
-          method: 'POST',
+          method: 'PATCH',
           params: args,
           url: `v1/auth/me`,
         }),
