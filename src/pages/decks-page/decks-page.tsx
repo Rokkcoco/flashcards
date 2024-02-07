@@ -58,15 +58,8 @@ export const DecksPage = () => {
   //   setParams(params)
   // }
 
-  const minMaxSliderValues = [0, 62]
-  const [sliderValue, setSliderValue] = useState([0, 62])
-  const [modalOpenStatus, setModalOpenStatus] = useState(false)
-  const [tabsValue, setTabsValue] = useState('allCards')
-  const [textFieldValueForNewDeck, setTextFieldValueForNewDeck] = useState('')
-  const [searchValueTextField, setSearchValueTextField] = useState('')
-  const [checkboxValueForNewDeck, setCheckboxValueForNewDeck] = useState(false)
-  const searchName = useDebounce(searchValueTextField, 1000)
-
+  //const searchName = useDebounce(searchValueTextField, 1000)
+  const searchName = 'FIX LATER'
   const setName = (name: string) => {
     if (name === '') {
       searchParams.delete('name')
@@ -101,39 +94,6 @@ export const DecksPage = () => {
     console.error(error)
 
     return <div>Error</div>
-  }
-
-  const AddDeckModal = () => {
-    return (
-      <Modal
-        controlButtons={
-          <>
-            <Button>Add New Pack</Button>
-            <Button variant={'secondary'}>Cancel</Button>
-          </>
-        }
-        onOpenChange={setModalOpenStatus}
-        open={modalOpenStatus}
-        title={'Add New Deck'}
-        trigger={<Button>Add New Deck</Button>}
-      >
-        <TextField
-          label={'Name Pack'}
-          onValueChange={setTextFieldValueForNewDeck}
-          placeholder={'Minimum X symbols'}
-          value={textFieldValueForNewDeck}
-        />
-        <Button fullWidth variant={'secondary'}>
-          <ImageOutline />
-          Upload Image
-        </Button>
-        <Checkbox
-          checked={checkboxValueForNewDeck}
-          label={'Private pack'}
-          onCheckedChange={() => setCheckboxValueForNewDeck(!checkboxValueForNewDeck)}
-        />
-      </Modal>
-    )
   }
 
   /* const GetCardModal = () => {
