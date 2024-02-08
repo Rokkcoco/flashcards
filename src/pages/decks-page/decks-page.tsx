@@ -1,9 +1,8 @@
 import { useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
-import { Edit2Outline, ImageOutline, PlayCircleOutline, TrashOutline } from '@/assets'
-import { useDebounce } from '@/common/hooks'
-import { Button, Checkbox, Modal, Page, TextField } from '@/components/ui'
+import { Edit2Outline, PlayCircleOutline, TrashOutline } from '@/assets'
+import { Button, Page } from '@/components/ui'
 import {
   Table,
   TableBody,

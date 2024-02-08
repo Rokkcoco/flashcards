@@ -1,4 +1,11 @@
-import { ComponentPropsWithoutRef, ElementRef, KeyboardEvent, forwardRef, useId } from 'react'
+import {
+  ComponentPropsWithoutRef,
+  ElementRef,
+  KeyboardEvent,
+  forwardRef,
+  useId,
+  useRef,
+} from 'react'
 
 import * as SliderRadix from '@radix-ui/react-slider'
 import { clsx } from 'clsx'
@@ -8,41 +15,57 @@ import s from './slider.module.scss'
 type Props = Omit<ComponentPropsWithoutRef<typeof SliderRadix.Root>, 'asChild' | 'onChange'>
 
 export const Slider = forwardRef<ElementRef<typeof SliderRadix.Root>, Props>((props, ref) => {
-  const { className, max, min, onValueChange, value, ...rest } = props
-  const stepChange = props.step ?? 1
+  const {
+    className,
+    max = 100,
+    min = 0,
+    onValueChange,
+    step = 1,
+    value = [0, 100],
+    ...rest
+  } = props
 
   const inputMinID = useId()
   const inputMaxID = useId()
-  const inputMinElement = document.getElementById(inputMinID) as HTMLInputElement | null
-  const inputMaxElement = document.getElementById(inputMaxID) as HTMLInputElement | null
+
+  const inputMinElement = useRef<HTMLInputElement>(null)
+  const inputMaxElement = useRef<HTMLInputElement>(null)
 
   //todo onValueCommit
+
   const inputElementKeyDown = (e: KeyboardEvent<HTMLInputElement>, input: 'left' | 'right') => {
     if (e.key === ',' || e.key === 'e' || e.key === '-' || e.key === '.') {
       e.preventDefault()
     }
-    if (input === 'left' && e.key === 'Backspace' && inputMinElement?.value.length === 1) {
-      inputMinElement.value = ''
+    if (input === 'left' && e.key === 'Backspace' && inputMinElement?.current?.value.length === 1) {
+      inputMinElement.current.value = ''
     }
-    if (input === 'right' && e.key === 'Backspace' && inputMaxElement?.value.length === 1) {
-      inputMaxElement.value = ''
+    if (
+      input === 'right' &&
+      e.key === 'Backspace' &&
+      inputMaxElement?.current?.value.length === 1
+    ) {
+      inputMaxElement.current.value = ''
     }
-    if (input === 'left' && !inputMinElement?.value.length && e.key === '0') {
+    if (input === 'left' && !inputMinElement?.current?.value.length && e.key === '0') {
       e.preventDefault()
     }
-    if (input === 'right' && !inputMaxElement?.value.length && e.key === '0') {
+    if (input === 'right' && !inputMaxElement?.current?.value.length && e.key === '0') {
       e.preventDefault()
     }
-    if (input === 'left' && e.key === 'Enter') {
+    if (input === 'left' && e.key === 'Enter' && inputMinElement?.current?.value !== '') {
       e.currentTarget.blur()
     }
-    if (input === 'right' && e.key === 'Enter') {
+    if (input === 'right' && e.key === 'Enter' && inputMinElement?.current?.value !== '') {
       e.currentTarget.blur()
     }
   }
 
   const onChangeInput = (newValue: number, side: 'left' | 'right') => {
-    const temp = [...(value as number[])]
+    if (value === undefined) {
+      return
+    }
+    const temp = [...value]
     const clampedValue = Math.min(newValue, max ?? 100)
 
     if (side === 'left') {
@@ -54,7 +77,10 @@ export const Slider = forwardRef<ElementRef<typeof SliderRadix.Root>, Props>((pr
   }
 
   const onBlurValidate = () => {
-    const temp = [...(value as number[])]
+    if (value === undefined) {
+      return
+    }
+    const temp = [...value]
 
     if (temp[0] > temp[1]) {
       onValueChange?.([temp[1], temp[0]])
@@ -70,19 +96,21 @@ export const Slider = forwardRef<ElementRef<typeof SliderRadix.Root>, Props>((pr
           onBlur={onBlurValidate}
           onChange={e => onChangeInput(+e.currentTarget.value, 'left')}
           onKeyDown={e => inputElementKeyDown(e, 'left')}
-          step={stepChange}
+          ref={inputMinElement}
+          step={step}
           type={'number'}
-          value={value?.[0]}
+          value={value[0]}
         />
       </div>
 
       <SliderRadix.Root
         className={clsx(s.root, className)}
-        max={max ?? 100}
-        min={min ?? 0}
+        max={max}
+        min={min}
         onValueChange={onValueChange}
         ref={ref}
-        value={[value?.[0] ?? 0, value?.[1] ?? 100]}
+        step={step}
+        value={value}
         {...rest}
       >
         <SliderRadix.Track className={s.track}>
@@ -98,9 +126,10 @@ export const Slider = forwardRef<ElementRef<typeof SliderRadix.Root>, Props>((pr
           onBlur={onBlurValidate}
           onChange={e => onChangeInput(+e.currentTarget.value, 'right')}
           onKeyDown={e => inputElementKeyDown(e, 'right')}
-          step={stepChange}
+          ref={inputMaxElement}
+          step={step}
           type={'number'}
-          value={value?.[1]}
+          value={value[1]}
         />
       </div>
     </div>
