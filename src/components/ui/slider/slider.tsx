@@ -32,7 +32,6 @@ export const Slider = forwardRef<ElementRef<typeof SliderRadix.Root>, Props>((pr
   const inputMaxElement = useRef<HTMLInputElement>(null)
 
   //todo onValueCommit
-
   const inputElementKeyDown = (e: KeyboardEvent<HTMLInputElement>, input: 'left' | 'right') => {
     if (e.key === ',' || e.key === 'e' || e.key === '-' || e.key === '.') {
       e.preventDefault()

@@ -8,8 +8,15 @@ import {
 
 import { SomethingWentWrong } from '@/assets'
 import { Layout } from '@/components/ui'
-import { DecksPage, ForgotPasswordPage, ProfilePage, SignInPage, SignUpPage } from '@/pages'
-import { Error404 } from '@/pages/error-404'
+import {
+  DeckPage,
+  DecksPage,
+  Error404,
+  ForgotPasswordPage,
+  ProfilePage,
+  SignInPage,
+  SignUpPage,
+} from '@/pages'
 
 const publicRoutes: RouteObject[] = [
   {
@@ -30,6 +37,10 @@ const privateRoutes: RouteObject[] = [
   {
     element: <DecksPage />,
     path: '/',
+  },
+  {
+    element: <DeckPage />,
+    path: '/deck/:id',
   },
   {
     element: <ProfilePage />,
