@@ -1,4 +1,5 @@
 import { useForm } from 'react-hook-form'
+import { Link } from 'react-router-dom'
 
 import { Button, Card, Typography } from '@/components/ui'
 import { ControlledCheckbox, ControlledTextField } from '@/components/ui/controlled'
@@ -15,7 +16,9 @@ const schema = z.object({
 })
 
 type FormTypes = z.infer<typeof schema>
-type Props = { onSubmit: (data: FormTypes) => void }
+type Props = {
+  onSubmit: (data: FormTypes) => void
+}
 export const SignIn = ({ onSubmit }: Props) => {
   const {
     control,
@@ -58,6 +61,7 @@ export const SignIn = ({ onSubmit }: Props) => {
           />
           <ControlledCheckbox control={control} label={'Remember Me'} name={'rememberMe'} />
         </div>
+        {/*        todo remove button inside typography*/}
         <Typography as={'span'} className={s.passwordForgot} variant={'body_2'}>
           <Button as={'a'} className={s.buttonForgot} href={'/forgot-password'} variant={'link'}>
             Forgot password?

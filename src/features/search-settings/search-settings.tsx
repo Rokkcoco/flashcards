@@ -12,23 +12,51 @@ export const SearchSettings = () => {
   const [sliderValue, setSliderValue] = useState([0, 62])
   const minMaxSliderValues = [0, 62]
   const [searchValueTextField, setSearchValueTextField] = useState('')
-  const [searchParams, setSearchParams] = useSearchParams({
-    cardOwner: '',
-    maxCards: '10',
-    minCards: '1',
-    search: '',
-  })
+  const [searchParams, setSearchParams] = useSearchParams()
 
-  const onValueChangeTextFieldWithSearchParams = (value: string) => {
-    searchParams.set('search', value)
+  const onValueChangeTextFieldWithSearchParams = (name: string) => {
+    if (!name) {
+      searchParams.delete('name')
+    } else {
+      searchParams.set('name', name)
+    }
     setSearchParams(searchParams)
-    setSearchValueTextField(value)
+    setSearchValueTextField(name)
   }
 
   const setTabsValueWithSearchParams = (value: string) => {
-    searchParams.set('cardOwner', value)
+    if (!value) {
+      searchParams.delete('cardOwner')
+    } else {
+      searchParams.set('cardOwner', value)
+    }
+
     setSearchParams(searchParams)
     setTabsValue(value)
+  }
+
+  const setSliderValueWithSearchParams = (values: number[]) => {
+    if (values[0] !== sliderValue[0]) {
+      searchParams.set('minCards', values[0].toString())
+    }
+    if (values[1] !== sliderValue[1]) {
+      searchParams.set('maxCards', values[1].toString())
+    }
+    if (values[0] === minMaxSliderValues[0]) {
+      searchParams.delete('minCards')
+    }
+    if (values[1] === minMaxSliderValues[1]) {
+      searchParams.delete('maxCards')
+    }
+    setSearchParams(searchParams)
+    setSliderValue(values)
+  }
+
+  const clearSearchParams = () => {
+    setTabsValue('')
+    setSearchValueTextField('')
+    setSliderValue(minMaxSliderValues)
+    setSearchParams({})
   }
 
   return (
@@ -49,11 +77,11 @@ export const SearchSettings = () => {
       <Slider
         max={minMaxSliderValues[1]}
         min={minMaxSliderValues[0]}
-        onValueChange={setSliderValue}
+        onValueChange={setSliderValueWithSearchParams}
         value={sliderValue}
       />
       <AddDeckModal />
-      <Button variant={'secondary'}>
+      <Button onClick={clearSearchParams} variant={'secondary'}>
         <TrashOutline />
         Clear Field
       </Button>

@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom'
 
 import { SomethingWentWrong } from '@/assets'
-import { Layout } from '@/components/ui'
+import { Layout, useAuthContext } from '@/components/ui'
 import {
   DeckPage,
   DecksPage,
@@ -31,6 +31,10 @@ const publicRoutes: RouteObject[] = [
     element: <ForgotPasswordPage />,
     path: '/forgot-password',
   },
+  {
+    element: <Error404 />,
+    path: '*',
+  },
 ]
 
 const privateRoutes: RouteObject[] = [
@@ -48,25 +52,13 @@ const privateRoutes: RouteObject[] = [
   },
 ]
 
-// const router = createBrowserRouter([
-//   {
-//     children: [{ children: privateRoutes, element: <PrivateRoutes /> }, ...publicRoutes],
-//     element: <Layout />,
-//     errorElement: <Error404 />,
-//   },
-// ])
-
 const router = createBrowserRouter([
   {
     children: [
       {
         children: [
           { children: privateRoutes, element: <PrivateRoutes /> },
-          ...publicRoutes,
-          {
-            element: <Error404 />,
-            path: '*',
-          },
+          { children: publicRoutes, element: <RedirectSignedUserToDecks /> },
         ],
         errorElement: <SomethingWentWrong />,
       },
@@ -81,7 +73,14 @@ export const Router = () => {
 }
 
 function PrivateRoutes() {
-  const isAuthenticated = true
+  //const { isAuthenticated } = useAuthContext()
+  const isAuthenticated = false
 
   return isAuthenticated ? <Outlet /> : <Navigate to={'/sign-in'} />
+}
+function RedirectSignedUserToDecks() {
+  //const { isAuthenticated } = useAuthContext()
+  const isAuthenticated = false
+
+  return isAuthenticated ? <Navigate to={'/'} /> : <Outlet />
 }

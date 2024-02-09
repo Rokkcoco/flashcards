@@ -1,15 +1,24 @@
 import { CSSProperties, ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useOutletContext } from 'react-router-dom'
 
 import { Header } from '@/components/ui/header'
+import { useMeQuery } from '@/services'
 
 import s from './layout.module.scss'
-
+type AuthContext = {
+  isAuthenticated: boolean
+}
+export function useAuthContext() {
+  return useOutletContext<AuthContext>()
+}
 type Props = ComponentPropsWithoutRef<'div'> & {
   contentMarginTop?: CSSProperties['marginTop']
 }
 export const Layout = forwardRef<ElementRef<'div'>, Props>(
   ({ children, className, ...rest }, ref) => {
+    // const { isError, isLoading } = useMeQuery()
+    // const isAuthenticated = !isError && !isLoading
+    //context={{ isAuthenticated } satisfies AuthContext}
     return (
       <div ref={ref} {...rest}>
         <Header

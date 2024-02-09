@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
 import { Edit2Outline, PlayCircleOutline, TrashOutline } from '@/assets'
+import { useDebounce } from '@/common/hooks'
 import { Button, Page } from '@/components/ui'
 import {
   Table,
@@ -19,23 +20,21 @@ import {
   useGetDeckQuery,
   useGetDecksQuery,
 } from '@/services/decks'
-import { skipToken } from '@reduxjs/toolkit/query'
 
 import s from './decks.module.scss'
 
 export const DecksPage = () => {
   const [searchParams, setSearchParams] = useSearchParams({ name: '', page: '1' })
   const page = Number(searchParams.get('page'))
-  const name = searchParams.get('name')
-  const setPage = (page: number) => {
-    searchParams.set('page', page.toString())
-    setSearchParams(searchParams)
-  }
+
+  // const setPage = (page: number) => {
+  //   searchParams.set('page', page.toString())
+  //   setSearchParams(searchParams)
+  // }
 
   //test@test.com
   //test
-  console.log(setPage)
-  console.log(name)
+
   // const orderBy = JSON.parse(search.get('orderBy') ?? 'null')
   // const setOrderBy = (value: Sort) => {
   //   search.set('orderBy', JSON.stringify(value))
@@ -47,32 +46,21 @@ export const DecksPage = () => {
   //   return `${orderBy.key}-${orderBy.direction}`
   // }, [orderBy])
 
-  // const changeSearchHandler = (search: string) => {
-  //   if (!search) {
-  //     params.delete('search')
-  //   } else {
-  //     params.set('search', search)
-  //   }
-  //   params.set('page', '1')
-  //   setParams(params)
-  // }
+  const name = searchParams.get('name')
+  const minCards = searchParams.get('minCards')
+  const maxCards = searchParams.get('maxCards')
+  const nameWithDebounce = useDebounce(name, 1000)
 
-  //const searchName = useDebounce(searchValueTextField, 1000)
-  const searchName = 'FIX LATER'
-  const setName = (name: string) => {
-    if (name === '') {
-      searchParams.delete('name')
-    } else {
-      searchParams.set('name', name)
-    }
-    searchParams.set('page', '1')
-    setSearchParams(searchParams)
-  }
+  console.log(name)
+  const minCardsValueWithDebounce = Number(useDebounce(minCards, 1000))
+  const maxCardsValueWithDebounce = Number(useDebounce(maxCards, 1000))
+
   const { data, error, isLoading } = useGetDecksQuery({
     currentPage: page || 1,
     itemsPerPage: 5,
-    minCardsCount: 3,
-    name: searchName ?? skipToken,
+    maxCardsCount: maxCardsValueWithDebounce ?? undefined,
+    minCardsCount: minCardsValueWithDebounce ?? undefined,
+    name: nameWithDebounce ?? undefined,
   })
 
   console.log(data)
@@ -94,14 +82,6 @@ export const DecksPage = () => {
 
     return <div>Error</div>
   }
-
-  /* const GetCardModal = () => {
-    return (
-      <Modal>
-        <Button as={'a'}></Button>
-      </Modal>
-    )
-  }*/
 
   return (
     <Page>

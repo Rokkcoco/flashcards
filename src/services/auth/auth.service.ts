@@ -19,13 +19,6 @@ import {
 export const AuthService = baseApi.injectEndpoints({
   endpoints: builder => {
     return {
-      getMe: builder.query<AuthMeResponse, void>({
-        providesTags: [''],
-        query: () => ({
-          params: undefined,
-          url: `v1/auth/me`,
-        }),
-      }),
       login: builder.mutation<LoginResponse, LoginArgs>({
         invalidatesTags: [''],
         query: args => ({
@@ -40,6 +33,13 @@ export const AuthService = baseApi.injectEndpoints({
           method: 'POST',
           params: undefined,
           url: `v1/auth/logout`,
+        }),
+      }),
+      me: builder.query<AuthMeResponse, void>({
+        providesTags: [''],
+        query: () => ({
+          params: undefined,
+          url: `v1/auth/me`,
         }),
       }),
       recoverPassword: builder.mutation<void, RecoverPasswordArgs>({
@@ -109,3 +109,4 @@ export const AuthService = baseApi.injectEndpoints({
     }
   },
 })
+export const { useLoginMutation, useLogoutMutation, useMeQuery } = AuthService

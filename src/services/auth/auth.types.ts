@@ -21,9 +21,9 @@ export type UpdateMeResponse = {
   updated: string
 }
 export type LoginArgs = {
-  login: string
+  email: string
   password: string
-  rememberMe: boolean
+  rememberMe?: boolean
 }
 export type LoginResponse = {
   accessToken: string
