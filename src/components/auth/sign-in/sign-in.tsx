@@ -63,7 +63,7 @@ export const SignIn = ({ onSubmit }: Props) => {
         </div>
         {/*        todo remove button inside typography*/}
         <Typography as={'span'} className={s.passwordForgot} variant={'body_2'}>
-          <Button as={'a'} className={s.buttonForgot} href={'/forgot-password'} variant={'link'}>
+          <Button as={Link} className={s.buttonForgot} to={'/forgot-password'} variant={'link'}>
             Forgot password?
           </Button>
         </Typography>
@@ -73,7 +73,7 @@ export const SignIn = ({ onSubmit }: Props) => {
         <Typography as={'span'} className={s.isUser} variant={'body_2'}>
           Already have an account?
         </Typography>
-        <Button as={'a'} className={s.buttonSignUp} href={'/sign-up'} variant={'link'}>
+        <Button as={Link} className={s.buttonSignUp} to={'/sign-up'} variant={'link'}>
           Sign Up
         </Button>
       </form>
