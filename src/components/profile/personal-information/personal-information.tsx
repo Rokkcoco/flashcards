@@ -12,7 +12,20 @@ import { z } from 'zod'
 
 import s from './personal-information.module.scss'
 
+const MAX_FILE_SIZE = 2000000
+const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp']
+
+const someSchema = z.object({
+  image: z
+    .any()
+    .refine(file => file?.[0]?.size <= MAX_FILE_SIZE, `Max image size is 2MB.`)
+    .refine(
+      file => ACCEPTED_IMAGE_TYPES.includes(file?.[0]?.type),
+      'Only .jpg, .jpeg, .png and .webp formats are supported.'
+    ),
+})
 const schema = z.object({
+  image: someSchema,
   name: z.string().min(3),
 })
 
@@ -28,12 +41,14 @@ type Props = {
 export const PersonalInformation = (props: Props) => {
   const { alt, email, name, onLogOut, onSubmit, src } = props
   const [editMode, setEditMode] = useState(false)
+  const [selectedImage, setSelectedImage] = useState<File | null>()
   const {
     control,
     formState: { errors, isDirty },
     handleSubmit,
   } = useForm<FormTypes>({
     defaultValues: {
+      image: undefined,
       name,
     },
     resolver: zodResolver(schema),
@@ -56,6 +71,8 @@ export const PersonalInformation = (props: Props) => {
     setEditMode(false)
   }
 
+  const fileUploaderHandler = () => {}
+
   return (
     <Card className={classNames.root}>
       <div className={s.contentWrapper}>
@@ -75,7 +92,13 @@ export const PersonalInformation = (props: Props) => {
                 variant={'secondary'}
               >
                 <Edit2Outline />
-                <input className={s.fileLoader} id={'fileUploader'} ref={inputRef} type={'file'} />
+                <input
+                  className={s.fileLoader}
+                  id={'fileUploader'}
+                  onChange={fileUploaderHandler}
+                  ref={inputRef}
+                  type={'file'}
+                />
               </Button>
             </>
           )}
@@ -128,32 +151,3 @@ export const PersonalInformation = (props: Props) => {
     )
   }
 }
-
-// const ImageUploader = () => {
-//     const [selectedImage, setSelectedImage] = useState(null);
-//
-//     const handleImageChange = (event) => {
-//         const file = event.target.files[0];
-//
-//         if (file) {
-//             const reader = new FileReader();
-//             reader.onload = () => {
-//                 setSelectedImage(reader.result);
-//             };
-//             reader.readAsDataURL(file);
-//         }
-//     };
-//
-//     return (
-//         <div>
-//             <input type="file" accept="image/*" onChange={handleImageChange} />
-//             {selectedImage && (
-//                 <div>
-//                     <p>Selected Image:</p>
-//                     <img src={selectedImage} alt="Selected" style={{ maxWidth: '100%' }} />
-//                 </div>
-//             )}
-//         </div>
-//     );
-// };
-//
