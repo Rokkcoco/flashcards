@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 
 import { Edit2Outline, PlayCircleOutline, TrashOutline } from '@/assets'
 import { useDebounce } from '@/common/hooks'
@@ -105,7 +105,9 @@ export const DecksPage = () => {
           {data?.items.map(deck => {
             return (
               <TableRow key={deck.id}>
-                <TableCell>{deck.name}</TableCell>
+                <TableCell>
+                  <Link to={`/deck/${deck.id}`}>{deck.name}</Link>
+                </TableCell>
                 <TableCell>{deck.cardsCount}</TableCell>
                 <TableCell>{new Date(deck.updated).toLocaleDateString('ru')}</TableCell>
                 <TableCell>{deck.author.name}</TableCell>

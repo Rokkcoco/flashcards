@@ -23,7 +23,7 @@ export const SearchSettings = () => {
     setSearchParams(searchParams)
     setSearchValueTextField(name)
   }
-
+  //todo fix TabsOwner
   const setTabsValueWithSearchParams = (value: string) => {
     if (!value) {
       searchParams.delete('cardOwner')
@@ -34,7 +34,7 @@ export const SearchSettings = () => {
     setSearchParams(searchParams)
     setTabsValue(value)
   }
-
+  //todo fix slider Max value is zero then nothing set
   const setSliderValueWithSearchParams = (values: number[]) => {
     if (values[0] !== sliderValue[0]) {
       searchParams.set('minCards', values[0].toString())
