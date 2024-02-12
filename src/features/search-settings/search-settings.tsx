@@ -4,7 +4,7 @@ import { useSearchParams } from 'react-router-dom'
 import { TrashOutline } from '@/assets'
 import { Button, Slider, TabItem, Tabs, TextField } from '@/components/ui'
 import { AddDeckModal } from '@/features'
-import { useGetMinMaxDeckCardsQuery } from '@/services'
+import { useGetMinMaxDeckCardsQuery, useMeQuery } from '@/services'
 
 import s from './search-settings.module.scss'
 
@@ -13,15 +13,19 @@ export const SearchSettings = () => {
   const name = searchParams.get('name')
   const minCards = searchParams.get('minCards')
   const maxCards = searchParams.get('maxCards')
-  const cardOwner = searchParams.get('cardOwner')
+  const deckOwner = searchParams.get('deckOwner')
   const { data: minMaxCardsAmount } = useGetMinMaxDeckCardsQuery()
-  const [tabsValue, setTabsValue] = useState(cardOwner ?? '')
+  const [tabsValue, setTabsValue] = useState(deckOwner ?? '')
   const [sliderValue, setSliderValue] = useState([
     minCards ? +minCards : 0,
     maxCards ? +maxCards : 0,
   ])
   const [minMaxSliderValues, setMinMaxSliderValues] = useState([0, 0])
   const [searchValueTextField, setSearchValueTextField] = useState(name ?? '')
+
+  const { data: meData } = useMeQuery()
+
+  console.log(meData?.id)
 
   //todo fix useeffect
   useEffect(() => {
@@ -35,6 +39,7 @@ export const SearchSettings = () => {
       }
     }
   }, [minMaxCardsAmount])
+
   //  setSliderValue([minMaxCardsAmount.min, minMaxCardsAmount.max])
   const onValueChangeTextFieldWithSearchParams = (name: string) => {
     if (!name) {
@@ -47,12 +52,13 @@ export const SearchSettings = () => {
   }
   //todo fix TabsOwner
   const setTabsValueWithSearchParams = (value: string) => {
-    if (!value) {
-      searchParams.delete('cardOwner')
-    } else {
-      searchParams.set('cardOwner', value)
+    if (meData) {
+      if (!value) {
+        searchParams.delete('deckOwner')
+      } else {
+        searchParams.set('deckOwner', meData.id)
+      }
     }
-
     setSearchParams(searchParams)
     setTabsValue(value)
   }
@@ -92,8 +98,8 @@ export const SearchSettings = () => {
       />
       <div className={s.tabs}>
         <Tabs onValueChange={setTabsValueWithSearchParams} value={tabsValue}>
-          <TabItem value={'myCards'}>My Cards</TabItem>
-          <TabItem value={''}>All Cards</TabItem>
+          <TabItem value={meData?.id ?? ''}>My Decks</TabItem>
+          <TabItem value={''}>All Decks</TabItem>
         </Tabs>
       </div>
       <Slider

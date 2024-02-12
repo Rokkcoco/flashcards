@@ -15,7 +15,7 @@ import {
 import { Typography } from '@/components/ui/typography/typography'
 import { SearchSettings } from '@/features'
 import { useMeQuery } from '@/services'
-import { useCreateDeckMutation, useDeleteDeckMutation, useGetDecksQuery } from '@/services/decks'
+import { useDeleteDeckMutation, useGetDecksQuery } from '@/services/decks'
 
 import s from './decks.module.scss'
 
@@ -47,11 +47,14 @@ export const DecksPage = () => {
   const name = searchParams.get('name')
   const minCards = searchParams.get('minCards')
   const maxCards = searchParams.get('maxCards')
+  const deckOwner = searchParams.get('deckOwner')
   const nameWithDebounce = useDebounce(name, 1000)
   const minCardsValueWithDebounce = useDebounce(minCards, 1000)
   const maxCardsValueWithDebounce = useDebounce(maxCards, 1000)
+  const deckOwnerWithDebounce = useDebounce(deckOwner, 1000)
 
   const { data, error, isLoading } = useGetDecksQuery({
+    authorId: deckOwnerWithDebounce ?? undefined,
     currentPage: page || 1,
     itemsPerPage: 5,
     maxCardsCount: maxCardsValueWithDebounce === null ? undefined : +maxCardsValueWithDebounce,
