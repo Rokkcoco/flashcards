@@ -14,17 +14,12 @@ import {
 } from '@/components/ui/table'
 import { Typography } from '@/components/ui/typography/typography'
 import { SearchSettings } from '@/features'
-import {
-  useCreateDeckMutation,
-  useDeleteDeckMutation,
-  useGetDeckQuery,
-  useGetDecksQuery,
-} from '@/services/decks'
+import { useCreateDeckMutation, useDeleteDeckMutation, useGetDecksQuery } from '@/services/decks'
 
 import s from './decks.module.scss'
 
 export const DecksPage = () => {
-  const [searchParams, setSearchParams] = useSearchParams({ name: '', page: '1' })
+  const [searchParams] = useSearchParams({ name: '', page: '1' })
   const page = Number(searchParams.get('page'))
 
   // const setPage = (page: number) => {
@@ -51,27 +46,23 @@ export const DecksPage = () => {
   const maxCards = searchParams.get('maxCards')
   const nameWithDebounce = useDebounce(name, 1000)
 
-  console.log(name)
-  const minCardsValueWithDebounce = Number(useDebounce(minCards, 1000))
-  const maxCardsValueWithDebounce = Number(useDebounce(maxCards, 1000))
+  const minCardsValueWithDebounce = useDebounce(minCards, 1000)
+  const maxCardsValueWithDebounce = useDebounce(maxCards, 1000)
 
   const { data, error, isLoading } = useGetDecksQuery({
     currentPage: page || 1,
     itemsPerPage: 5,
-    maxCardsCount: maxCardsValueWithDebounce ?? undefined,
-    minCardsCount: minCardsValueWithDebounce ?? undefined,
+    maxCardsCount: maxCardsValueWithDebounce === null ? undefined : +maxCardsValueWithDebounce,
+    minCardsCount: minCardsValueWithDebounce === null ? undefined : +minCardsValueWithDebounce,
     name: nameWithDebounce ?? undefined,
   })
 
-  console.log(data)
   const [deckId, setDeckId] = useState('')
   const [skip, setSkip] = useState(true)
   const [createDeck] = useCreateDeckMutation()
   const [deleteDeck] = useDeleteDeckMutation()
   // const { data: CardData } = useGetCardQuery({ id: cardId }, { skip })
-  const { data: DeckData } = useGetDeckQuery({ id: deckId }, { skip })
-
-  console.log(DeckData)
+  // const { data: DeckData } = useGetDeckQuery({ id: deckId }, { skip })
 
   if (isLoading) {
     return <div>Loading...</div>

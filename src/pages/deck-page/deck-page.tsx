@@ -15,11 +15,15 @@ import {
 import { Rating } from '@/features'
 import { useGetCardsInADeckQuery, useGetDeckQuery } from '@/services'
 
+import s from './deck-page.module.scss'
+
 export const DeckPage = () => {
   const { id = '' } = useParams<{ id: 'string' }>()
 
   const { data: deckData } = useGetDeckQuery({ id })
   const { data: cardsData } = useGetCardsInADeckQuery({ id })
+
+  console.log(id)
 
   return (
     <>
@@ -32,7 +36,9 @@ export const DeckPage = () => {
         <Typography as={'h1'} variant={'h1'}>
           {deckData?.name}
         </Typography>
-        <Button>Learn to Pack</Button>
+        <Button as={Link} to={`/learn/${id}`}>
+          Learn to Pack
+        </Button>
       </div>
       <div>
         <TextField type={'search'} />
@@ -51,12 +57,20 @@ export const DeckPage = () => {
             return (
               <TableRow key={card.id}>
                 <TableCell>
-                  {card.questionImg && <img alt={''} src={card.questionImg} />}
-                  {card.question}
+                  <div className={s.cellWithImage}>
+                    {card.questionImg && (
+                      <img alt={''} className={s.cardImage} src={card.questionImg} />
+                    )}
+                    {card.question}
+                  </div>
                 </TableCell>
                 <TableCell>
-                  {card.answerImg && <img alt={''} src={card.answerImg} />}
-                  {card.answer}
+                  <div className={s.cellWithImage}>
+                    {card.answerImg && (
+                      <img alt={''} className={s.cardImage} src={card.answerImg} />
+                    )}
+                    {card.answer}
+                  </div>
                 </TableCell>
                 <TableCell>{new Date(card.updated).toLocaleDateString('ru')}</TableCell>
                 <TableCell>

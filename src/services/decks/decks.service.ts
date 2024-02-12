@@ -82,13 +82,6 @@ export const DecksService = baseApi.injectEndpoints({
           url: `v2/decks`,
         }),
       }),
-      getMe: builder.query<AuthMeResponse, void>({
-        providesTags: [''],
-        query: () => ({
-          params: undefined,
-          url: `v1/auth/me`,
-        }),
-      }),
       getMinMaxDeckCards: builder.query<GetMinMaxDeckCardsArgs, void>({
         providesTags: [''],
         query: () => ({
@@ -98,9 +91,9 @@ export const DecksService = baseApi.injectEndpoints({
       }),
       getRandomCard: builder.query<GetRandomCardResponse, GetRandomCardArgs>({
         providesTags: [''],
-        query: args => ({
+        query: ({ id, ...args }) => ({
           params: args,
-          url: `v1/decks/${args.id}/learn`,
+          url: `v1/decks/${id}/learn`,
         }),
       }),
 
@@ -129,4 +122,6 @@ export const {
   useGetCardsInADeckQuery,
   useGetDeckQuery,
   useGetDecksQuery,
+  useGetMinMaxDeckCardsQuery,
+  useGetRandomCardQuery,
 } = DecksService

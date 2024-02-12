@@ -1,19 +1,41 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
 import { TrashOutline } from '@/assets'
 import { Button, Slider, TabItem, Tabs, TextField } from '@/components/ui'
 import { AddDeckModal } from '@/features'
+import { useGetMinMaxDeckCardsQuery } from '@/services'
 
 import s from './search-settings.module.scss'
 
 export const SearchSettings = () => {
-  const [tabsValue, setTabsValue] = useState('')
-  const [sliderValue, setSliderValue] = useState([0, 62])
-  const minMaxSliderValues = [0, 62]
-  const [searchValueTextField, setSearchValueTextField] = useState('')
   const [searchParams, setSearchParams] = useSearchParams()
+  const name = searchParams.get('name')
+  const minCards = searchParams.get('minCards')
+  const maxCards = searchParams.get('maxCards')
+  const cardOwner = searchParams.get('cardOwner')
+  const { data: minMaxCardsAmount } = useGetMinMaxDeckCardsQuery()
+  const [tabsValue, setTabsValue] = useState(cardOwner ?? '')
+  const [sliderValue, setSliderValue] = useState([
+    minCards ? +minCards : 0,
+    maxCards ? +maxCards : 0,
+  ])
+  const [minMaxSliderValues, setMinMaxSliderValues] = useState([0, 0])
+  const [searchValueTextField, setSearchValueTextField] = useState(name ?? '')
 
+  //todo fix useeffect
+  useEffect(() => {
+    if (minMaxCardsAmount) {
+      setMinMaxSliderValues([minMaxCardsAmount.min, minMaxCardsAmount.max])
+      if (sliderValue[0] === 0) {
+        setSliderValue([minMaxCardsAmount.min, sliderValue[1]])
+      }
+      if (sliderValue[1] === 0) {
+        setSliderValue([sliderValue[0], minMaxCardsAmount.max])
+      }
+    }
+  }, [minMaxCardsAmount])
+  //  setSliderValue([minMaxCardsAmount.min, minMaxCardsAmount.max])
   const onValueChangeTextFieldWithSearchParams = (name: string) => {
     if (!name) {
       searchParams.delete('name')

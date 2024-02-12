@@ -17,6 +17,7 @@ import {
   SignInPage,
   SignUpPage,
 } from '@/pages'
+import { LearnDeckPage } from '@/pages/learn-deck-page'
 
 const authRoutes: RouteObject[] = [
   {
@@ -46,6 +47,7 @@ const privateRoutes: RouteObject[] = [
     element: <ProfilePage />,
     path: '/profile',
   },
+  { element: <LearnDeckPage />, path: '/learn/:id' },
 ]
 
 export const router = createBrowserRouter([

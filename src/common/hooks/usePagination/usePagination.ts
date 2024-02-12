@@ -56,5 +56,6 @@ export const usePagination = ({
     }
   }, [totalCount, pageSize, siblingCount, currentPage])
 
+  //todo нужно возвращать пустой массив?
   return paginationRange || []
 }
