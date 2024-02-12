@@ -5,6 +5,7 @@ import { Header } from '@/components/ui/header'
 import { useMeQuery } from '@/services'
 
 import s from './layout.module.scss'
+
 type AuthContext = {
   isAuthenticated: boolean
 }
@@ -16,20 +17,22 @@ type Props = ComponentPropsWithoutRef<'div'> & {
 }
 export const Layout = forwardRef<ElementRef<'div'>, Props>(
   ({ children, className, ...rest }, ref) => {
-    // const { isError, isLoading } = useMeQuery()
-    // const isAuthenticated = !isError && !isLoading
-    //context={{ isAuthenticated } satisfies AuthContext}
+    const { data: meData, isError, isLoading } = useMeQuery()
+    const isAuthenticated = !isError && !isLoading
+
+    console.log('MeData', meData)
+
     return (
       <div ref={ref} {...rest}>
         <Header
-          alt={'ye'}
-          authorized
-          email={'youremail@email.com'}
-          name={'Liza'}
-          src={'https://xsgames.co/randomusers/avatar.php?g=female'}
+          alt={'user avatar'}
+          authorized={isAuthenticated}
+          email={meData?.email ?? ''}
+          name={meData?.name ?? ''}
+          src={meData?.avatar ?? ''}
         />
         <main className={s.main}>
-          <Outlet />
+          <Outlet context={{ isAuthenticated } satisfies AuthContext} />
         </main>
       </div>
     )

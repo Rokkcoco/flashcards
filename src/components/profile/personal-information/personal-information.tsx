@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { ChangeEvent, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { Edit2Outline, LogOut } from '@/assets'
@@ -15,8 +15,8 @@ import s from './personal-information.module.scss'
 const MAX_FILE_SIZE = 2000000
 const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp']
 
-const someSchema = z.object({
-  image: z
+const imageSchema = z.object({
+  avatar: z
     .any()
     .refine(file => file?.[0]?.size <= MAX_FILE_SIZE, `Max image size is 2MB.`)
     .refine(
@@ -25,8 +25,7 @@ const someSchema = z.object({
     ),
 })
 const schema = z.object({
-  image: someSchema,
-  name: z.string().min(3),
+  name: z.string().min(3).optional(),
 })
 
 type FormTypes = z.infer<typeof schema>
@@ -35,24 +34,24 @@ type Props = {
   email: string
   name: string
   onLogOut: () => void
-  onSubmit: (data: FormTypes) => void
+  onSubmit: (data: FormData) => void
   src: string
 }
 export const PersonalInformation = (props: Props) => {
   const { alt, email, name, onLogOut, onSubmit, src } = props
   const [editMode, setEditMode] = useState(false)
-  const [selectedImage, setSelectedImage] = useState<File | null>()
+  const [selectedImage, setSelectedImage] = useState<File | undefined>()
   const {
     control,
     formState: { errors, isDirty },
     handleSubmit,
   } = useForm<FormTypes>({
     defaultValues: {
-      image: undefined,
       name,
     },
     resolver: zodResolver(schema),
   })
+
   const classNames = {
     avatarWrapper: clsx(
       s.avatarWrapper,
@@ -66,12 +65,22 @@ export const PersonalInformation = (props: Props) => {
   }
 
   const setEditModeTrue = () => setEditMode(true)
-  const handlerOnSubmit = (data: FormTypes) => {
+  const onSubmitHandler = (data: FormData) => {
     isDirty && onSubmit(data)
     setEditMode(false)
   }
 
-  const fileUploaderHandler = () => {}
+  const imgSubmit = (e: ChangeEvent<HTMLInputElement>) => {
+    console.log('yes')
+    setSelectedImage(e.target.files?.[0])
+    if (selectedImage) {
+      const formData = new FormData()
+
+      formData.append('avatar', selectedImage)
+      console.log(selectedImage)
+      onSubmit(formData)
+    }
+  }
 
   return (
     <Card className={classNames.root}>
@@ -84,23 +93,21 @@ export const PersonalInformation = (props: Props) => {
             {name[0].toUpperCase()}
           </Avatar>
           {!editMode && (
-            <>
-              <Button
-                className={s.avatarButton}
-                onClick={avatarUploaderButtonClick}
-                type={'button'}
-                variant={'secondary'}
-              >
-                <Edit2Outline />
-                <input
-                  className={s.fileLoader}
-                  id={'fileUploader'}
-                  onChange={fileUploaderHandler}
-                  ref={inputRef}
-                  type={'file'}
-                />
-              </Button>
-            </>
+            <Button
+              className={s.avatarButton}
+              onClick={avatarUploaderButtonClick}
+              type={'submit'}
+              variant={'secondary'}
+            >
+              <Edit2Outline />
+              <input
+                className={s.fileLoader}
+                id={'fileUploader'}
+                onChange={imgSubmit}
+                ref={inputRef}
+                type={'file'}
+              />
+            </Button>
           )}
         </div>
         <div className={s.profileWrapper}>{editableProfile()}</div>
@@ -132,7 +139,7 @@ export const PersonalInformation = (props: Props) => {
     }
 
     return (
-      <form className={s.formWrapper} onSubmit={handleSubmit(handlerOnSubmit)}>
+      <form className={s.formWrapper} onSubmit={handleSubmit(onSubmitHandler)}>
         <DevTool control={control} />
         <div className={s.textFieldWrapper}>
           <ControlledTextField

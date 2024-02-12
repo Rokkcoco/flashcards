@@ -7,7 +7,7 @@ export * from './text-field'
 export * from './typography'
 export * from './slider'
 export * from './avatar'
-export * from './layout'
+
 export * from './page'
 export * from './controlled'
 export * from './drop-down-menu'

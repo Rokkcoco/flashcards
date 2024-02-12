@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom'
 
 import { SomethingWentWrong } from '@/assets'
-import { Layout } from '@/components/ui'
+import { Layout, useAuthContext } from '@/components/ui/layout/layout'
 import {
   DeckPage,
   DecksPage,
@@ -75,14 +75,12 @@ export const Router = () => {
 }
 
 function PrivateRoutes() {
-  //const { isAuthenticated } = useAuthContext()
-  const isAuthenticated = true
+  const { isAuthenticated } = useAuthContext()
 
   return isAuthenticated ? <Outlet /> : <Navigate to={'/sign-in'} />
 }
 function RedirectSignedUserToDecks() {
-  //const { isAuthenticated } = useAuthContext()
-  const isAuthenticated = true
+  const { isAuthenticated } = useAuthContext()
 
   return isAuthenticated ? <Navigate to={'/'} /> : <Outlet />
 }

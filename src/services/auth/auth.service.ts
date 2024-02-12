@@ -13,8 +13,8 @@ import {
   UpdateMeArgs,
   UpdateMeResponse,
   VerifyEmailArgs,
-  baseApi,
 } from '@/services'
+import { baseApi } from '@/services/base-api'
 
 export const AuthService = baseApi.injectEndpoints({
   endpoints: builder => {
@@ -76,25 +76,17 @@ export const AuthService = baseApi.injectEndpoints({
       }),
       signUp: builder.mutation<SIgnUpResponse, SignUpArgs>({
         invalidatesTags: [''],
-        query: args => ({
+        query: body => ({
+          body,
           method: 'POST',
-          params: args,
           url: `v1/auth/sign-up`,
         }),
       }),
-      updateCard: builder.mutation<UpdateCardResponse, UpdateCardArgs>({
+      updateMe: builder.mutation<UpdateMeResponse, FormData>({
         invalidatesTags: [''],
-        query: args => ({
+        query: body => ({
+          body,
           method: 'PATCH',
-          params: args,
-          url: `v1/cards/${args.id}`,
-        }),
-      }),
-      updateMe: builder.mutation<UpdateMeResponse, UpdateMeArgs>({
-        invalidatesTags: [''],
-        query: args => ({
-          method: 'PATCH',
-          params: args,
           url: `v1/auth/me`,
         }),
       }),
@@ -109,4 +101,10 @@ export const AuthService = baseApi.injectEndpoints({
     }
   },
 })
-export const { useLoginMutation, useLogoutMutation, useMeQuery } = AuthService
+export const {
+  useLoginMutation,
+  useLogoutMutation,
+  useMeQuery,
+  useSignUpMutation,
+  useUpdateMeMutation,
+} = AuthService

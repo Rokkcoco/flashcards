@@ -30,11 +30,11 @@ export type LoginResponse = {
 }
 export type SignUpArgs = {
   email: string
-  html: string
-  name: string
+  html?: string
+  name?: string
   password: string
-  sendConfirmationEmail: boolean
-  subject: string
+  sendConfirmationEmail?: boolean
+  subject?: string
 }
 export type SIgnUpResponse = {
   avatar: string

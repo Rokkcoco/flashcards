@@ -1,4 +1,4 @@
-import { Link, useParams } from 'react-router-dom'
+import { Link, useLocation, useParams } from 'react-router-dom'
 
 import { ArrowBackOutline } from '@/assets'
 import {
@@ -22,9 +22,12 @@ export const DeckPage = () => {
 
   const { data: deckData } = useGetDeckQuery({ id })
   const { data: cardsData } = useGetCardsInADeckQuery({ id })
+  const location = useLocation()
 
+  console.log('location', location)
   console.log(id)
 
+  //todo fix Link
   return (
     <>
       <div>

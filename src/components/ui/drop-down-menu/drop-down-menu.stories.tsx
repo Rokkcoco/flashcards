@@ -5,7 +5,7 @@ import {
   PlayCircleOutline,
   TrashOutline,
 } from '@/assets'
-import { Avatar, Button } from '@/components/ui'
+import { Avatar, Button, DropdownLabel } from '@/components/ui'
 import { Meta, StoryObj } from '@storybook/react'
 
 import { DropdownItem, DropdownMenu, DropdownSeparator } from './'
@@ -31,6 +31,10 @@ export const DropdownMenuWithAvatarStory: Story = {
     return (
       <div style={{ marginLeft: '150px' }}>
         <DropdownMenu {...args}>
+          <DropdownLabel>
+            Label test <CloseOutline />
+          </DropdownLabel>
+          <DropdownSeparator />
           <DropdownItem>
             Sup sup sup
             <CloseOutline />

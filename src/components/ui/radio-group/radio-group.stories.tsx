@@ -20,7 +20,7 @@ export const RadioStory: Story = {
     const onChangeHandler = (newValue: string) => setValue(newValue)
 
     return (
-      <RadioGroup defaultValue={value} onValueChange={onChangeHandler}>
+      <RadioGroup onValueChange={onChangeHandler} value={value}>
         <RadioItem value={'1'}>Value1</RadioItem>
         <RadioItem value={'2'}>Value2</RadioItem>
         <RadioItem disabled value={'3'}>

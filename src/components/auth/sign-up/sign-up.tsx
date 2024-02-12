@@ -19,8 +19,12 @@ const schema = z
     path: ['confirmPassword'],
   })
 
+//todo ошибка падает при регистрации на me и refresh-token
 type FormTypes = z.infer<typeof schema>
-export const SignUp = () => {
+type Props = {
+  onSubmit: (data: Omit<FormTypes, 'confirmPassword'>) => void
+}
+export const SignUp = ({ onSubmit }: Props) => {
   const {
     control,
     formState: { errors },
@@ -35,13 +39,13 @@ export const SignUp = () => {
     resolver: zodResolver(schema),
   })
 
-  const onSubmit = (data: FormTypes) => {
-    console.log(data)
+  const submitHandler = (data: FormTypes) => {
+    onSubmit({ email: data.email, password: data.password })
   }
 
   return (
     <Card className={s.root}>
-      <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
+      <form className={s.form} onSubmit={handleSubmit(submitHandler)}>
         <DevTool control={control} />
         <div className={s.titleContainer}>
           <Typography variant={'h1'}>Sign Up</Typography>

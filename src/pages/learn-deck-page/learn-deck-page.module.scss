@@ -1,4 +1,5 @@
 .root {
+  min-width: 420px;
   padding: 33px 36px 48px;
 }
 
@@ -20,5 +21,21 @@
 }
 
 .questionPicture {
+  display: flex;
+  justify-content: center;
+
+  width: 350px;
+  height: 120px;
   margin-bottom: 19px;
+
+  object-fit: cover;
+}
+
+.imageContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.radio {
+  margin-bottom: 29px;
 }

@@ -57,6 +57,26 @@
   }
 }
 
+.label {
+  cursor: initial;
+  user-select: none;
+
+  display: flex;
+  gap: 6px;
+  align-items: center;
+
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+
+  outline: transparent;
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
 .separator {
   height: 1px;
   margin: 12px 0;

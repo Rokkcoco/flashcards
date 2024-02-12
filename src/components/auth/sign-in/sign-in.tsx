@@ -71,7 +71,7 @@ export const SignIn = ({ onSubmit }: Props) => {
           Sign In
         </Button>
         <Typography as={'span'} className={s.isUser} variant={'body_2'}>
-          Already have an account?
+          Don't have an account?
         </Typography>
         <Button as={Link} className={s.buttonSignUp} to={'/sign-up'} variant={'link'}>
           Sign Up

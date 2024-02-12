@@ -5,7 +5,7 @@ import { LoginArgs, useLoginMutation } from '@/services'
 export const SignInPage = () => {
   const [login] = useLoginMutation()
   const handleLogin = async (data: LoginArgs) => {
-    await login(data)
+    await login(data).then(data => console.log(data))
   }
 
   return (

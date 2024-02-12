@@ -100,6 +100,10 @@ export type GetRandomCardArgs = {
   id: string
   previousCardId?: string
 }
+export type UpdateCardGradeArgs = {
+  cardId: string
+  grade: number
+}
 export type GetRandomCardResponse = {
   answer: string
   answerImg: string

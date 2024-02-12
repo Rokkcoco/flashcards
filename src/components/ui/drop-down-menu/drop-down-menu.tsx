@@ -5,6 +5,25 @@ import { clsx } from 'clsx'
 
 import s from './drop-down-menu.module.scss'
 
+type DropdownLabelProps = Omit<ComponentPropsWithoutRef<typeof DropdownMenuRadix.Label>, 'onChange'>
+export const DropdownLabel = forwardRef<
+  ElementRef<typeof DropdownMenuRadix.Label>,
+  DropdownLabelProps
+>((props, ref) => {
+  const { children, className, ...rest } = props
+
+  const classNames = {
+    item: clsx(s.label, className),
+  }
+
+  return (
+    <DropdownMenuRadix.Label className={classNames.item} ref={ref} {...rest}>
+      {children}
+    </DropdownMenuRadix.Label>
+  )
+})
+DropdownLabel.displayName = 'DropdownLabel'
+
 type DropdownItemProps = Omit<ComponentPropsWithoutRef<typeof DropdownMenuRadix.Item>, 'onChange'>
 
 export const DropdownItem = forwardRef<
@@ -23,7 +42,6 @@ export const DropdownItem = forwardRef<
     </DropdownMenuRadix.Item>
   )
 })
-
 DropdownItem.displayName = 'DropdownItem'
 
 type DropdownSeparatorProps = Omit<
@@ -42,7 +60,6 @@ export const DropdownSeparator = forwardRef<
 
   return <DropdownMenuRadix.Separator className={classNames.item} ref={ref} {...rest} />
 })
-
 DropdownSeparator.displayName = 'DropdownSeparator'
 
 type Props = {
@@ -80,5 +97,4 @@ export const DropdownMenu = forwardRef<ElementRef<typeof DropdownMenuRadix.Conte
     )
   }
 )
-
 DropdownMenu.displayName = 'DropdownMenu'

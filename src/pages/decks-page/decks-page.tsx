@@ -1,9 +1,9 @@
 import { useState } from 'react'
-import { Link, useSearchParams } from 'react-router-dom'
+import { NavLink, useLocation, useSearchParams } from 'react-router-dom'
 
 import { Edit2Outline, PlayCircleOutline, TrashOutline } from '@/assets'
 import { useDebounce } from '@/common/hooks'
-import { Button, Page } from '@/components/ui'
+import { Button, Page, Pagination } from '@/components/ui'
 import {
   Table,
   TableBody,
@@ -14,6 +14,7 @@ import {
 } from '@/components/ui/table'
 import { Typography } from '@/components/ui/typography/typography'
 import { SearchSettings } from '@/features'
+import { useMeQuery } from '@/services'
 import { useCreateDeckMutation, useDeleteDeckMutation, useGetDecksQuery } from '@/services/decks'
 
 import s from './decks.module.scss'
@@ -21,7 +22,9 @@ import s from './decks.module.scss'
 export const DecksPage = () => {
   const [searchParams] = useSearchParams({ name: '', page: '1' })
   const page = Number(searchParams.get('page'))
+  const location = useLocation()
 
+  console.log('location', location)
   // const setPage = (page: number) => {
   //   searchParams.set('page', page.toString())
   //   setSearchParams(searchParams)
@@ -45,7 +48,6 @@ export const DecksPage = () => {
   const minCards = searchParams.get('minCards')
   const maxCards = searchParams.get('maxCards')
   const nameWithDebounce = useDebounce(name, 1000)
-
   const minCardsValueWithDebounce = useDebounce(minCards, 1000)
   const maxCardsValueWithDebounce = useDebounce(maxCards, 1000)
 
@@ -56,10 +58,11 @@ export const DecksPage = () => {
     minCardsCount: minCardsValueWithDebounce === null ? undefined : +minCardsValueWithDebounce,
     name: nameWithDebounce ?? undefined,
   })
+  const { data: meData } = useMeQuery()
 
+  console.log(data)
   const [deckId, setDeckId] = useState('')
   const [skip, setSkip] = useState(true)
-  const [createDeck] = useCreateDeckMutation()
   const [deleteDeck] = useDeleteDeckMutation()
   // const { data: CardData } = useGetCardQuery({ id: cardId }, { skip })
   // const { data: DeckData } = useGetDeckQuery({ id: deckId }, { skip })
@@ -80,7 +83,6 @@ export const DecksPage = () => {
         <Typography as={'h1'} variant={'large'}>
           Decks
         </Typography>
-        <Button onClick={() => createDeck({ name: 'new deck' })}>Add new deck</Button>
       </div>
       <SearchSettings />
       <Table width={'100%'}>
@@ -97,7 +99,7 @@ export const DecksPage = () => {
             return (
               <TableRow key={deck.id}>
                 <TableCell>
-                  <Link to={`/deck/${deck.id}`}>{deck.name}</Link>
+                  <NavLink to={`/deck/${deck.id}`}>{deck.name}</NavLink>
                 </TableCell>
                 <TableCell>{deck.cardsCount}</TableCell>
                 <TableCell>{new Date(deck.updated).toLocaleDateString('ru')}</TableCell>
@@ -111,23 +113,32 @@ export const DecksPage = () => {
                   >
                     <PlayCircleOutline />
                   </button>
-                  <button>
-                    <Edit2Outline />
-                  </button>
-                  <button
-                    onClick={() => {
-                      deleteDeck({ id: deck.id })
-                    }}
-                  >
-                    <TrashOutline />
-                  </button>
+                  {meData?.id === deck.author.id && (
+                    <>
+                      <button>
+                        <Edit2Outline />
+                      </button>
+                      <button
+                        onClick={() => {
+                          deleteDeck({ id: deck.id })
+                        }}
+                      >
+                        <TrashOutline />
+                      </button>
+                    </>
+                  )}
                 </TableCell>
               </TableRow>
             )
           })}
         </TableBody>
       </Table>
-      {/*<Pagination count={data?.pagination?.totalPages ?? 1} onPageChange={setPage} currentPage={page} />*/}
+      <Pagination
+        currentPage={page}
+        onPageChange={() => {}}
+        pageSize={3}
+        totalCount={data?.pagination?.totalPages ?? 1}
+      />
     </Page>
   )
 }

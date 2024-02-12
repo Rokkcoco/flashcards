@@ -3,6 +3,8 @@ import '@fontsource/roboto/400.css'
 import '@fontsource/roboto/700.css'
 import '../src/styles/index.scss'
 import { withRouter } from 'storybook-addon-react-router-v6'
+import { Provider } from 'react-redux'
+import { store } from '../src/services'
 
 const preview: Preview = {
   parameters: {
@@ -14,7 +16,14 @@ const preview: Preview = {
       },
     },
   },
-  decorators: [withRouter],
+  decorators: [
+    withRouter,
+    Story => (
+      <Provider store={store}>
+        <Story />
+      </Provider>
+    ),
+  ],
 }
 
 export default preview
