@@ -21,12 +21,7 @@ export const Modal = forwardRef<ElementRef<typeof Dialog.Content>, Props>((props
       <Dialog.Trigger asChild>{trigger}</Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Overlay className={s.overlay} />
-        <Dialog.Content
-          asChild
-          className={s.contentBox}
-          onClick={e => e.preventDefault()}
-          ref={ref}
-        >
+        <Dialog.Content asChild className={s.contentBox} ref={ref}>
           <Card>
             {title && (
               <div className={s.header}>

@@ -8,9 +8,6 @@ import {
   ResetPasswordResponse,
   SIgnUpResponse,
   SignUpArgs,
-  UpdateCardArgs,
-  UpdateCardResponse,
-  UpdateMeArgs,
   UpdateMeResponse,
   VerifyEmailArgs,
 } from '@/services'
@@ -36,7 +33,7 @@ export const AuthService = baseApi.injectEndpoints({
         }),
       }),
       me: builder.query<AuthMeResponse, void>({
-        providesTags: [''],
+        providesTags: ['Me'],
         query: () => ({
           params: undefined,
           url: `v1/auth/me`,

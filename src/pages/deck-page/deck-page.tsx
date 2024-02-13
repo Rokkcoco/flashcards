@@ -13,19 +13,25 @@ import {
   Typography,
 } from '@/components/ui'
 import { Rating } from '@/features'
-import { useGetCardsInADeckQuery, useGetDeckQuery } from '@/services'
+import { AddCardModal } from '@/features/add-card-modal'
+import { useGetCardsInADeckQuery, useGetDeckQuery, useMeQuery } from '@/services'
 
 import s from './deck-page.module.scss'
 
 export const DeckPage = () => {
   const { id = '' } = useParams<{ id: 'string' }>()
-
+  const { data: meData } = useMeQuery()
   const { data: deckData } = useGetDeckQuery({ id })
   const { data: cardsData } = useGetCardsInADeckQuery({ id })
   const location = useLocation()
+  const userIsDeckAuthor = meData?.id === deckData?.userId
 
+  console.log(userIsDeckAuthor, 'userIsDeckAuthor')
   console.log('location', location)
+
   console.log(id)
+  console.log('meData', meData)
+  console.log('deckData', deckData)
 
   //todo fix Link
   return (
@@ -39,9 +45,12 @@ export const DeckPage = () => {
         <Typography as={'h1'} variant={'h1'}>
           {deckData?.name}
         </Typography>
-        <Button as={Link} to={`/learn/${id}`}>
-          Learn to Pack
-        </Button>
+        {userIsDeckAuthor && <AddCardModal />}
+        {!userIsDeckAuthor && (
+          <Button as={Link} to={`/learn/${id}`}>
+            Learn to Deck
+          </Button>
+        )}
       </div>
       <div>
         <TextField type={'search'} />

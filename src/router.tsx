@@ -56,6 +56,7 @@ export const router = createBrowserRouter([
       {
         children: [
           { children: privateRoutes, element: <PrivateRoutes /> },
+
           { children: authRoutes, element: <RedirectSignedUserToDecks /> },
           {
             element: <Error404 />,

@@ -13,7 +13,7 @@ export const SearchSettings = () => {
   const name = searchParams.get('name')
   const minCards = searchParams.get('minCards')
   const maxCards = searchParams.get('maxCards')
-  const deckOwner = searchParams.get('deckOwner')
+  const deckOwner = searchParams.get('authorId')
   const { data: minMaxCardsAmount } = useGetMinMaxDeckCardsQuery()
   const [tabsValue, setTabsValue] = useState(deckOwner ?? '')
   const [sliderValue, setSliderValue] = useState([
@@ -54,9 +54,9 @@ export const SearchSettings = () => {
   const setTabsValueWithSearchParams = (value: string) => {
     if (meData) {
       if (!value) {
-        searchParams.delete('deckOwner')
+        searchParams.delete('authorId')
       } else {
-        searchParams.set('deckOwner', meData.id)
+        searchParams.set('authorId', meData.id)
       }
     }
     setSearchParams(searchParams)

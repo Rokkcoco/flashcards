@@ -89,7 +89,7 @@ export type GetCardsInADeckArgs = {
 
 export type CreateCardArgs = {
   answer: string
-  answerImg: string
+  answerImg?: string
   answerVideo?: string
   id: string
   question: string

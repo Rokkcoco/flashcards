@@ -1,0 +1,32 @@
+.questionAnswerTitle {
+  margin-bottom: 12px;
+}
+
+.root {
+  width: 100%;
+  padding-right: 10px;
+  padding-bottom: 12px;
+}
+
+.questionAnswerTextfield {
+  margin-bottom: 12px;
+}
+
+.questionPicture {
+  margin-bottom: 24px;
+}
+
+.questionAnswerCoverButton {
+  margin-bottom: 24px;
+}
+
+.controlButtonsWrapper {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  margin-top: 42px;
+}
+
+.submitButton {
+  margin-right: -10px;
+}

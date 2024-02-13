@@ -3,7 +3,7 @@ import { NavLink, useLocation, useSearchParams } from 'react-router-dom'
 
 import { Edit2Outline, PlayCircleOutline, TrashOutline } from '@/assets'
 import { useDebounce } from '@/common/hooks'
-import { Button, Page, Pagination } from '@/components/ui'
+import { Page, Pagination } from '@/components/ui'
 import {
   Table,
   TableBody,
@@ -47,14 +47,14 @@ export const DecksPage = () => {
   const name = searchParams.get('name')
   const minCards = searchParams.get('minCards')
   const maxCards = searchParams.get('maxCards')
-  const deckOwner = searchParams.get('deckOwner')
+  const authorId = searchParams.get('authorId')
   const nameWithDebounce = useDebounce(name, 1000)
   const minCardsValueWithDebounce = useDebounce(minCards, 1000)
   const maxCardsValueWithDebounce = useDebounce(maxCards, 1000)
-  const deckOwnerWithDebounce = useDebounce(deckOwner, 1000)
+  const authorIdWithDebounce = useDebounce(authorId, 1000)
 
   const { data, error, isLoading } = useGetDecksQuery({
-    authorId: deckOwnerWithDebounce ?? undefined,
+    authorId: authorIdWithDebounce ?? undefined,
     currentPage: page || 1,
     itemsPerPage: 5,
     maxCardsCount: maxCardsValueWithDebounce === null ? undefined : +maxCardsValueWithDebounce,

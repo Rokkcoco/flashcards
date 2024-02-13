@@ -51,7 +51,7 @@ export const PersonalInformation = (props: Props) => {
     },
     resolver: zodResolver(schema),
   })
-
+  //todo try add picture in form
   const classNames = {
     avatarWrapper: clsx(
       s.avatarWrapper,
