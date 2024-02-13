@@ -13,6 +13,7 @@ import { z } from 'zod'
 import s from './personal-information.module.scss'
 
 const MAX_FILE_SIZE = 2000000
+//const MAX_FILE_SIZE = 2
 const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp']
 
 const imageSchema = z.object({
@@ -66,6 +67,7 @@ export const PersonalInformation = (props: Props) => {
   const { onChange: onIMGChange, ref: refZ, ...restZ } = register('avatar')
 
   console.log('errors', imgErrors)
+  console.log('errors', errors)
   //todo try add picture in form
   const classNames = {
     avatarWrapper: clsx(
