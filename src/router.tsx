@@ -4,7 +4,6 @@ import {
   RouteObject,
   RouterProvider,
   createBrowserRouter,
-  useOutletContext,
 } from 'react-router-dom'
 
 import { SomethingWentWrong } from '@/assets'

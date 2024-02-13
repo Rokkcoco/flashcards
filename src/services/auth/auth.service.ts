@@ -17,7 +17,7 @@ export const AuthService = baseApi.injectEndpoints({
   endpoints: builder => {
     return {
       login: builder.mutation<LoginResponse, LoginArgs>({
-        invalidatesTags: [''],
+        invalidatesTags: ['Me'],
         query: args => ({
           method: 'POST',
           params: args,
@@ -25,7 +25,7 @@ export const AuthService = baseApi.injectEndpoints({
         }),
       }),
       logout: builder.mutation<void, void>({
-        invalidatesTags: [''],
+        invalidatesTags: ['Me'],
         query: () => ({
           method: 'POST',
           params: undefined,

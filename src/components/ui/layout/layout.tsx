@@ -2,6 +2,7 @@ import { CSSProperties, ComponentPropsWithoutRef, ElementRef, forwardRef } from 
 import { Outlet, useOutletContext } from 'react-router-dom'
 
 import { Header } from '@/components/ui/header'
+import { Loader } from '@/components/ui/loader'
 import { useMeQuery } from '@/services'
 
 import s from './layout.module.scss'
@@ -17,14 +18,13 @@ type Props = ComponentPropsWithoutRef<'div'> & {
 }
 export const Layout = forwardRef<ElementRef<'div'>, Props>(
   ({ children, className, ...rest }, ref) => {
-    const { data: meData, isError, isLoading, isSuccess } = useMeQuery()
-    //const isAuthenticated = !isError && !isLoading
-    const isAuthenticated = isSuccess
+    const { data: meData, isError, isLoading } = useMeQuery()
+    const isAuthenticated = !isError && !isLoading
 
-    console.log('isSuccess', isSuccess)
+    console.log('isAuthenticated', isAuthenticated)
 
     if (isLoading) {
-      return <div>123</div>
+      return <Loader />
     }
 
     return (
@@ -37,7 +37,7 @@ export const Layout = forwardRef<ElementRef<'div'>, Props>(
           src={meData?.avatar ?? ''}
         />
         <main className={s.main}>
-          <Outlet context={{ isAuthenticated: isSuccess } satisfies AuthContext} />
+          <Outlet context={{ isAuthenticated } satisfies AuthContext} />
         </main>
       </div>
     )
