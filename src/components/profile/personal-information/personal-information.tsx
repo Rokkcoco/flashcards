@@ -1,4 +1,4 @@
-import { ChangeEvent, useRef, useState } from 'react'
+import { ChangeEvent, useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { Edit2Outline, LogOut } from '@/assets'
@@ -28,6 +28,7 @@ const schema = z.object({
   name: z.string().min(3).optional(),
 })
 
+type ImageFormType = z.infer<typeof imageSchema>
 type FormTypes = z.infer<typeof schema>
 type Props = {
   alt: string
@@ -51,6 +52,20 @@ export const PersonalInformation = (props: Props) => {
     },
     resolver: zodResolver(schema),
   })
+
+  const {
+    formState: { errors: imgErrors },
+    handleSubmit: handleIMGsubmit,
+    register,
+  } = useForm<ImageFormType>({
+    defaultValues: {
+      avatar: undefined,
+    },
+    resolver: zodResolver(imageSchema),
+  })
+  const { onChange: onIMGChange, ref: refZ, ...restZ } = register('avatar')
+
+  console.log('errors', imgErrors)
   //todo try add picture in form
   const classNames = {
     avatarWrapper: clsx(
@@ -60,9 +75,15 @@ export const PersonalInformation = (props: Props) => {
     root: clsx(s.root, editMode && s.rootEditMode),
   }
   const inputRef = useRef<HTMLInputElement>(null)
+  const customRef = useRef<HTMLInputElement | null>(null)
   const avatarUploaderButtonClick = () => {
-    inputRef.current?.click()
+    //inputRef.current?.click()
+    customRef.current?.click()
   }
+
+  useEffect(() => {
+    console.log(selectedImage)
+  }, [selectedImage])
 
   const setEditModeTrue = () => setEditMode(true)
   const onSubmitHandler = (data: FormData) => {
@@ -71,15 +92,22 @@ export const PersonalInformation = (props: Props) => {
   }
 
   const imgSubmit = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log('yes')
-    setSelectedImage(e.target.files?.[0])
-    if (selectedImage) {
-      const formData = new FormData()
+    const file = e.target.files?.[0]
 
-      formData.append('avatar', selectedImage)
-      console.log(selectedImage)
-      onSubmit(formData)
-    }
+    setSelectedImage(e.target.files?.[0])
+    const formData = new FormData()
+
+    formData.append('avatar', file)
+    onSubmit(formData)
+  }
+
+  const customSubmit = (data: any) => {
+    console.log(data.avatar[0])
+    console.log(data)
+    const formData = new FormData()
+
+    formData.append('avatar', data.avatar[0])
+    onSubmit(formData)
   }
 
   return (
@@ -93,21 +121,35 @@ export const PersonalInformation = (props: Props) => {
             {name[0].toUpperCase()}
           </Avatar>
           {!editMode && (
-            <Button
-              className={s.avatarButton}
-              onClick={avatarUploaderButtonClick}
-              type={'submit'}
-              variant={'secondary'}
-            >
-              <Edit2Outline />
+            <form onSubmit={handleIMGsubmit(customSubmit)}>
+              <Button
+                className={s.avatarButton}
+                onClick={avatarUploaderButtonClick}
+                type={'button'}
+                variant={'secondary'}
+              >
+                <Edit2Outline />
+                <input
+                  className={s.fileLoader}
+                  id={'fileUploader'}
+                  onChange={e => imgSubmit(e)}
+                  ref={inputRef}
+                  type={'file'}
+                />
+              </Button>
               <input
-                className={s.fileLoader}
-                id={'fileUploader'}
-                onChange={imgSubmit}
-                ref={inputRef}
                 type={'file'}
+                {...restZ}
+                onChange={e => {
+                  onIMGChange(e)
+                  handleIMGsubmit(customSubmit)()
+                }}
+                ref={e => {
+                  refZ(e)
+                  customRef.current = e
+                }}
               />
-            </Button>
+            </form>
           )}
         </div>
         <div className={s.profileWrapper}>{editableProfile()}</div>

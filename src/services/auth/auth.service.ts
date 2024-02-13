@@ -80,7 +80,7 @@ export const AuthService = baseApi.injectEndpoints({
         }),
       }),
       updateMe: builder.mutation<UpdateMeResponse, FormData>({
-        invalidatesTags: [''],
+        invalidatesTags: ['Me'],
         query: body => ({
           body,
           method: 'PATCH',
