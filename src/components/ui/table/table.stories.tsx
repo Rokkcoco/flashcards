@@ -1,4 +1,3 @@
-import { Edit2Outline, PlayCircleOutline, TrashOutline } from '@/assets'
 import {
   Table,
   TableBody,
@@ -56,7 +55,6 @@ export const TableStory: Story = {
             <TableHeadCell>Cards</TableHeadCell>
             <TableHeadCell>Last Updated</TableHeadCell>
             <TableHeadCell>Created By</TableHeadCell>
-            <TableHeadCell></TableHeadCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -67,11 +65,6 @@ export const TableStory: Story = {
               <TableCell>{t.name}</TableCell>
               <TableCell>
                 {new Date(t.lastUpdated).toLocaleString('ru', { dateStyle: 'short' })}
-              </TableCell>
-              <TableCell>
-                <PlayCircleOutline />
-                <Edit2Outline />
-                <TrashOutline />
               </TableCell>
             </TableRow>
           ))}

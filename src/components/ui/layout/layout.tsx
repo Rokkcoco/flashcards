@@ -17,10 +17,15 @@ type Props = ComponentPropsWithoutRef<'div'> & {
 }
 export const Layout = forwardRef<ElementRef<'div'>, Props>(
   ({ children, className, ...rest }, ref) => {
-    const { data: meData, isError, isLoading } = useMeQuery()
-    const isAuthenticated = !isError && !isLoading
+    const { data: meData, isError, isLoading, isSuccess } = useMeQuery()
+    //const isAuthenticated = !isError && !isLoading
+    const isAuthenticated = isSuccess
 
-    console.log('isAuthenticated', isAuthenticated)
+    console.log('isSuccess', isSuccess)
+
+    if (isLoading) {
+      return <div>123</div>
+    }
 
     return (
       <div ref={ref} {...rest}>
@@ -32,7 +37,7 @@ export const Layout = forwardRef<ElementRef<'div'>, Props>(
           src={meData?.avatar ?? ''}
         />
         <main className={s.main}>
-          <Outlet context={{ isAuthenticated } satisfies AuthContext} />
+          <Outlet context={{ isAuthenticated: isSuccess } satisfies AuthContext} />
         </main>
       </div>
     )

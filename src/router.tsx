@@ -4,6 +4,7 @@ import {
   RouteObject,
   RouterProvider,
   createBrowserRouter,
+  useOutletContext,
 } from 'react-router-dom'
 
 import { SomethingWentWrong } from '@/assets'
@@ -19,7 +20,7 @@ import {
 } from '@/pages'
 import { LearnDeckPage } from '@/pages/learn-deck-page'
 
-const authRoutes: RouteObject[] = [
+const publicRoutes: RouteObject[] = [
   {
     element: <SignInPage />,
     path: '/sign-in',
@@ -57,7 +58,7 @@ export const router = createBrowserRouter([
         children: [
           { children: privateRoutes, element: <PrivateRoutes /> },
 
-          { children: authRoutes, element: <RedirectSignedUserToDecks /> },
+          { children: publicRoutes, element: <RedirectSignedUserToDecks /> },
           {
             element: <Error404 />,
             path: '*',

@@ -14,7 +14,6 @@
 }
 
 .cell {
-  width: fit-content;
   height: 100%;
   padding: 6px 24px;
 
@@ -30,20 +29,6 @@
 
 .data {
   background-color: var(--color-dark-900);
-
-  &:last-child {
-    display: flex;
-    gap: 10px;
-    align-content: center;
-
-    margin-right: 0;
-
-    text-align: right;
-  }
-}
-
-.icons {
-  text-align: right;
 }
 
 .row {
