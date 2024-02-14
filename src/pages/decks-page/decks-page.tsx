@@ -102,7 +102,16 @@ export const DecksPage = () => {
             return (
               <TableRow key={deck.id}>
                 <TableCell>
-                  <NavLink to={`/deck/${deck.id}`}>{deck.name}</NavLink>
+                  <NavLink to={`/deck/${deck.id}`}>
+                    {deck.cover && (
+                      <img
+                        alt={'FIX LATER'}
+                        src={deck.cover}
+                        style={{ height: '90px', width: '90px' }}
+                      />
+                    )}
+                    {deck.name}
+                  </NavLink>
                 </TableCell>
                 <TableCell>{deck.cardsCount}</TableCell>
                 <TableCell>{new Date(deck.updated).toLocaleDateString('ru')}</TableCell>

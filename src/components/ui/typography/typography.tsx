@@ -32,6 +32,7 @@ type TypographyComponent = <T extends ElementType = 'p'>(
 ) => ReactNode
 
 //todo сделать зависимость as к variant, чтобы по умолчанию уже было
+//todo проверить css стили по макету
 export const Typography: TypographyComponent = forwardRef(
   <T extends ElementType = 'p'>(props: TypographyProps<T>, ref: PolymorphicRef<T>) => {
     const { as, children, className, text = '', variant = 'body_1', ...rest } = props

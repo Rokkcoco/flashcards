@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { Edit2Outline, LogOut } from '@/assets'
@@ -12,18 +12,16 @@ import { z } from 'zod'
 
 import s from './personal-information.module.scss'
 
-const MAX_FILE_SIZE = 2000000
-//const MAX_FILE_SIZE = 2
-const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp']
-
 const imageSchema = z.object({
   avatar: z
-    .any()
-    .refine(file => file?.[0]?.size <= MAX_FILE_SIZE, `Max image size is 2MB.`)
-    .refine(
-      file => ACCEPTED_IMAGE_TYPES.includes(file?.[0]?.type),
-      'Only .jpg, .jpeg, .png and .webp formats are supported.'
-    ),
+    .custom<FileList>()
+    .transform(file => file.length > 0 && file.item(0))
+    .refine(file => !file || (!!file && file.type?.startsWith('image')), {
+      message: 'Only images are allowed to be sent.',
+    })
+    .refine(file => !file || (!!file && file.size <= 2 * 1024 * 1024), {
+      message: 'The profile picture must be a maximum of 2MB.',
+    }),
 })
 const schema = z.object({
   name: z.string().min(3).optional(),
@@ -42,7 +40,6 @@ type Props = {
 export const PersonalInformation = (props: Props) => {
   const { alt, email, name, onLogOut, onSubmit, src } = props
   const [editMode, setEditMode] = useState(false)
-  const [selectedImage, setSelectedImage] = useState<File | undefined>()
   const {
     control,
     formState: { errors, isDirty },
@@ -53,8 +50,10 @@ export const PersonalInformation = (props: Props) => {
     },
     resolver: zodResolver(schema),
   })
-
+  //todo fix span styles, fix variable names, type for avatar | name
+  //todo проверить паддинги по макету
   const {
+    clearErrors,
     formState: { errors: imgErrors },
     handleSubmit: handleIMGsubmit,
     register,
@@ -66,26 +65,32 @@ export const PersonalInformation = (props: Props) => {
   })
   const { onChange: onIMGChange, ref: refZ, ...restZ } = register('avatar')
 
-  console.log('errors', imgErrors)
-  console.log('errors', errors)
-  //todo try add picture in form
   const classNames = {
+    avatar: s.avatar,
+    avatarButton: s.avatarButton,
     avatarWrapper: clsx(
       s.avatarWrapper,
       editMode ? s.avatarWrapperEditMode : s.avatarWrapperNotEditMode
     ),
+    contentWrapper: s.contentWrapper,
+    email: s.email,
+    fileLoader: s.fileLoader,
+    formWrapper: s.formWrapper,
+    imageError: s.imageError,
+    name: s.name,
+    nameButton: s.nameButton,
+    nameWrapper: s.nameWrapper,
+    profileWrapper: s.profileWrapper,
     root: clsx(s.root, editMode && s.rootEditMode),
-  }
-  const inputRef = useRef<HTMLInputElement>(null)
-  const customRef = useRef<HTMLInputElement | null>(null)
-  const avatarUploaderButtonClick = () => {
-    //inputRef.current?.click()
-    customRef.current?.click()
+    textField: s.textField,
+    textFieldWrapper: s.textFieldWrapper,
+    title: s.title,
   }
 
-  useEffect(() => {
-    console.log(selectedImage)
-  }, [selectedImage])
+  const customRef = useRef<HTMLInputElement | null>(null)
+  const avatarUploaderButtonClick = () => {
+    customRef.current?.click()
+  }
 
   const setEditModeTrue = () => setEditMode(true)
   const onSubmitHandler = (data: FormData) => {
@@ -93,56 +98,43 @@ export const PersonalInformation = (props: Props) => {
     setEditMode(false)
   }
 
-  const imgSubmit = (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-
-    setSelectedImage(e.target.files?.[0])
+  const customSubmit = (data: ImageFormType) => {
+    if (!data.avatar) {
+      return
+    }
     const formData = new FormData()
 
-    formData.append('avatar', file)
-    onSubmit(formData)
-  }
-
-  const customSubmit = (data: any) => {
-    console.log(data.avatar[0])
-    console.log(data)
-    const formData = new FormData()
-
-    formData.append('avatar', data.avatar[0])
+    formData.append('avatar', data.avatar)
     onSubmit(formData)
   }
 
   return (
     <Card className={classNames.root}>
-      <div className={s.contentWrapper}>
-        <Typography as={'h1'} className={s.title} variant={'h1'}>
+      <div className={classNames.contentWrapper}>
+        <Typography as={'h1'} className={classNames.title} variant={'h1'}>
           Personal Information
         </Typography>
         <div className={classNames.avatarWrapper}>
-          <Avatar alt={alt} size={'large'} src={src}>
+          <Avatar alt={alt} className={classNames.avatar} size={'large'} src={src}>
             {name[0].toUpperCase()}
           </Avatar>
           {!editMode && (
             <form onSubmit={handleIMGsubmit(customSubmit)}>
               <Button
-                className={s.avatarButton}
+                className={classNames.avatarButton}
                 onClick={avatarUploaderButtonClick}
                 type={'button'}
                 variant={'secondary'}
               >
                 <Edit2Outline />
-                <input
-                  className={s.fileLoader}
-                  id={'fileUploader'}
-                  onChange={e => imgSubmit(e)}
-                  ref={inputRef}
-                  type={'file'}
-                />
               </Button>
               <input
+                className={classNames.fileLoader}
+                id={'fileUploader'}
                 type={'file'}
                 {...restZ}
                 onChange={e => {
+                  clearErrors()
                   onIMGChange(e)
                   handleIMGsubmit(customSubmit)()
                 }}
@@ -151,10 +143,15 @@ export const PersonalInformation = (props: Props) => {
                   customRef.current = e
                 }}
               />
+              {imgErrors.avatar && (
+                <Typography className={classNames.imageError} variant={'caption'}>
+                  {imgErrors.avatar.message}
+                </Typography>
+              )}
             </form>
           )}
         </div>
-        <div className={s.profileWrapper}>{editableProfile()}</div>
+        <div className={classNames.profileWrapper}>{editableProfile()}</div>
       </div>
     </Card>
   )
@@ -163,15 +160,15 @@ export const PersonalInformation = (props: Props) => {
     if (!editMode) {
       return (
         <>
-          <div className={s.nameWrapper}>
-            <Typography as={'h2'} className={s.name} variant={'h2'}>
+          <div className={classNames.nameWrapper}>
+            <Typography as={'h2'} className={classNames.name} variant={'h2'}>
               {name}
             </Typography>
-            <button className={s.nameButton} onClick={setEditModeTrue} type={'button'}>
+            <button className={classNames.nameButton} onClick={setEditModeTrue} type={'button'}>
               <Edit2Outline />
             </button>
           </div>
-          <Typography as={'span'} className={s.email} variant={'body_2'}>
+          <Typography as={'span'} className={classNames.email} variant={'body_2'}>
             {email}
           </Typography>
           <Button onClick={onLogOut} type={'button'} variant={'secondary'}>
@@ -183,11 +180,11 @@ export const PersonalInformation = (props: Props) => {
     }
 
     return (
-      <form className={s.formWrapper} onSubmit={handleSubmit(onSubmitHandler)}>
+      <form className={classNames.formWrapper} onSubmit={handleSubmit(onSubmitHandler)}>
         <DevTool control={control} />
-        <div className={s.textFieldWrapper}>
+        <div className={classNames.textFieldWrapper}>
           <ControlledTextField
-            className={s.textField}
+            className={classNames.textField}
             control={control}
             errorMessage={errors?.name?.message}
             label={'Nickname'}

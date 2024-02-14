@@ -98,8 +98,8 @@ export const SearchSettings = () => {
       />
       <div className={s.tabs}>
         <Tabs onValueChange={setTabsValueWithSearchParams} value={tabsValue}>
-          <TabItem value={meData?.id ?? ''}>My Decks</TabItem>
-          <TabItem value={''}>All Decks</TabItem>
+          <TabItem value={meData?.id ?? ''}>My Cards</TabItem>
+          <TabItem value={''}>All Cards</TabItem>
         </Tabs>
       </div>
       <Slider
