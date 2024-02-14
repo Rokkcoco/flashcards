@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form'
 import { ImageOutline } from '@/assets'
 import { imgSchema } from '@/common/schema'
 import { Button, ControlledCheckbox, ControlledTextField, Modal } from '@/components/ui'
-import { CreateDeckArgs, useCreateDeckMutation } from '@/services'
+import { useCreateDeckMutation } from '@/services'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -18,7 +18,6 @@ const schema = z.object({
 type FormType = z.infer<typeof schema>
 export const AddDeckModal = () => {
   const [modalOpenStatus, setModalOpenStatus] = useState(false)
-  const [coverForNewDeck, setCoverForNewDeck] = useState<File | undefined>()
   const [createDeck] = useCreateDeckMutation()
   const addDeckHanlder = (data: FormType) => {
     const formData = new FormData()
@@ -40,6 +39,7 @@ export const AddDeckModal = () => {
     handleSubmit,
     register,
     reset,
+    watch,
   } = useForm<FormType>({
     defaultValues: {
       deck: '',
@@ -50,9 +50,11 @@ export const AddDeckModal = () => {
   })
   const { onChange: onChangeFile, ref: refFile, ...restFile } = register('image')
 
+  const uploadCover = watch('image')
+
   useEffect(() => {
     if (!modalOpenStatus) {
-      setCoverForNewDeck(undefined)
+      reset()
     }
   }, [modalOpenStatus])
 
@@ -70,17 +72,18 @@ export const AddDeckModal = () => {
           name={'deck'}
           placeholder={'Minimum X symbols'}
         />
-        <Button fullWidth variant={'secondary'}>
+        <Button fullWidth type={'button'} variant={'secondary'}>
           <ImageOutline />
           Upload Image
         </Button>
-        {coverForNewDeck && (
+        {uploadCover instanceof FileList && uploadCover?.length > 0 && (
           <img
             alt={'FIX LATER'}
-            src={URL.createObjectURL(coverForNewDeck)}
+            src={URL.createObjectURL(uploadCover?.[0])}
             style={{ width: '211px' }}
           />
         )}
+
         <input
           /*className={classNames.fileLoader}*/
           id={'fileUploader'}
@@ -88,9 +91,6 @@ export const AddDeckModal = () => {
           {...restFile}
           onChange={e => {
             onChangeFile(e)
-            if (e.target.files) {
-              setCoverForNewDeck(e.target.files[0])
-            }
           }}
           ref={e => {
             refFile(e)
@@ -100,7 +100,9 @@ export const AddDeckModal = () => {
         {errors.image?.message && <p>{errors.image.message}</p>}
         <ControlledCheckbox control={control} name={'isPrivate'} />
         <Button type={'submit'}>Add New Deck</Button>
-        <Button variant={'secondary'}>Cancel</Button>
+        <Button type={'button'} variant={'secondary'}>
+          Cancel
+        </Button>
       </form>
     </Modal>
   )
