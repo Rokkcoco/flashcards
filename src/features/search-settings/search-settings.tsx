@@ -25,8 +25,6 @@ export const SearchSettings = () => {
 
   const { data: meData } = useMeQuery()
 
-  console.log(meData?.id)
-
   //todo fix useeffect
   useEffect(() => {
     if (minMaxCardsAmount) {
@@ -40,7 +38,6 @@ export const SearchSettings = () => {
     }
   }, [minMaxCardsAmount])
 
-  //  setSliderValue([minMaxCardsAmount.min, minMaxCardsAmount.max])
   const onValueChangeTextFieldWithSearchParams = (name: string) => {
     if (!name) {
       searchParams.delete('name')

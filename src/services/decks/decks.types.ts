@@ -29,11 +29,10 @@ export type GetDecksArgs = {
   orderBy?: null | string
 }
 
-export type CreateDeckArgs = {
-  cover?: File | null
-  isPrivate?: boolean
-  name: string
-}
+export type CreateDeckArgs = FormData
+// cover?: string
+// isPrivate?: boolean
+// name: string
 
 export type DeleteDeckArgs = {
   id: string

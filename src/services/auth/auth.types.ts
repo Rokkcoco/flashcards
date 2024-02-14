@@ -7,10 +7,10 @@ export type AuthMeResponse = {
   name: string
   updated: string
 }
-export type UpdateMeArgs = {
-  avatar?: string
-  name?: string
-}
+export type UpdateMeArgs = FormData
+// avatar?
+// name?
+
 export type UpdateMeResponse = {
   avatar: string
   created: string
@@ -23,7 +23,7 @@ export type UpdateMeResponse = {
 export type LoginArgs = {
   email: string
   password: string
-  rememberMe?: boolean
+  rememberMe: boolean
 }
 export type LoginResponse = {
   accessToken: string

@@ -8,6 +8,7 @@ import {
   ResetPasswordResponse,
   SIgnUpResponse,
   SignUpArgs,
+  UpdateMeArgs,
   UpdateMeResponse,
   VerifyEmailArgs,
 } from '@/services'
@@ -18,9 +19,9 @@ export const AuthService = baseApi.injectEndpoints({
     return {
       login: builder.mutation<LoginResponse, LoginArgs>({
         invalidatesTags: ['Me'],
-        query: args => ({
+        query: body => ({
+          body,
           method: 'POST',
-          params: args,
           url: `v1/auth/login`,
         }),
       }),
@@ -79,7 +80,7 @@ export const AuthService = baseApi.injectEndpoints({
           url: `v1/auth/sign-up`,
         }),
       }),
-      updateMe: builder.mutation<UpdateMeResponse, FormData>({
+      updateMe: builder.mutation<UpdateMeResponse, UpdateMeArgs>({
         invalidatesTags: ['Me'],
         query: body => ({
           body,

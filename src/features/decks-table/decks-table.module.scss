@@ -1,0 +1,27 @@
+.cellIcons {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: flex-end;
+
+  width: fit-content;
+
+  button {
+    display: flex;
+    align-items: center;
+  }
+
+  a {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.tableLink {
+  text-decoration: none;
+
+  &:visited,
+  &:not(:visited) {
+    color: var(--color-light-100);
+  }
+}

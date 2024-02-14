@@ -1,30 +1,15 @@
-import { useState } from 'react'
-import { NavLink, useLocation, useSearchParams } from 'react-router-dom'
+import { useLocation, useSearchParams } from 'react-router-dom'
 
-import { Edit2Outline, PlayCircleOutline, TrashOutline } from '@/assets'
 import { useDebounce } from '@/common/hooks'
 import { Page, Pagination } from '@/components/ui'
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeadCell,
-  TableRow,
-} from '@/components/ui/table'
 import { Typography } from '@/components/ui/typography/typography'
 import { SearchSettings } from '@/features'
-import { useMeQuery } from '@/services'
-import { useDeleteDeckMutation, useGetDecksQuery } from '@/services/decks'
+import { DecksTable } from '@/features/decks-table/decks-table'
+import { useGetDecksQuery } from '@/services'
 
 import s from './decks.module.scss'
 
 export const DecksPage = () => {
-  const [searchParams] = useSearchParams({ name: '', page: '1' })
-  const page = Number(searchParams.get('page'))
-  const location = useLocation()
-
-  console.log('location', location)
   // const setPage = (page: number) => {
   //   searchParams.set('page', page.toString())
   //   setSearchParams(searchParams)
@@ -44,6 +29,13 @@ export const DecksPage = () => {
   //   return `${orderBy.key}-${orderBy.direction}`
   // }, [orderBy])
 
+  // const { data: CardData } = useGetCardQuery({ id: cardId }, { skip })
+  // const { data: DeckData } = useGetDeckQuery({ id: deckId }, { skip })
+  const [searchParams] = useSearchParams({ name: '', page: '1' })
+  const page = Number(searchParams.get('page'))
+  const location = useLocation()
+
+  console.log('location', location)
   const name = searchParams.get('name')
   const minCards = searchParams.get('minCards')
   const maxCards = searchParams.get('maxCards')
@@ -61,14 +53,6 @@ export const DecksPage = () => {
     minCardsCount: minCardsValueWithDebounce === null ? undefined : +minCardsValueWithDebounce,
     name: nameWithDebounce ?? undefined,
   })
-  const { data: meData } = useMeQuery()
-
-  console.log(data)
-  const [deckId, setDeckId] = useState('')
-  const [skip, setSkip] = useState(true)
-  const [deleteDeck] = useDeleteDeckMutation()
-  // const { data: CardData } = useGetCardQuery({ id: cardId }, { skip })
-  // const { data: DeckData } = useGetDeckQuery({ id: deckId }, { skip })
 
   if (isLoading) {
     return <div>Loading...</div>
@@ -88,63 +72,7 @@ export const DecksPage = () => {
         </Typography>
       </div>
       <SearchSettings />
-      <Table width={'100%'}>
-        <TableHead>
-          <TableRow>
-            <TableHeadCell>Name</TableHeadCell>
-            <TableHeadCell>Cards</TableHeadCell>
-            <TableHeadCell>Last updated</TableHeadCell>
-            <TableHeadCell>Created by</TableHeadCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {data?.items.map(deck => {
-            return (
-              <TableRow key={deck.id}>
-                <TableCell>
-                  <NavLink to={`/deck/${deck.id}`}>
-                    {deck.cover && (
-                      <img
-                        alt={'FIX LATER'}
-                        src={deck.cover}
-                        style={{ height: '90px', width: '90px' }}
-                      />
-                    )}
-                    {deck.name}
-                  </NavLink>
-                </TableCell>
-                <TableCell>{deck.cardsCount}</TableCell>
-                <TableCell>{new Date(deck.updated).toLocaleDateString('ru')}</TableCell>
-                <TableCell>{deck.author.name}</TableCell>
-                <TableCell>
-                  <button
-                    onClick={() => {
-                      setDeckId(deck.id)
-                      setSkip(false)
-                    }}
-                  >
-                    <PlayCircleOutline />
-                  </button>
-                  {meData?.id === deck.author.id && (
-                    <>
-                      <button>
-                        <Edit2Outline />
-                      </button>
-                      <button
-                        onClick={() => {
-                          deleteDeck({ id: deck.id })
-                        }}
-                      >
-                        <TrashOutline />
-                      </button>
-                    </>
-                  )}
-                </TableCell>
-              </TableRow>
-            )
-          })}
-        </TableBody>
-      </Table>
+      <DecksTable decks={data?.items} />
       <Pagination
         currentPage={page}
         onPageChange={() => {}}

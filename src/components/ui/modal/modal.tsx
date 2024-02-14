@@ -8,7 +8,6 @@ import s from './modal.module.scss'
 
 type Props = {
   controlButtons?: ReactNode
-
   trigger?: ReactNode
 } & ComponentPropsWithoutRef<typeof Dialog.Root> &
   Omit<ComponentPropsWithoutRef<'div'>, 'onChange'>

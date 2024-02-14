@@ -2,6 +2,7 @@ import { useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { Edit2Outline, LogOut } from '@/assets'
+import { imgSchema } from '@/common/schema'
 import { Button, Card, Typography } from '@/components/ui'
 import { Avatar } from '@/components/ui/avatar'
 import { ControlledTextField } from '@/components/ui/controlled'
@@ -12,17 +13,7 @@ import { z } from 'zod'
 
 import s from './personal-information.module.scss'
 
-const imageSchema = z.object({
-  avatar: z
-    .custom<FileList>()
-    .transform(file => file.length > 0 && file.item(0))
-    .refine(file => !file || (!!file && file.type?.startsWith('image')), {
-      message: 'Only images are allowed to be sent.',
-    })
-    .refine(file => !file || (!!file && file.size <= 2 * 1024 * 1024), {
-      message: 'The profile picture must be a maximum of 2MB.',
-    }),
-})
+const imageSchema = imgSchema('avatar')
 const schema = z.object({
   name: z.string().min(3).optional(),
 })
@@ -46,7 +37,7 @@ export const PersonalInformation = (props: Props) => {
     handleSubmit,
   } = useForm<FormTypes>({
     defaultValues: {
-      name,
+      name: '',
     },
     resolver: zodResolver(schema),
   })
@@ -93,8 +84,15 @@ export const PersonalInformation = (props: Props) => {
   }
 
   const setEditModeTrue = () => setEditMode(true)
-  const onSubmitHandler = (data: FormData) => {
-    isDirty && onSubmit(data)
+  const onSubmitHandler = (data: FormTypes) => {
+    if (!data.name) {
+      return
+    }
+    const formData = new FormData()
+
+    formData.append('avatar', data.name)
+
+    isDirty && onSubmit(formData)
     setEditMode(false)
   }
 
