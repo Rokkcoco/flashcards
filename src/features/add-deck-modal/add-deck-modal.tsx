@@ -8,10 +8,11 @@ import { useCreateDeckMutation } from '@/services'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
+import s from './add-deck-modal.module.scss'
 const schema = z.object({
-  deck: z.string().min(3),
-  image: imgSchema('image').shape.image,
+  cover: imgSchema('cover').shape.cover,
   isPrivate: z.boolean(),
+  name: z.string().min(3),
 })
 
 //  .merge(imgSchema('cover'))
@@ -20,13 +21,7 @@ export const AddDeckModal = () => {
   const [modalOpenStatus, setModalOpenStatus] = useState(false)
   const [createDeck] = useCreateDeckMutation()
   const addDeckHanlder = (data: FormType) => {
-    const formData = new FormData()
-
-    data.image && formData.append('cover', data.image)
-
-    data.isPrivate && formData.append('isPrivate', data.isPrivate.toString())
-    formData.append('name', data.deck)
-    createDeck(formData)
+    createDeck(data)
     setModalOpenStatus(false)
     reset()
   }
@@ -42,24 +37,29 @@ export const AddDeckModal = () => {
     watch,
   } = useForm<FormType>({
     defaultValues: {
-      deck: '',
-      image: undefined,
+      cover: undefined,
       isPrivate: false,
+      name: '',
     },
     resolver: zodResolver(schema),
   })
-  const { onChange: onChangeFile, ref: refFile, ...restFile } = register('image')
+  const { ref: fileRef, ...restFile } = register('cover')
 
-  const uploadCover = watch('image')
+  const uploadCover = watch('cover')
 
   useEffect(() => {
     if (!modalOpenStatus) {
       reset()
     }
-  }, [modalOpenStatus])
+  }, [modalOpenStatus, reset])
+
+  const classNames = {
+    fileLoader: s.fileLoader,
+  }
 
   return (
     <Modal
+      className={s.root}
       onOpenChange={setModalOpenStatus}
       open={modalOpenStatus}
       title={'Add New Deck'}
@@ -69,14 +69,14 @@ export const AddDeckModal = () => {
         <ControlledTextField
           control={control}
           label={'Name Pack'}
-          name={'deck'}
+          name={'name'}
           placeholder={'Minimum X symbols'}
         />
         <Button fullWidth type={'button'} variant={'secondary'}>
           <ImageOutline />
           Upload Image
         </Button>
-        {uploadCover instanceof FileList && uploadCover?.length > 0 && (
+        {uploadCover?.length > 0 && (
           <img
             alt={'FIX LATER'}
             src={URL.createObjectURL(uploadCover?.[0])}
@@ -85,19 +85,16 @@ export const AddDeckModal = () => {
         )}
 
         <input
-          /*className={classNames.fileLoader}*/
+          className={classNames.fileLoader}
           id={'fileUploader'}
           type={'file'}
           {...restFile}
-          onChange={e => {
-            onChangeFile(e)
-          }}
           ref={e => {
-            refFile(e)
+            fileRef(e)
             fileCustomRef.current = e
           }}
         />
-        {errors.image?.message && <p>{errors.image.message}</p>}
+        {errors.cover?.message && <p>{errors.cover.message}</p>}
         <ControlledCheckbox control={control} name={'isPrivate'} />
         <Button type={'submit'}>Add New Deck</Button>
         <Button type={'button'} variant={'secondary'}>

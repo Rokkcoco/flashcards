@@ -6,6 +6,7 @@ import { imgSchema } from '@/common/schema'
 import { Button, Card, Typography } from '@/components/ui'
 import { Avatar } from '@/components/ui/avatar'
 import { ControlledTextField } from '@/components/ui/controlled'
+import { UpdateMeArgs } from '@/services'
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { clsx } from 'clsx'
@@ -25,7 +26,7 @@ type Props = {
   email: string
   name: string
   onLogOut: () => void
-  onSubmit: (data: FormData) => void
+  onSubmit: (data: UpdateMeArgs) => void
   src: string
 }
 export const PersonalInformation = (props: Props) => {
@@ -84,26 +85,13 @@ export const PersonalInformation = (props: Props) => {
   }
 
   const setEditModeTrue = () => setEditMode(true)
-  const onSubmitHandler = (data: FormTypes) => {
-    if (!data.name) {
-      return
-    }
-    const formData = new FormData()
-
-    formData.append('avatar', data.name)
-
-    isDirty && onSubmit(formData)
+  const onSubmitHandler = ({ name }: FormTypes) => {
+    isDirty && onSubmit({ name })
     setEditMode(false)
   }
 
-  const customSubmit = (data: ImageFormType) => {
-    if (!data.avatar) {
-      return
-    }
-    const formData = new FormData()
-
-    formData.append('avatar', data.avatar)
-    onSubmit(formData)
+  const customSubmit = ({ avatar }: ImageFormType) => {
+    onSubmit({ avatar })
   }
 
   return (

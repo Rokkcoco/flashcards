@@ -7,9 +7,10 @@ export type AuthMeResponse = {
   name: string
   updated: string
 }
-export type UpdateMeArgs = FormData
-// avatar?
-// name?
+export type UpdateMeArgs = {
+  avatar?: FileList
+  name?: string
+}
 
 export type UpdateMeResponse = {
   avatar: string

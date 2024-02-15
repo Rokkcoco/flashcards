@@ -82,11 +82,22 @@ export const AuthService = baseApi.injectEndpoints({
       }),
       updateMe: builder.mutation<UpdateMeResponse, UpdateMeArgs>({
         invalidatesTags: ['Me'],
-        query: body => ({
-          body,
-          method: 'PATCH',
-          url: `v1/auth/me`,
-        }),
+        query: ({ avatar, name }) => {
+          const bodyFormData = new FormData()
+
+          name && bodyFormData.append('name', name)
+          avatar && bodyFormData.append('avatar', avatar[0])
+
+          return {
+            body: { formData: bodyFormData },
+            formData: true,
+            headers: {
+              'Content-Type': 'multipart/form-data;',
+            },
+            method: 'PATCH',
+            url: 'v1/auth/me',
+          }
+        },
       }),
       verifyEmail: builder.mutation<void, VerifyEmailArgs>({
         invalidatesTags: [''],
