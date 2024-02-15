@@ -19,15 +19,15 @@ const schema = z.object({
 
 type FormType = z.infer<typeof schema>
 export const AddDeckModal = () => {
-  const [modalOpenStatus, setModalOpenStatus] = useState(false)
+  const [modalOpen, setModalOpen] = useState(false)
 
   const [createDeck] = useCreateDeckMutation()
-  const addDeckHanlder = (data: FormType) => {
+  const addDeckHandler = (data: FormType) => {
     createDeck(data)
-    setModalOpenStatus(false)
+    setModalOpen(false)
   }
 
-  const closeModalHanlder = () => setModalOpenStatus(false)
+  const closeModalHanlder = () => setModalOpen(false)
 
   const fileCustomRef = useRef<HTMLInputElement | null>(null)
 
@@ -56,10 +56,10 @@ export const AddDeckModal = () => {
   const coverWatcher = watch('cover')
 
   useEffect(() => {
-    if (!modalOpenStatus) {
+    if (!modalOpen) {
       reset()
     }
-  }, [modalOpenStatus])
+  }, [modalOpen])
 
   const classNames = {
     error: s.error,
@@ -67,11 +67,11 @@ export const AddDeckModal = () => {
     imagePreview: s.imagePreview,
   }
 
-  const imgLoaderRef = (e: HTMLInputElement | null) => {
+  const imgUploaderRef = (e: HTMLInputElement | null) => {
     fileRef(e)
     fileCustomRef.current = e
   }
-  const imgLoaderHandler = (e: ChangeEvent<HTMLInputElement>) => {
+  const imgUploaderHandler = (e: ChangeEvent<HTMLInputElement>) => {
     imageOnChange(e)
     trigger('cover')
   }
@@ -88,9 +88,9 @@ export const AddDeckModal = () => {
           </Button>
         </>
       }
-      formSubmit={handleSubmit(addDeckHanlder)}
-      onOpenChange={setModalOpenStatus}
-      open={modalOpenStatus}
+      formSubmit={handleSubmit(addDeckHandler)}
+      onOpenChange={setModalOpen}
+      open={modalOpen}
       title={'Add New Deck'}
       trigger={<Button>Add New Deck</Button>}
     >
@@ -114,11 +114,11 @@ export const AddDeckModal = () => {
       )}
       <input
         className={classNames.fileLoader}
-        id={'fileUploader'}
+        id={'imageUploader'}
         type={'file'}
         {...restFile}
-        onChange={imgLoaderHandler}
-        ref={imgLoaderRef}
+        onChange={imgUploaderHandler}
+        ref={imgUploaderRef}
       />
       {errors.cover && (
         <Typography className={classNames.error} variant={'caption'}>

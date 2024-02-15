@@ -1,35 +1,35 @@
-import { useState } from 'react'
+import { ChangeEvent, useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { Edit2Outline, ImageOutline } from '@/assets'
 import { imgSchema } from '@/common/schema'
-import { Button, ControlledTextField, Typography } from '@/components/ui'
+import { Button, ControlledCheckbox, ControlledTextField, Typography } from '@/components/ui'
 import { ModalForm } from '@/components/ui/modal-form'
 import { useUpdateDeckMutation } from '@/services'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
+import s from './edit-deck-modal.module.scss'
 const schema = z.object({
-  cover: imgSchema('cover').shape['cover'],
+  cover: z.instanceof(FileList),
   isPrivate: z.boolean(),
   name: z.string().min(3),
+  newCover: imgSchema('newCover').shape['newCover'],
 })
 
 type FormType = z.infer<typeof schema>
 type Props = {
-  deck: {
-    cover: FileList
-    id: string
-    isPrivate: boolean
-    name: string
-  }
+  deck: { cover: FileList; id: string; isPrivate: boolean; name: string }
 }
 export const EditDeckModal = ({ deck }: Props) => {
-  const { cover, id, isPrivate, name } = deck
   const [modalOpen, setModalOpen] = useState(false)
   const [updateDeck] = useUpdateDeckMutation()
 
-  console.log(deck)
+  const imageCustomRef = useRef<HTMLInputElement | null>(null)
+  const addCoverHandler = () => {
+    imageCustomRef.current?.click()
+  }
+
   const {
     control,
     formState: { errors },
@@ -40,23 +40,60 @@ export const EditDeckModal = ({ deck }: Props) => {
     watch,
   } = useForm<FormType>({
     defaultValues: {
-      cover,
-      isPrivate,
-      name,
+      cover: deck.cover,
+      isPrivate: deck.isPrivate,
+      name: deck.name,
+      newCover: undefined,
     },
     resolver: zodResolver(schema),
   })
 
-  const updateDeckSubmit = (data: FormType) => {
-    console.log({ ...data, id })
+  const { onChange: imageOnChange, ref: imageRef, ...restImage } = register('newCover')
+  const newCoverWatcher = watch('newCover')
 
+  const updateDeckHandler = (data: FormType) => {
+    console.log(deck.id)
+    console.log(data)
     //updateDeck(data)
+    setModalOpen(false)
+  }
+
+  useEffect(() => {
+    if (!modalOpen) {
+      reset()
+    }
+  }, [])
+
+  const classNames = {
+    error: s.error,
+    imagePreview: s.imagePreview,
+    imageUploader: s.imageUploader,
+  }
+
+  const closeModalHandler = () => setModalOpen(false)
+
+  const imageUploaderHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    imageOnChange(e)
+    trigger('newCover')
+  }
+
+  const imageUploaderRef = (e: HTMLInputElement | null) => {
+    imageRef(e)
+    imageCustomRef.current = e
   }
 
   return (
     <ModalForm
       control={control}
-      formSubmit={handleSubmit(updateDeckSubmit)}
+      controlButtons={
+        <>
+          <Button type={'submit'}>Update Deck</Button>
+          <Button onClick={closeModalHandler} type={'submit'} variant={'secondary'}>
+            Cancel
+          </Button>
+        </>
+      }
+      formSubmit={handleSubmit(updateDeckHandler)}
       onOpenChange={setModalOpen}
       open={modalOpen}
       title={'Edit Deck'}
@@ -74,18 +111,38 @@ export const EditDeckModal = ({ deck }: Props) => {
         placeholder={'Minimum X symbols'}
       />
       <Typography variant={'subtitle_2'}>Cover:</Typography>
-      {!cover && <Typography variant={'body_2'}>No cover</Typography>}
-      {cover && <img alt={'cover image'} src={''} />}
-      {true && (
+      {!deck.cover && <Typography variant={'body_2'}>No cover</Typography>}
+      {deck.cover && (
+        <img alt={'cover image'} className={classNames.imagePreview} src={deck.cover.toString()} />
+      )}
+      {errors.newCover && (
+        <Typography className={classNames.error} variant={'caption'}>
+          {errors.newCover?.message}
+        </Typography>
+      )}
+      {!errors.newCover && newCoverWatcher?.length > 0 && (
         <>
           <Typography variant={'subtitle_2'}>New Cover:</Typography>{' '}
-          <img alt={'new cover image'} src={''} />
+          <img
+            alt={'new cover image'}
+            className={classNames.imagePreview}
+            src={URL.createObjectURL(newCoverWatcher?.[0])}
+          />
         </>
       )}
-      <Button variant={'secondary'}>
+      <Button fullWidth onClick={addCoverHandler} type={'button'} variant={'secondary'}>
         <ImageOutline />
         Upload Image
       </Button>
+      <ControlledCheckbox control={control} label={'Private Deck'} name={'isPrivate'} />
+      <input
+        {...restImage}
+        className={classNames.imageUploader}
+        id={'imageUploader'}
+        onChange={imageUploaderHandler}
+        ref={imageUploaderRef}
+        type={'file'}
+      />
     </ModalForm>
   )
 }
