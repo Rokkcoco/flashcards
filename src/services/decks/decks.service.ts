@@ -140,7 +140,6 @@ export const DecksService = baseApi.injectEndpoints({
         query: ({ cover, id, isPrivate, name }) => {
           const bodyFormData = new FormData()
 
-          console.log(cover)
           bodyFormData.append('name', name)
           cover && bodyFormData.append('cover', cover[0])
           isPrivate && bodyFormData.append('isPrivate', isPrivate.toString())

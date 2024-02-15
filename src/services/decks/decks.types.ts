@@ -5,7 +5,7 @@ export type DeckResponse = PaginatedResponse<Deck[]>
 export type Deck = {
   author: DeckAuthor
   cardsCount: number
-  cover: FileList
+  cover: string
   created: string
   id: string
   isPrivate: boolean

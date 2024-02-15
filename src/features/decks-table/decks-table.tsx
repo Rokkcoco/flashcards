@@ -45,7 +45,7 @@ export const DecksTable = ({ decks }: Props) => {
                   {deck.cover && (
                     <img
                       alt={deck.name + ' deck image'}
-                      src={deck.cover.toString()}
+                      src={deck.cover}
                       style={{ height: '90px', width: '90px' }}
                     />
                   )}

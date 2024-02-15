@@ -18,7 +18,7 @@ const schema = z.object({
 
 type FormType = z.infer<typeof schema>
 type Props = {
-  deck: { cover: FileList; id: string; isPrivate: boolean; name: string }
+  deck: { cover: string; id: string; isPrivate: boolean; name: string }
 }
 export const EditDeckModal = ({ deck }: Props) => {
   const { cover, id, isPrivate, name } = deck
@@ -110,9 +110,7 @@ export const EditDeckModal = ({ deck }: Props) => {
       />
       <Typography variant={'subtitle_2'}>Cover:</Typography>
       {!cover && <Typography variant={'body_2'}>No cover</Typography>}
-      {cover && (
-        <img alt={'cover image'} className={classNames.imagePreview} src={deck.cover.toString()} />
-      )}
+      {cover && <img alt={'cover image'} className={classNames.imagePreview} src={cover} />}
       {errors.newCover && (
         <Typography className={classNames.error} variant={'caption'}>
           {errors.newCover?.message}
