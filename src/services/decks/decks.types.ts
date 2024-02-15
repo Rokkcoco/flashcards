@@ -42,6 +42,27 @@ export type DeleteDeckArgs = {
 export type GetCardArgs = {
   id: string
 }
+export type UpdateDeckArgs = {
+  cover: FileList
+  id: string
+  isPrivate: boolean
+  name: string
+}
+export type UpdateDeckResponse = {
+  author: UpdateDeckResponseAuthor
+  cardsCount: number
+  cover: string
+  created: string
+  id: string
+  isPrivate: boolean
+  name: string
+  updated: string
+  userId: string
+}
+export type UpdateDeckResponseAuthor = {
+  id: string
+  name: string
+}
 export type CardResponse = {
   answer: string
   answerImg: string
@@ -89,11 +110,11 @@ export type GetCardsInADeckArgs = {
 
 export type CreateCardArgs = {
   answer: string
-  answerImg?: string
+  answerImg?: FileList
   answerVideo?: string
   id: string
   question: string
-  questionImg?: string
+  questionImg?: FileList
   questionVideo?: string
 }
 export type GetRandomCardArgs = {

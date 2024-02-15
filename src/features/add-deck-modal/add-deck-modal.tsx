@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { ChangeEvent, useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { ImageOutline } from '@/assets'
@@ -10,14 +10,13 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
 import s from './add-deck-modal.module.scss'
-
+//todo перекинуть в общие, она еще используется
 const schema = z.object({
   cover: imgSchema('cover').shape['cover'],
   isPrivate: z.boolean(),
   name: z.string().min(3),
 })
 
-console.log(schema)
 type FormType = z.infer<typeof schema>
 export const AddDeckModal = () => {
   const [modalOpenStatus, setModalOpenStatus] = useState(false)
@@ -26,8 +25,9 @@ export const AddDeckModal = () => {
   const addDeckHanlder = (data: FormType) => {
     createDeck(data)
     setModalOpenStatus(false)
-    reset()
   }
+
+  const closeModalHanlder = () => setModalOpenStatus(false)
 
   const fileCustomRef = useRef<HTMLInputElement | null>(null)
 
@@ -53,14 +53,13 @@ export const AddDeckModal = () => {
   })
   const { onChange: imageOnChange, ref: fileRef, ...restFile } = register('cover')
 
-  const uploadCover = watch('cover')
+  const coverWatcher = watch('cover')
 
-  console.log(uploadCover)
   useEffect(() => {
     if (!modalOpenStatus) {
       reset()
     }
-  }, [modalOpenStatus, reset])
+  }, [modalOpenStatus])
 
   const classNames = {
     error: s.error,
@@ -68,7 +67,14 @@ export const AddDeckModal = () => {
     imagePreview: s.imagePreview,
   }
 
-  console.log(errors)
+  const imgLoaderRef = (e: HTMLInputElement | null) => {
+    fileRef(e)
+    fileCustomRef.current = e
+  }
+  const imgLoaderHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    imageOnChange(e)
+    trigger('cover')
+  }
 
   return (
     <ModalForm
@@ -77,7 +83,7 @@ export const AddDeckModal = () => {
       controlButtons={
         <>
           <Button type={'submit'}>Add New Deck</Button>
-          <Button type={'button'} variant={'secondary'}>
+          <Button onClick={closeModalHanlder} type={'button'} variant={'secondary'}>
             Cancel
           </Button>
         </>
@@ -99,27 +105,20 @@ export const AddDeckModal = () => {
         <ImageOutline />
         Upload Image
       </Button>
-      {!errors.cover && uploadCover?.length > 0 && (
+      {!errors.cover && coverWatcher?.length > 0 && (
         <img
           alt={'FIX LATER'}
           className={classNames.imagePreview}
-          src={URL.createObjectURL(uploadCover?.[0])}
+          src={URL.createObjectURL(coverWatcher?.[0])}
         />
       )}
-
       <input
         className={classNames.fileLoader}
         id={'fileUploader'}
         type={'file'}
         {...restFile}
-        onChange={e => {
-          imageOnChange(e)
-          trigger('cover')
-        }}
-        ref={e => {
-          fileRef(e)
-          fileCustomRef.current = e
-        }}
+        onChange={imgLoaderHandler}
+        ref={imgLoaderRef}
       />
       {errors.cover && (
         <Typography className={classNames.error} variant={'caption'}>

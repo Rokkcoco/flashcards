@@ -16,6 +16,8 @@ import {
   UpdateCardArgs,
   UpdateCardGradeArgs,
   UpdateCardResponse,
+  UpdateDeckArgs,
+  UpdateDeckResponse,
 } from '@/services'
 import { baseApi } from '@/services/base-api'
 
@@ -24,20 +26,32 @@ export const DecksService = baseApi.injectEndpoints({
     return {
       createCard: builder.mutation<CardResponse, CreateCardArgs>({
         invalidatesTags: [''],
-        query: ({ id, ...body }) => ({
-          body,
-          method: 'POST',
-          url: `v1/decks/${id}/cards`,
-        }),
+        query: ({ answer, answerImg, answerVideo, id, question, questionImg, questionVideo }) => {
+          const bodyFormData = new FormData()
+
+          bodyFormData.append('answer', answer)
+          bodyFormData.append('question', question)
+          answerImg && bodyFormData.append('answerImg', answerImg?.[0])
+          answerVideo && bodyFormData.append('answerVideo', answerVideo)
+          questionVideo && bodyFormData.append('questionVideo', questionVideo)
+          questionImg && bodyFormData.append('questionImg', questionImg?.[0])
+
+          return {
+            body: bodyFormData,
+            formData: true,
+            method: 'POST',
+            url: `v1/decks/${id}/cards`,
+          }
+        },
       }),
       createDeck: builder.mutation<Deck, CreateDeckArgs>({
         invalidatesTags: ['Decks'],
         query: ({ cover, isPrivate, name }) => {
           const bodyFormData = new FormData()
 
+          bodyFormData.append('name', name)
           cover && bodyFormData.append('cover', cover[0])
           isPrivate && bodyFormData.append('isPrivate', isPrivate.toString())
-          bodyFormData.append('name', name)
 
           return {
             body: bodyFormData,
@@ -121,7 +135,7 @@ export const DecksService = baseApi.injectEndpoints({
           url: `/v1/decks/${body.cardId}/learn`,
         }),
       }),
-      updateDeck: builder.mutation<GetDeckArgs, GetCardArgs>({
+      updateDeck: builder.mutation<UpdateDeckResponse, UpdateDeckArgs>({
         invalidatesTags: [''],
         query: args => ({
           method: 'PATCH',
@@ -142,4 +156,5 @@ export const {
   useGetMinMaxDeckCardsQuery,
   useGetRandomCardQuery,
   useUpdateCardGradeMutation,
+  useUpdateDeckMutation,
 } = DecksService

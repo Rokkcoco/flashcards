@@ -1,32 +1,13 @@
-.questionAnswerTitle {
-  margin-bottom: 12px;
+.error {
+  color: var(--color-danger-300);
 }
 
-.root {
+.fileLoader {
+  display: none;
+}
+
+.imagePreview {
   width: 100%;
-  padding-right: 10px;
-  padding-bottom: 12px;
-}
-
-.questionAnswerTextfield {
-  margin-bottom: 12px;
-}
-
-.questionPicture {
-  margin-bottom: 24px;
-}
-
-.questionAnswerCoverButton {
-  margin-bottom: 24px;
-}
-
-.controlButtonsWrapper {
-  display: flex;
-  flex-direction: row-reverse;
-  justify-content: space-between;
-  margin-top: 42px;
-}
-
-.submitButton {
-  margin-right: -10px;
+  height: 175px;
+  object-fit: cover;
 }

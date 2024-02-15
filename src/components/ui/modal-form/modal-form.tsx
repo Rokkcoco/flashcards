@@ -30,6 +30,7 @@ export const ModalForm = forwardRef<ElementRef<typeof Dialog.Content>, Props>((p
     overlay: s.overlay,
   }
 
+  //todo try to add feature to await server request for form add
   return (
     <Dialog.Root {...rest}>
       <Dialog.Trigger asChild>{trigger}</Dialog.Trigger>

@@ -25,3 +25,8 @@
     color: var(--color-light-100);
   }
 }
+
+.disabledLink {
+  pointer-events: none;
+  opacity: 0.5;
+}
