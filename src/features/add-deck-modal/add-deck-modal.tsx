@@ -65,37 +65,39 @@ export const AddDeckModal = () => {
       title={'Add New Deck'}
       trigger={<Button>Add New Deck</Button>}
     >
-      <form onSubmit={handleSubmit(addDeckHanlder)}>
-        <ControlledTextField
-          control={control}
-          label={'Name Pack'}
-          name={'name'}
-          placeholder={'Minimum X symbols'}
-        />
-        <Button fullWidth type={'button'} variant={'secondary'}>
-          <ImageOutline />
-          Upload Image
-        </Button>
-        {uploadCover?.length > 0 && (
-          <img
-            alt={'FIX LATER'}
-            src={URL.createObjectURL(uploadCover?.[0])}
-            style={{ width: '211px' }}
+      <form className={s.form} onSubmit={handleSubmit(addDeckHanlder)}>
+        <div className={s.content}>
+          <ControlledTextField
+            control={control}
+            label={'Name Pack'}
+            name={'name'}
+            placeholder={'Minimum X symbols'}
           />
-        )}
+          <Button fullWidth type={'button'} variant={'secondary'}>
+            <ImageOutline />
+            Upload Image
+          </Button>
+          {uploadCover?.length > 0 && (
+            <img
+              alt={'FIX LATER'}
+              src={URL.createObjectURL(uploadCover?.[0])}
+              style={{ width: '211px' }}
+            />
+          )}
 
-        <input
-          className={classNames.fileLoader}
-          id={'fileUploader'}
-          type={'file'}
-          {...restFile}
-          ref={e => {
-            fileRef(e)
-            fileCustomRef.current = e
-          }}
-        />
-        {errors.cover?.message && <p>{errors.cover.message}</p>}
-        <ControlledCheckbox control={control} name={'isPrivate'} />
+          <input
+            className={classNames.fileLoader}
+            id={'fileUploader'}
+            type={'file'}
+            {...restFile}
+            ref={e => {
+              fileRef(e)
+              fileCustomRef.current = e
+            }}
+          />
+          {errors.cover?.message && <p>{errors.cover.message}</p>}
+          <ControlledCheckbox control={control} label={'Private Deck'} name={'isPrivate'} />
+        </div>
         <Button type={'submit'}>Add New Deck</Button>
         <Button type={'button'} variant={'secondary'}>
           Cancel
