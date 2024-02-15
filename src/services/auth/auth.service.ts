@@ -89,11 +89,8 @@ export const AuthService = baseApi.injectEndpoints({
           avatar && bodyFormData.append('avatar', avatar[0])
 
           return {
-            body: { formData: bodyFormData },
+            body: bodyFormData,
             formData: true,
-            headers: {
-              'Content-Type': 'multipart/form-data;',
-            },
             method: 'PATCH',
             url: 'v1/auth/me',
           }

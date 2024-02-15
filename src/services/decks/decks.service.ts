@@ -40,11 +40,8 @@ export const DecksService = baseApi.injectEndpoints({
           bodyFormData.append('name', name)
 
           return {
-            body: { formData: bodyFormData },
+            body: bodyFormData,
             formData: true,
-            headers: {
-              'Content-Type': 'multipart/form-data;',
-            },
             method: 'POST',
             url: 'v1/decks',
           }

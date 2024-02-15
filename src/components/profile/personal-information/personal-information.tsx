@@ -46,8 +46,9 @@ export const PersonalInformation = (props: Props) => {
   //todo проверить паддинги по макету
   const {
     clearErrors,
-    formState: { errors: imgErrors },
-    handleSubmit: handleIMGsubmit,
+    control: imageControl,
+    formState: { errors: imageErrors },
+    handleSubmit: handleImageSubmit,
     register,
   } = useForm<ImageFormType>({
     defaultValues: {
@@ -55,7 +56,7 @@ export const PersonalInformation = (props: Props) => {
     },
     resolver: zodResolver(imageSchema),
   })
-  const { onChange: onIMGChange, ref: refZ, ...restZ } = register('avatar')
+  const { onChange: onImageChange, ref: imageRef, ...restZ } = register('avatar')
 
   const classNames = {
     avatar: s.avatar,
@@ -105,7 +106,8 @@ export const PersonalInformation = (props: Props) => {
             {name[0].toUpperCase()}
           </Avatar>
           {!editMode && (
-            <form onSubmit={handleIMGsubmit(customSubmit)}>
+            <form onSubmit={handleImageSubmit(customSubmit)}>
+              <DevTool control={imageControl} />
               <Button
                 className={classNames.avatarButton}
                 onClick={avatarUploaderButtonClick}
@@ -121,17 +123,17 @@ export const PersonalInformation = (props: Props) => {
                 {...restZ}
                 onChange={e => {
                   clearErrors()
-                  onIMGChange(e)
-                  handleIMGsubmit(customSubmit)()
+                  onImageChange(e)
+                  handleImageSubmit(customSubmit)()
                 }}
                 ref={e => {
-                  refZ(e)
+                  imageRef(e)
                   customRef.current = e
                 }}
               />
-              {imgErrors.avatar && (
+              {imageErrors.avatar && (
                 <Typography className={classNames.imageError} variant={'caption'}>
-                  {imgErrors.avatar.message}
+                  {imageErrors.avatar.message}
                 </Typography>
               )}
             </form>

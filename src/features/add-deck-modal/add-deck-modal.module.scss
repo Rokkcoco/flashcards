@@ -2,17 +2,12 @@
   display: none;
 }
 
-.root {
-  padding: 24px 34px 36px 24px;
+.imagePreview {
+  width: 100%;
+  height: 175px;
+  object-fit: cover;
 }
 
-form {
-  width: 100%;
-}
-
-.content {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  width: 100%;
+.error {
+  color: var(--color-danger-300);
 }

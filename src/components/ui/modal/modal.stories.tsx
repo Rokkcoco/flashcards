@@ -28,7 +28,6 @@ export const ModalWithTitleAndButtons: Story = {
           ipsum magni minima nihil nobis non nostrum placeat provident quas quasi, similique
           suscipit temporibus, velit veniam. Aliquid, aspernatur, dignissimos.
         </div>
-        <Checkbox checked label={'Check'} />
       </>
     ),
     title: 'Card',
