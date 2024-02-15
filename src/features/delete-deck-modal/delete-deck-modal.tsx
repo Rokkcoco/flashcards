@@ -11,6 +11,7 @@ export const DeleteDeckModal = ({ deckName, onDelete }: Props) => {
   const onDeleteHandler = () => onDelete()
   const closeModal = () => setOpenModal(false)
 
+  //todo fix fonts on helvetica
   return (
     <Modal
       controlButtons={

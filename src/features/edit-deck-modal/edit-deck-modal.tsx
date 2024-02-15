@@ -11,7 +11,6 @@ import { z } from 'zod'
 
 import s from './edit-deck-modal.module.scss'
 const schema = z.object({
-  cover: z.instanceof(FileList),
   isPrivate: z.boolean(),
   name: z.string().min(3),
   newCover: imgSchema('newCover').shape['newCover'],
@@ -22,6 +21,7 @@ type Props = {
   deck: { cover: FileList; id: string; isPrivate: boolean; name: string }
 }
 export const EditDeckModal = ({ deck }: Props) => {
+  const { cover, id, isPrivate, name } = deck
   const [modalOpen, setModalOpen] = useState(false)
   const [updateDeck] = useUpdateDeckMutation()
 
@@ -40,9 +40,8 @@ export const EditDeckModal = ({ deck }: Props) => {
     watch,
   } = useForm<FormType>({
     defaultValues: {
-      cover: deck.cover,
-      isPrivate: deck.isPrivate,
-      name: deck.name,
+      isPrivate,
+      name,
       newCover: undefined,
     },
     resolver: zodResolver(schema),
@@ -52,9 +51,8 @@ export const EditDeckModal = ({ deck }: Props) => {
   const newCoverWatcher = watch('newCover')
 
   const updateDeckHandler = (data: FormType) => {
-    console.log(deck.id)
     console.log(data)
-    //updateDeck(data)
+    updateDeck({ ...data, cover: data.newCover, id })
     setModalOpen(false)
   }
 
@@ -111,8 +109,8 @@ export const EditDeckModal = ({ deck }: Props) => {
         placeholder={'Minimum X symbols'}
       />
       <Typography variant={'subtitle_2'}>Cover:</Typography>
-      {!deck.cover && <Typography variant={'body_2'}>No cover</Typography>}
-      {deck.cover && (
+      {!cover && <Typography variant={'body_2'}>No cover</Typography>}
+      {cover && (
         <img alt={'cover image'} className={classNames.imagePreview} src={deck.cover.toString()} />
       )}
       {errors.newCover && (

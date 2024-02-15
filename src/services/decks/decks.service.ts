@@ -137,11 +137,21 @@ export const DecksService = baseApi.injectEndpoints({
       }),
       updateDeck: builder.mutation<UpdateDeckResponse, UpdateDeckArgs>({
         invalidatesTags: [''],
-        query: args => ({
-          method: 'PATCH',
-          params: args,
-          url: `v1/decks/${args.id}`,
-        }),
+        query: ({ cover, id, isPrivate, name }) => {
+          const bodyFormData = new FormData()
+
+          console.log(cover)
+          bodyFormData.append('name', name)
+          cover && bodyFormData.append('cover', cover[0])
+          isPrivate && bodyFormData.append('isPrivate', isPrivate.toString())
+
+          return {
+            body: bodyFormData,
+            formData: true,
+            method: 'PATCH',
+            url: `v1/decks/${id}`,
+          }
+        },
       }),
     }
   },
