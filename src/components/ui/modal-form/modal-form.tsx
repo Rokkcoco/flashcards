@@ -12,13 +12,13 @@ import s from './modal-form.module.scss'
 type Props = {
   control?: TODO
   controlButtons?: ReactNode
-  formSubmit?: () => void
+  onFormSubmit?: () => void
   trigger?: ReactNode
 } & ComponentPropsWithoutRef<typeof Dialog.Root> &
   Omit<ComponentPropsWithoutRef<'div'>, 'onChange'>
 
 export const ModalForm = forwardRef<ElementRef<typeof Dialog.Content>, Props>((props, ref) => {
-  const { children, className, control, controlButtons, formSubmit, title, trigger, ...rest } =
+  const { children, className, control, controlButtons, onFormSubmit, title, trigger, ...rest } =
     props
 
   const classNames = {
@@ -50,7 +50,7 @@ export const ModalForm = forwardRef<ElementRef<typeof Dialog.Content>, Props>((p
                 </Dialog.Close>
               </div>
             )}
-            <form onSubmit={formSubmit}>
+            <form onSubmit={onFormSubmit}>
               {control && <DevTool control={control} />}
               <div className={classNames.content}>{children}</div>
               {controlButtons && <div className={classNames.controlButtons}>{controlButtons}</div>}

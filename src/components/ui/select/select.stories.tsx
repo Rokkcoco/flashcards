@@ -52,14 +52,13 @@ export const Disabled: Story = {
 export const PaginationSelect: Story = {
   args: {
     value: '10',
-    variant: 'pagination',
   },
   render: args => {
     const options = { 5: '5', 7: '7', 10: '10', 15: '15', 20: '20' }
     const [value, setValue] = useState(options['10'])
 
     return (
-      <Select {...args} onValueChange={setValue} value={value}>
+      <Select {...args} isPagination onValueChange={setValue} value={value}>
         <SelectItemWithText isPagination value={options['5']}>
           {options['5']}
         </SelectItemWithText>

@@ -25,12 +25,12 @@ export const SearchSettings = () => {
   // ])
   // const [minMaxSliderValues, setMinMaxSliderValues] = useState([0, 0])
   const [sliderValue, setSliderValue] = useState([
-    minCards || minMaxCardsData?.min,
-    maxCards || minMaxCardsData?.max,
+    ((minCards && +minCards) || minMaxCardsData?.min) ?? 0,
+    ((maxCards && +maxCards) || minMaxCardsData?.max) ?? 0,
   ])
 
   console.log(sliderValue)
-  const [minMaxSliderValues, _] = useState([minMaxCardsData?.min, minMaxCardsData?.max])
+  const [minMaxSliderValues, _] = useState([minMaxCardsData?.min ?? 0, minMaxCardsData?.max ?? 0])
 
   const [searchValueTextField, setSearchValueTextField] = useState(name ?? '')
 

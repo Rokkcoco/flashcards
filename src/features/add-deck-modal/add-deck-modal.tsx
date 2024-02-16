@@ -88,7 +88,7 @@ export const AddDeckModal = () => {
           </Button>
         </>
       }
-      formSubmit={handleSubmit(addDeckHandler)}
+      onFormSubmit={handleSubmit(addDeckHandler)}
       onOpenChange={setModalOpen}
       open={modalOpen}
       title={'Add New Deck'}

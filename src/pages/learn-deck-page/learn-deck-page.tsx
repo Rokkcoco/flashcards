@@ -13,7 +13,8 @@ export const LearnDeckPage = () => {
   const { data: deckData } = useGetDeckQuery({ id })
   const { data: cardData } = useGetRandomCardQuery({ id })
   const [saveGrade] = useUpdateCardGradeMutation()
-
+  //todo save prevCard id for request
+  //todo remove useeffect
   const answerButtonHanlder = () => setShowAnswer(true)
   const nextQuestionButtonHandler = () => {
     if (!cardData) {

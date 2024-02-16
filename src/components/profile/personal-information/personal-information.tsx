@@ -45,7 +45,6 @@ export const PersonalInformation = (props: Props) => {
   //todo fix span styles, fix variable names, type for avatar | name
   //todo проверить паддинги по макету
   const {
-    clearErrors,
     control: imageControl,
     formState: { errors: imageErrors },
     handleSubmit: handleImageSubmit,
@@ -79,7 +78,7 @@ export const PersonalInformation = (props: Props) => {
     textFieldWrapper: s.textFieldWrapper,
     title: s.title,
   }
-
+  //todo try mode onChange
   const customRef = useRef<HTMLInputElement | null>(null)
   const avatarUploaderButtonClick = () => {
     customRef.current?.click()
@@ -122,7 +121,6 @@ export const PersonalInformation = (props: Props) => {
                 type={'file'}
                 {...restZ}
                 onChange={e => {
-                  clearErrors()
                   onImageChange(e)
                   handleImageSubmit(customSubmit)()
                 }}

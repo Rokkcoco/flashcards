@@ -1,4 +1,4 @@
-import { PaginatedResponse } from '@/services'
+import { PaginatedResponse, Pagination } from '@/services'
 
 export type DeckResponse = PaginatedResponse<Deck[]>
 
@@ -43,7 +43,7 @@ export type GetCardArgs = {
   id: string
 }
 export type UpdateDeckArgs = {
-  cover: FileList
+  cover: FileList | undefined
   id: string
   isPrivate: boolean
   name: string

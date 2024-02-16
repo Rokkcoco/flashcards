@@ -32,7 +32,7 @@ export const EditDeckModal = ({ deck }: Props) => {
 
   const {
     control,
-    formState: { errors },
+    formState: { dirtyFields, errors },
     handleSubmit,
     register,
     reset,
@@ -51,10 +51,17 @@ export const EditDeckModal = ({ deck }: Props) => {
   const newCoverWatcher = watch('newCover')
 
   const updateDeckHandler = (data: FormType) => {
-    updateDeck({ ...data, cover: data.newCover, id })
+    Object.keys(dirtyFields).length &&
+      updateDeck({
+        ...data,
+        cover: data.newCover.length > 0 ? data.newCover : undefined,
+        id,
+      })
+
     setModalOpen(false)
   }
 
+  //: data.newCover.length > 0 ? data.newCover : undefined
   useEffect(() => {
     if (!modalOpen) {
       reset()
@@ -90,7 +97,7 @@ export const EditDeckModal = ({ deck }: Props) => {
           </Button>
         </>
       }
-      formSubmit={handleSubmit(updateDeckHandler)}
+      onFormSubmit={handleSubmit(updateDeckHandler)}
       onOpenChange={setModalOpen}
       open={modalOpen}
       title={'Edit Deck'}

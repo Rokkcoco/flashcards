@@ -55,13 +55,12 @@ export const SelectItemWithText = forwardRef<
 SelectItemWithText.displayName = 'SelectItemWithText'
 
 export type SelectProps = {
+  isPagination?: boolean
   label?: string
-  variant?: 'default' | 'pagination'
 } & ComponentPropsWithoutRef<typeof SelectRadix.Root>
 
 export const Select = forwardRef<ElementRef<typeof SelectRadix.Trigger>, SelectProps>(
-  ({ children, label, value, variant = 'default', ...rest }, ref) => {
-    const isPagination = variant === 'pagination'
+  ({ children, isPagination, label, value, ...rest }, ref) => {
     const selectID = useId()
 
     //todo create new component for label

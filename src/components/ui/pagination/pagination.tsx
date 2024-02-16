@@ -62,7 +62,7 @@ export const Pagination = ({
       {buttons}
       <PaginationNextButton disabled={currentPage === totalPageCount} onClick={forward} />
       <Typography variant={'body_2'}>Показать</Typography>
-      <Select onValueChange={onChangePageSize} value={pageSize.toString()} variant={'pagination'}>
+      <Select isPagination onValueChange={onChangePageSize} value={pageSize.toString()}>
         <SelectItem value={selectOptions['5']}>{selectOptions['5']}</SelectItem>
         <SelectItem value={selectOptions['7']}>{selectOptions['7']}</SelectItem>
         <SelectItem value={selectOptions['10']}>{selectOptions['10']}</SelectItem>

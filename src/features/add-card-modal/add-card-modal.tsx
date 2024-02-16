@@ -113,7 +113,7 @@ export const AddCardModal = () => {
           </Button>
         </>
       }
-      formSubmit={handleSubmit(addCardSubmit)}
+      onFormSubmit={handleSubmit(addCardSubmit)}
       onOpenChange={setModalOpen}
       open={modalOpen}
       title={'Add New Card'}
