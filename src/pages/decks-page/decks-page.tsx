@@ -55,7 +55,7 @@ export const DecksPage = () => {
   })
   const { isLoading: minMaxDeckCardsIsloading } = useGetMinMaxDeckCardsQuery()
 
-  if (isLoading ?? minMaxDeckCardsIsloading) {
+  if (isLoading || minMaxDeckCardsIsloading) {
     return <div>Loading...</div>
   }
 
