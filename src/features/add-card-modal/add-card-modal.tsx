@@ -43,10 +43,10 @@ export const AddCardModal = () => {
   })
 
   useEffect(() => {
-    if (!modalOpenStatus) {
+    return () => {
       reset()
     }
-  }, [modalOpenStatus])
+  }, [])
 
   const addCardSubmit = (data: FormTypes) => {
     createCard({ id, ...data })

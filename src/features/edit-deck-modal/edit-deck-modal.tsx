@@ -51,13 +51,12 @@ export const EditDeckModal = ({ deck }: Props) => {
   const newCoverWatcher = watch('newCover')
 
   const updateDeckHandler = (data: FormType) => {
-    console.log(data)
     updateDeck({ ...data, cover: data.newCover, id })
     setModalOpen(false)
   }
 
   useEffect(() => {
-    if (!modalOpen) {
+    return () => {
       reset()
     }
   }, [])
