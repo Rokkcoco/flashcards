@@ -1,0 +1,10 @@
+.cardImage {
+  width: 118px;
+  height: 48px;
+  object-fit: cover;
+}
+
+.cellWithImage {
+  display: flex;
+  flex-direction: column;
+}

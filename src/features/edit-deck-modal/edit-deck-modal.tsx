@@ -56,10 +56,10 @@ export const EditDeckModal = ({ deck }: Props) => {
   }
 
   useEffect(() => {
-    return () => {
+    if (!modalOpen) {
       reset()
     }
-  }, [])
+  }, [modalOpen])
 
   const classNames = {
     error: s.error,
@@ -85,7 +85,7 @@ export const EditDeckModal = ({ deck }: Props) => {
       controlButtons={
         <>
           <Button type={'submit'}>Update Deck</Button>
-          <Button onClick={closeModalHandler} type={'submit'} variant={'secondary'}>
+          <Button onClick={closeModalHandler} type={'button'} variant={'secondary'}>
             Cancel
           </Button>
         </>

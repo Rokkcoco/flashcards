@@ -21,7 +21,7 @@ const schema = z.object({
 
 type FormTypes = z.infer<typeof schema>
 export const AddCardModal = () => {
-  const [modalOpenStatus, setModalOpenStatus] = useState(false)
+  const [modalOpen, setModalOpen] = useState(false)
   const { id = '' } = useParams()
   const [createCard] = useCreateCardMutation()
   const {
@@ -43,16 +43,16 @@ export const AddCardModal = () => {
   })
 
   useEffect(() => {
-    return () => {
+    if (!modalOpen) {
       reset()
     }
-  }, [])
+  }, [modalOpen])
 
   const addCardSubmit = (data: FormTypes) => {
     createCard({ id, ...data })
-    setModalOpenStatus(false)
+    setModalOpen(false)
   }
-  const closeModalHandler = () => setModalOpenStatus(false)
+  const closeModalHandler = () => setModalOpen(false)
 
   const answerImageRef = useRef<HTMLInputElement | null>(null)
   const questionImageRef = useRef<HTMLInputElement | null>(null)
@@ -114,8 +114,8 @@ export const AddCardModal = () => {
         </>
       }
       formSubmit={handleSubmit(addCardSubmit)}
-      onOpenChange={setModalOpenStatus}
-      open={modalOpenStatus}
+      onOpenChange={setModalOpen}
+      open={modalOpen}
       title={'Add New Card'}
       trigger={<Button>Add New Card</Button>}
     >

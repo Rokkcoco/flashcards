@@ -4,7 +4,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeadCell, TableRow } from 
 import { Rating } from '@/features'
 import { useGetCardsInADeckQuery } from '@/services'
 
-import s from '@/pages/deck-page/deck-page.module.scss'
+import s from './deck-table.module.scss'
 
 export const DeckTable = () => {
   const { id = '' } = useParams<{ id: 'string' }>()

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
 import { TrashOutline } from '@/assets'
@@ -14,29 +14,41 @@ export const SearchSettings = () => {
   const minCards = searchParams.get('minCards')
   const maxCards = searchParams.get('maxCards')
   const deckOwner = searchParams.get('authorId')
-  const { data: minMaxCardsAmount } = useGetMinMaxDeckCardsQuery()
+  const { data: minMaxCardsData } = useGetMinMaxDeckCardsQuery()
   const [tabsValue, setTabsValue] = useState(deckOwner ?? '')
+
+  console.log('minMaxCardsData', minMaxCardsData)
+  console.log('minCards', minCards)
+  // const [sliderValue, setSliderValue] = useState([
+  //   minCards ? +minCards : 0,
+  //   maxCards ? +maxCards : 0,
+  // ])
+  // const [minMaxSliderValues, setMinMaxSliderValues] = useState([0, 0])
   const [sliderValue, setSliderValue] = useState([
-    minCards ? +minCards : 0,
-    maxCards ? +maxCards : 0,
+    minCards || minMaxCardsData?.min,
+    maxCards || minMaxCardsData?.max,
   ])
-  const [minMaxSliderValues, setMinMaxSliderValues] = useState([0, 0])
+
+  console.log(sliderValue)
+  const [minMaxSliderValues, _] = useState([minMaxCardsData?.min, minMaxCardsData?.max])
+
   const [searchValueTextField, setSearchValueTextField] = useState(name ?? '')
 
   const { data: meData } = useMeQuery()
 
   //todo fix useeffect
-  useEffect(() => {
-    if (minMaxCardsAmount) {
-      setMinMaxSliderValues([minMaxCardsAmount.min, minMaxCardsAmount.max])
-      if (sliderValue[0] === 0) {
-        setSliderValue([minMaxCardsAmount.min, sliderValue[1]])
-      }
-      if (sliderValue[1] === 0) {
-        setSliderValue([sliderValue[0], minMaxCardsAmount.max])
-      }
-    }
-  }, [minMaxCardsAmount])
+
+  // useEffect(() => {
+  //   if (minMaxCardsData) {
+  //     setMinMaxSliderValues([minMaxCardsData.min, minMaxCardsData.max])
+  //     if (sliderValue[0] === 0) {
+  //       setSliderValue([minMaxCardsData.min, sliderValue[1]])
+  //     }
+  //     if (sliderValue[1] === 0) {
+  //       setSliderValue([sliderValue[0], minMaxCardsData.max])
+  //     }
+  //   }
+  // }, [minMaxCardsData])
 
   const onValueChangeTextFieldWithSearchParams = (name: string) => {
     if (!name) {

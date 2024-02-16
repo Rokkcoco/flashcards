@@ -5,7 +5,7 @@ import { Page, Pagination } from '@/components/ui'
 import { Typography } from '@/components/ui/typography/typography'
 import { SearchSettings } from '@/features'
 import { DecksTable } from '@/features/decks-table/decks-table'
-import { useGetDecksQuery } from '@/services'
+import { useGetDecksQuery, useGetMinMaxDeckCardsQuery } from '@/services'
 
 import s from './decks.module.scss'
 
@@ -53,8 +53,9 @@ export const DecksPage = () => {
     minCardsCount: minCardsValueWithDebounce === null ? undefined : +minCardsValueWithDebounce,
     name: nameWithDebounce ?? undefined,
   })
+  const { isLoading: minMaxDeckCardsIsloading } = useGetMinMaxDeckCardsQuery()
 
-  if (isLoading) {
+  if (isLoading ?? minMaxDeckCardsIsloading) {
     return <div>Loading...</div>
   }
 

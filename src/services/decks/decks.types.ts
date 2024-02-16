@@ -1,4 +1,4 @@
-import { PaginatedResponse, Pagination } from '@/services'
+import { PaginatedResponse } from '@/services'
 
 export type DeckResponse = PaginatedResponse<Deck[]>
 

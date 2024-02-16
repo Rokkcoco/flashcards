@@ -38,7 +38,7 @@ export const PersonalInformation = (props: Props) => {
     handleSubmit,
   } = useForm<FormTypes>({
     defaultValues: {
-      name: '',
+      name,
     },
     resolver: zodResolver(schema),
   })

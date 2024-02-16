@@ -1,24 +1,14 @@
-.cardImage {
-  width: 118px;
-  height: 48px;
-  object-fit: cover;
-}
-
-.cellWithImage {
-  display: flex;
-  flex-direction: column;
-}
-
-.textFieldWrapper {
-  width: 100%;
-  margin-bottom: 24px;
-}
-
 .root {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  justify-content: space-between;
   width: 100%;
+}
+
+.deckImage {
+  width: 170px;
+  height: 107px;
+  margin-bottom: 25px;
+  object-fit: cover;
 }
 
 .linkBack {
@@ -37,6 +27,16 @@
   margin-bottom: 27px;
 }
 
-.deckButton {
-  align-self: flex-end;
+.column {
+  display: flex;
+  flex-direction: column;
+}
+
+.rightColumn {
+  margin-top: 60px;
+}
+
+.textFieldWrapper {
+  width: 100%;
+  margin-bottom: 24px;
 }

@@ -56,10 +56,10 @@ export const AddDeckModal = () => {
   const coverWatcher = watch('cover')
 
   useEffect(() => {
-    return () => {
+    if (!modalOpen) {
       reset()
     }
-  }, [])
+  }, [modalOpen])
 
   const classNames = {
     error: s.error,
