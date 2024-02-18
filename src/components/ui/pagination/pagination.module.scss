@@ -9,12 +9,25 @@
   align-items: center;
   justify-content: center;
 
-  width: 24px;
-  height: 24px;
+  width: 16px;
+  height: 16px;
   margin: 0 6px;
 
   background-color: var(--color-dark-900);
   border: none;
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  &:first-child {
+    margin: 0 6px 0 0;
+  }
+}
+
+.navigateLastButton {
+  margin: 0 25px 0 6px;
 }
 
 .navigateButton:hover {
@@ -25,6 +38,7 @@
 .navigateButton.defaultButton.active {
   color: var(--color-dark-900);
   background-color: var(--color-light-100);
+  border-radius: 2px;
 }
 
 .navigateButton:disabled {

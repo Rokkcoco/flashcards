@@ -9,9 +9,9 @@ type Props = {
   className?: string
   currentPage: number
   onPageChange: (page: number) => void
-  onPageSizeChange: (size: string) => void
+  onPageSizeChange?: (size: string) => void
   pageSize: number
-  selectOptions: Record<string, string>
+  selectOptions?: Record<string, string>
   siblingCount?: number
   totalCount: number
 }
@@ -32,6 +32,10 @@ export const Pagination = ({
     siblingCount,
     totalCount,
   })
+
+  if (currentPage === 0 || (paginationRange && paginationRange.length < 2)) {
+    return null
+  }
 
   const lastPage = paginationRange?.at(-1)
 
@@ -59,15 +63,19 @@ export const Pagination = ({
       <PaginationPrevButton disabled={currentPage === 1} onClick={onPrevious} />
       {buttons}
       <PaginationNextButton disabled={currentPage === lastPage} onClick={onNext} />
-      <Typography variant={'body_2'}>Показать</Typography>
-      <Select isPagination onValueChange={onPageSizeChange} value={pageSize.toString()}>
-        {Object.keys(selectOptions).map((t, i) => (
-          <SelectItemWithText isPagination key={i} value={selectOptions[t]}>
-            {selectOptions[t]}
-          </SelectItemWithText>
-        ))}
-      </Select>
-      <Typography variant={'body_2'}>на странице</Typography>
+      {selectOptions && (
+        <>
+          <Typography variant={'body_2'}>Показать</Typography>
+          <Select isPagination onValueChange={onPageSizeChange} value={pageSize.toString()}>
+            {Object.keys(selectOptions).map((t, i) => (
+              <SelectItemWithText isPagination key={i} value={selectOptions[t]}>
+                {selectOptions[t]}
+              </SelectItemWithText>
+            ))}
+          </Select>
+          <Typography variant={'body_2'}>на странице</Typography>
+        </>
+      )}
     </div>
   )
 }
@@ -105,7 +113,11 @@ const PaginationPrevButton = ({ disabled, onClick }: NavigateButtonProps) => {
 
 const PaginationNextButton = ({ disabled, onClick }: NavigateButtonProps) => {
   return (
-    <button className={s.navigateButton} disabled={disabled} onClick={onClick}>
+    <button
+      className={clsx(s.navigateButton, s.navigateLastButton)}
+      disabled={disabled}
+      onClick={onClick}
+    >
       <KeyboardArrowRight />
     </button>
   )

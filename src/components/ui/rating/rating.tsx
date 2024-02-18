@@ -6,7 +6,7 @@ type Props = {
 }
 
 export const Rating = ({ maxRating = 5, rating }: Props) => {
-  const elementsCount = Array(maxRating).fill(null)
+  const elementsCount = new Array(maxRating).fill(null)
 
   return (
     <div style={{ color: 'yellow' }}>

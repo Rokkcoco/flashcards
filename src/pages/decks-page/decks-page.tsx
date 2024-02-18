@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useLocation, useSearchParams } from 'react-router-dom'
 
 import { useDebounce } from '@/common/hooks'
@@ -7,7 +8,7 @@ import { Typography } from '@/components/ui/typography/typography'
 import { SearchSettings } from '@/features'
 import { useGetDecksQuery, useGetMinMaxDeckCardsQuery } from '@/services'
 
-import s from './decks.module.scss'
+import s from './decks-page.module.scss'
 
 export const DecksPage = () => {
   // const setPage = (page: number) => {
@@ -31,8 +32,16 @@ export const DecksPage = () => {
 
   // const { data: CardData } = useGetCardQuery({ id: cardId }, { skip })
   // const { data: DeckData } = useGetDeckQuery({ id: deckId }, { skip })
+  const pageSizeOptions = {
+    5: '5',
+    7: '7',
+    10: '10',
+  }
+  //todo update currentPage after update
   const [searchParams] = useSearchParams({ name: '', page: '1' })
   const page = Number(searchParams.get('page'))
+  const [currentPage, setCurrentPage] = useState(page)
+  const [pageSize, setPageSize] = useState(pageSizeOptions['5'])
   const location = useLocation()
 
   console.log('location', location)
@@ -47,15 +56,15 @@ export const DecksPage = () => {
 
   const { data, error, isLoading } = useGetDecksQuery({
     authorId: authorIdWithDebounce ?? undefined,
-    currentPage: page || 1,
-    itemsPerPage: 5,
+    currentPage: currentPage || 1,
+    itemsPerPage: +pageSize,
     maxCardsCount: maxCardsValueWithDebounce === null ? undefined : +maxCardsValueWithDebounce,
     minCardsCount: minCardsValueWithDebounce === null ? undefined : +minCardsValueWithDebounce,
     name: nameWithDebounce ?? undefined,
   })
-  const { isLoading: minMaxDeckCardsIsloading } = useGetMinMaxDeckCardsQuery()
+  const { isLoading: minMaxDeckCardsIsLoading } = useGetMinMaxDeckCardsQuery()
 
-  if (isLoading || minMaxDeckCardsIsloading) {
+  if (isLoading || minMaxDeckCardsIsLoading) {
     return <div>Loading...</div>
   }
 
@@ -74,12 +83,16 @@ export const DecksPage = () => {
       </div>
       <SearchSettings />
       <DecksTable decks={data?.items} />
-      <Pagination
-        currentPage={page}
-        onPageChange={() => {}}
-        pageSize={3}
-        totalCount={data?.pagination?.totalPages ?? 1}
-      />
+      <div className={s.pagination}>
+        <Pagination
+          currentPage={currentPage}
+          onPageChange={setCurrentPage}
+          onPageSizeChange={setPageSize}
+          pageSize={+pageSize}
+          selectOptions={pageSizeOptions}
+          totalCount={data?.pagination?.totalPages ?? 1}
+        />
+      </div>
     </Page>
   )
 }

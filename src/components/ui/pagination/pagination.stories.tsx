@@ -14,6 +14,15 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const PaginationWithSelect: Story = {
+  args: {
+    currentPage: 1,
+    onPageChange: x => x,
+    onPageSizeChange: x => x,
+    pageSize: 1,
+    selectOptions: {},
+    totalCount: 1,
+  },
+
   render: () => {
     const pageSizeOptions = {
       5: '5',
