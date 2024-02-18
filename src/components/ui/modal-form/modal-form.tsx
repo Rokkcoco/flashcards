@@ -1,7 +1,7 @@
 import { ComponentPropsWithoutRef, ElementRef, ReactNode, forwardRef } from 'react'
+import { Control } from 'react-hook-form'
 
 import { CloseOutline } from '@/assets'
-import { TODO } from '@/common'
 import { Card, Typography } from '@/components/ui'
 import { DevTool } from '@hookform/devtools'
 import * as Dialog from '@radix-ui/react-dialog'
@@ -10,7 +10,7 @@ import { clsx } from 'clsx'
 import s from './modal-form.module.scss'
 
 type Props = {
-  control?: TODO
+  control?: Control
   controlButtons?: ReactNode
   onFormSubmit?: () => void
   trigger?: ReactNode
