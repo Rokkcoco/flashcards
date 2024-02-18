@@ -1,10 +1,10 @@
 import { useLocation, useSearchParams } from 'react-router-dom'
 
 import { useDebounce } from '@/common/hooks'
+import { DecksTable } from '@/components/table/decks-table/decks-table'
 import { Page, Pagination } from '@/components/ui'
 import { Typography } from '@/components/ui/typography/typography'
 import { SearchSettings } from '@/features'
-import { DecksTable } from '@/features/decks-table/decks-table'
 import { useGetDecksQuery, useGetMinMaxDeckCardsQuery } from '@/services'
 
 import s from './decks.module.scss'

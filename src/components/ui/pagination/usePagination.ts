@@ -3,7 +3,7 @@ import { useMemo } from 'react'
 const range = (start: number, end: number) =>
   Array.from({ length: end - start + 1 }, (_, idx) => idx + start)
 
-type usePaginationArgs = {
+type Props = {
   currentPage: number
   pageSize: number
   siblingCount: number
@@ -15,8 +15,8 @@ export const usePagination = ({
   pageSize,
   siblingCount = 1,
   totalCount,
-}: usePaginationArgs) => {
-  const paginationRange = useMemo(() => {
+}: Props) => {
+  return useMemo(() => {
     const totalPageCount = Math.ceil(totalCount / pageSize)
 
     const DOTS = '...'
@@ -55,7 +55,4 @@ export const usePagination = ({
       return [firstPageIndex, DOTS, ...middleRange, DOTS, lastPageIndex]
     }
   }, [totalCount, pageSize, siblingCount, currentPage])
-
-  //todo нужно возвращать пустой массив?
-  return paginationRange || []
 }

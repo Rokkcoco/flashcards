@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 
 import { useState } from 'react'
 
-import { OnPageChangeArgs, Pagination } from './pagination'
+import { Pagination } from './pagination'
 
 const meta = {
   component: Pagination,
@@ -13,37 +13,30 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {
-  args: {
-    currentPage: 5,
-    onPageChange: () => {},
-    pageSize: 3,
-    totalCount: 20,
-  },
+export const PaginationWithSelect: Story = {
   render: () => {
+    const pageSizeOptions = {
+      5: '5',
+      7: '7',
+      10: '10',
+      15: '15',
+      20: '20',
+    }
     const [currentPage, setCurrentPage] = useState(1)
-    const [pageSize, setPageSize] = useState(10)
-
-    const onPageChange = ({ currentPage, pageSize }: OnPageChangeArgs) => {
-      if (currentPage) {
-        setCurrentPage(currentPage)
-      }
-
-      if (pageSize) {
-        setPageSize(pageSize)
-      }
-
-      if (!currentPage && !pageSize) {
-        console.log('Пустой вызов')
-      }
+    const [pageSize, setPageSize] = useState(pageSizeOptions['5'])
+    const totalCount = 84
+    const onPageChange = (page: number) => {
+      setCurrentPage(page)
     }
 
     return (
       <Pagination
         currentPage={currentPage}
         onPageChange={onPageChange}
-        pageSize={pageSize}
-        totalCount={71}
+        onPageSizeChange={setPageSize}
+        pageSize={Number(pageSize)}
+        selectOptions={pageSizeOptions}
+        totalCount={totalCount}
       />
     )
   },

@@ -2,8 +2,8 @@ import { useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
 import { TrashOutline } from '@/assets'
+import { AddDeckModal } from '@/components/modal'
 import { Button, Slider, TabItem, Tabs, TextField } from '@/components/ui'
-import { AddDeckModal } from '@/features'
 import { useGetMinMaxDeckCardsQuery, useMeQuery } from '@/services'
 
 import s from './search-settings.module.scss'

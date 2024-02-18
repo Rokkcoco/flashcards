@@ -1,9 +1,8 @@
 import { Link } from 'react-router-dom'
 
 import { PlayCircleOutline } from '@/assets'
+import { DeleteDeckModal, EditDeckModal } from '@/components/modal'
 import { Table, TableBody, TableCell, TableHead, TableHeadCell, TableRow } from '@/components/ui'
-import { DeleteDeckModal } from '@/features'
-import { EditDeckModal } from '@/features/edit-deck-modal'
 import { Deck, useDeleteDeckMutation, useMeQuery } from '@/services'
 import { clsx } from 'clsx'
 

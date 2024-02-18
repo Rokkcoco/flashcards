@@ -2,12 +2,13 @@ import { Link, useLocation, useParams } from 'react-router-dom'
 
 import { ArrowBackOutline } from '@/assets'
 import { Button, Page, TextField, Typography } from '@/components/ui'
-import { AddCardModal } from '@/features/add-card-modal'
-import { DeckTable } from '@/features/deck-table'
 import { useGetDeckQuery, useMeQuery } from '@/services'
 import { clsx } from 'clsx'
 
 import s from './deck-page.module.scss'
+
+import { AddCardModal } from '../../components/modal/add-card-modal'
+import { DeckTable } from '../../components/table/deck-table'
 
 export const DeckPage = () => {
   const { id = '' } = useParams<{ id: 'string' }>()

@@ -1,7 +1,14 @@
 import { useParams } from 'react-router-dom'
 
-import { Table, TableBody, TableCell, TableHead, TableHeadCell, TableRow } from '@/components/ui'
-import { Rating } from '@/features'
+import {
+  Rating,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeadCell,
+  TableRow,
+} from '@/components/ui'
 import { useGetCardsInADeckQuery } from '@/services'
 
 import s from './deck-table.module.scss'

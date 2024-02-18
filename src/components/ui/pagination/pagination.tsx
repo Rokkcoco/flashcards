@@ -1,51 +1,49 @@
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@/assets'
-import { usePagination } from '@/common/hooks/usePagination'
-import { Typography } from '@/components/ui'
-import { SelectItem } from '@radix-ui/react-select'
+import { Select, SelectItemWithText, Typography } from '@/components/ui'
+import { usePagination } from '@/components/ui/pagination/usePagination'
 import clsx from 'clsx'
 
 import s from './pagination.module.scss'
 
-import { Select } from '../select'
-
-export type OnPageChangeArgs = { currentPage?: number; pageSize?: number }
-
-type PaginationProps = {
+type Props = {
+  className?: string
   currentPage: number
-  onPageChange: ({ currentPage, pageSize }: OnPageChangeArgs) => void
+  onPageChange: (page: number) => void
+  onPageSizeChange: (size: string) => void
   pageSize: number
-  selectOptions?: Record<string, string>
+  selectOptions: Record<string, string>
+  siblingCount?: number
   totalCount: number
 }
-
+//todo buttons -> links
 export const Pagination = ({
+  className,
   currentPage,
   onPageChange,
+  onPageSizeChange,
   pageSize,
-  selectOptions = { 5: '5', 7: '7', 10: '10', 15: '15', 20: '20' },
+  selectOptions,
+  siblingCount = 1,
   totalCount,
-}: PaginationProps) => {
+}: Props) => {
   const paginationRange = usePagination({
     currentPage,
     pageSize,
-    siblingCount: 1,
+    siblingCount,
     totalCount,
   })
-  const totalPageCount = Math.ceil(totalCount / pageSize)
 
-  const onChangePageSize = (value: string) => {
-    onPageChange({ currentPage: 1, pageSize: Number(value) })
+  const lastPage = paginationRange?.at(-1)
+
+  const onPrevious = () => {
+    onPageChange(currentPage - 1)
   }
 
-  const back = () => {
-    onPageChange({ currentPage: currentPage - 1 })
+  const onNext = () => {
+    onPageChange(currentPage + 1)
   }
 
-  const forward = () => {
-    onPageChange({ currentPage: currentPage + 1 })
-  }
-
-  const buttons = paginationRange.map((item: number | string, index) => {
+  const buttons = paginationRange?.map((item: number | string, index) => {
     return (
       <DefaultNavigateButton
         currentPage={currentPage}
@@ -57,17 +55,17 @@ export const Pagination = ({
   })
 
   return (
-    <div className={clsx(s.paginationWrapp)}>
-      <PaginationPrevButton disabled={currentPage === 1} onClick={back} />
+    <div className={clsx(s.paginationWrapp, className)}>
+      <PaginationPrevButton disabled={currentPage === 1} onClick={onPrevious} />
       {buttons}
-      <PaginationNextButton disabled={currentPage === totalPageCount} onClick={forward} />
+      <PaginationNextButton disabled={currentPage === lastPage} onClick={onNext} />
       <Typography variant={'body_2'}>Показать</Typography>
-      <Select isPagination onValueChange={onChangePageSize} value={pageSize.toString()}>
-        <SelectItem value={selectOptions['5']}>{selectOptions['5']}</SelectItem>
-        <SelectItem value={selectOptions['7']}>{selectOptions['7']}</SelectItem>
-        <SelectItem value={selectOptions['10']}>{selectOptions['10']}</SelectItem>
-        <SelectItem value={selectOptions['15']}>{selectOptions['15']}</SelectItem>
-        <SelectItem value={selectOptions['20']}>{selectOptions['20']}</SelectItem>
+      <Select isPagination onValueChange={onPageSizeChange} value={pageSize.toString()}>
+        {Object.keys(selectOptions).map((t, i) => (
+          <SelectItemWithText isPagination key={i} value={selectOptions[t]}>
+            {selectOptions[t]}
+          </SelectItemWithText>
+        ))}
       </Select>
       <Typography variant={'body_2'}>на странице</Typography>
     </div>
@@ -79,7 +77,7 @@ type NavigateButtonProps = {
   disabled?: boolean
   item?: number | string
   onClick?: () => void
-  onPageChange?: ({ currentPage, pageSize }: OnPageChangeArgs) => void
+  onPageChange?: (page: number) => void
 }
 
 const DefaultNavigateButton = ({ currentPage, item, onPageChange }: NavigateButtonProps) => {
@@ -88,7 +86,7 @@ const DefaultNavigateButton = ({ currentPage, item, onPageChange }: NavigateButt
       className={clsx(s.defaultButton, s.navigateButton, currentPage === item ? s.active : '')}
       onClick={() => {
         if (onPageChange && typeof item === 'number') {
-          onPageChange({ currentPage: item })
+          onPageChange(item)
         }
       }}
     >
