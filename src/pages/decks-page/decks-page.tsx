@@ -90,7 +90,7 @@ export const DecksPage = () => {
           onPageSizeChange={setPageSize}
           pageSize={+pageSize}
           selectOptions={pageSizeOptions}
-          totalCount={data?.pagination?.totalPages ?? 1}
+          totalCount={data?.pagination?.totalItems ?? 1}
         />
       </div>
     </Page>

@@ -18,7 +18,7 @@ type Props = {
 //todo buttons -> links
 export const Pagination = ({
   className,
-  currentPage,
+  currentPage = 1,
   onPageChange,
   onPageSizeChange,
   pageSize,
@@ -33,6 +33,7 @@ export const Pagination = ({
     totalCount,
   })
 
+  console.log(paginationRange)
   if (currentPage === 0 || (paginationRange && paginationRange.length < 2)) {
     return null
   }
@@ -58,6 +59,19 @@ export const Pagination = ({
     )
   })
 
+  const onValueChangeHandler = (newPageSize: string) => {
+    onPageSizeChange?.(newPageSize)
+    let page
+
+    if (+newPageSize < pageSize) {
+      page = Math.ceil((currentPage * pageSize) / +newPageSize) - 1
+    } else {
+      page = Math.ceil((currentPage * pageSize) / +newPageSize)
+    }
+
+    onPageChange(page)
+  }
+
   return (
     <div className={clsx(s.paginationWrapp, className)}>
       <PaginationPrevButton disabled={currentPage === 1} onClick={onPrevious} />
@@ -66,7 +80,7 @@ export const Pagination = ({
       {selectOptions && (
         <>
           <Typography variant={'body_2'}>Показать</Typography>
-          <Select isPagination onValueChange={onPageSizeChange} value={pageSize.toString()}>
+          <Select isPagination onValueChange={onValueChangeHandler} value={pageSize.toString()}>
             {Object.keys(selectOptions).map((t, i) => (
               <SelectItemWithText isPagination key={i} value={selectOptions[t]}>
                 {selectOptions[t]}

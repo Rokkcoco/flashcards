@@ -10,12 +10,7 @@ type Props = {
   totalCount: number
 }
 
-export const usePagination = ({
-  currentPage = 1,
-  pageSize,
-  siblingCount = 1,
-  totalCount,
-}: Props) => {
+export const usePagination = ({ currentPage, pageSize, siblingCount, totalCount }: Props) => {
   return useMemo(() => {
     const totalPageCount = Math.ceil(totalCount / pageSize)
 
