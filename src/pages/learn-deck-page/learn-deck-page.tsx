@@ -13,6 +13,7 @@ export const LearnDeckPage = () => {
   const { data: deckData } = useGetDeckQuery({ id })
   const { data: cardData } = useGetRandomCardQuery({ id })
   const [saveGrade] = useUpdateCardGradeMutation()
+  const location = useLocation()
   //todo save prevCard id for request
   //todo remove useeffect
   const answerButtonHanlder = () => setShowAnswer(true)
@@ -21,6 +22,7 @@ export const LearnDeckPage = () => {
       return
     }
     saveGrade({ cardId: cardData.id, grade: Number(gradeForAnswer) })
+
     setShowAnswer(false)
     setGradeForAnswer('1')
   }

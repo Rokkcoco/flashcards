@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { useLocation, useSearchParams } from 'react-router-dom'
 
 import { TrashOutline } from '@/assets'
 import { AddDeckModal } from '@/components/modal'
@@ -17,38 +17,16 @@ export const SearchSettings = () => {
   const { data: minMaxCardsData } = useGetMinMaxDeckCardsQuery()
   const [tabsValue, setTabsValue] = useState(deckOwner ?? '')
 
-  console.log('minMaxCardsData', minMaxCardsData)
-  console.log('minCards', minCards)
-  // const [sliderValue, setSliderValue] = useState([
-  //   minCards ? +minCards : 0,
-  //   maxCards ? +maxCards : 0,
-  // ])
-  // const [minMaxSliderValues, setMinMaxSliderValues] = useState([0, 0])
   const [sliderValue, setSliderValue] = useState([
     ((minCards && +minCards) || minMaxCardsData?.min) ?? 0,
     ((maxCards && +maxCards) || minMaxCardsData?.max) ?? 0,
   ])
 
-  console.log(sliderValue)
   const [minMaxSliderValues, _] = useState([minMaxCardsData?.min ?? 0, minMaxCardsData?.max ?? 0])
 
   const [searchValueTextField, setSearchValueTextField] = useState(name ?? '')
 
   const { data: meData } = useMeQuery()
-
-  //todo fix useeffect
-
-  // useEffect(() => {
-  //   if (minMaxCardsData) {
-  //     setMinMaxSliderValues([minMaxCardsData.min, minMaxCardsData.max])
-  //     if (sliderValue[0] === 0) {
-  //       setSliderValue([minMaxCardsData.min, sliderValue[1]])
-  //     }
-  //     if (sliderValue[1] === 0) {
-  //       setSliderValue([sliderValue[0], minMaxCardsData.max])
-  //     }
-  //   }
-  // }, [minMaxCardsData])
 
   const onValueChangeTextFieldWithSearchParams = (name: string) => {
     if (!name) {
@@ -71,12 +49,12 @@ export const SearchSettings = () => {
     setSearchParams(searchParams)
     setTabsValue(value)
   }
-  //todo fix slider Max value is zero then nothing set
-  const setSliderValueWithSearchParams = (values: number[]) => {
-    if (values[0] !== sliderValue[0]) {
+
+  const setSliderValueWithSearchParamsOnCommit = (values: number[]) => {
+    if (values[0] !== minMaxSliderValues[0]) {
       searchParams.set('minCards', values[0].toString())
     }
-    if (values[1] !== sliderValue[1]) {
+    if (values[1] !== minMaxSliderValues[1]) {
       searchParams.set('maxCards', values[1].toString())
     }
     if (values[0] === minMaxSliderValues[0]) {
@@ -114,7 +92,8 @@ export const SearchSettings = () => {
       <Slider
         max={minMaxSliderValues[1]}
         min={minMaxSliderValues[0]}
-        onValueChange={setSliderValueWithSearchParams}
+        onValueChange={setSliderValue}
+        onValueCommit={setSliderValueWithSearchParamsOnCommit}
         value={sliderValue}
       />
       <AddDeckModal />

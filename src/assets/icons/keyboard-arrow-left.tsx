@@ -12,7 +12,7 @@ const SvgComponent = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) =
     <g clipPath={'url(#clip0_5928_3055)'}>
       <path
         d={'M10.2733 11.06L7.21998 8L10.2733 4.94L9.33331 4L5.33331 8L9.33331 12L10.2733 11.06Z'}
-        fill={'white'}
+        fill={'currentColor'}
       />
     </g>
     <defs>

@@ -19,7 +19,7 @@ export const Slider = forwardRef<ElementRef<typeof SliderRadix.Root>, Props>((pr
     className,
     max = 100,
     min = 0,
-    onValueChange,
+    onValueCommit,
     step = 1,
     value = [0, 100],
     ...rest
@@ -45,16 +45,16 @@ export const Slider = forwardRef<ElementRef<typeof SliderRadix.Root>, Props>((pr
     ) {
       inputMaxElement.current.value = ''
     }
-    if (input === 'left' && !inputMinElement?.current?.value.length && e.key === '0') {
+    if (input === 'left' && inputMinElement?.current?.value === '0' && e.key === '0') {
       e.preventDefault()
     }
-    if (input === 'right' && !inputMaxElement?.current?.value.length && e.key === '0') {
+    if (input === 'right' && inputMaxElement?.current?.value === '0' && e.key === '0') {
       e.preventDefault()
     }
     if (input === 'left' && e.key === 'Enter' && inputMinElement?.current?.value !== '') {
       e.currentTarget.blur()
     }
-    if (input === 'right' && e.key === 'Enter' && inputMinElement?.current?.value !== '') {
+    if (input === 'right' && e.key === 'Enter' && inputMaxElement?.current?.value !== '') {
       e.currentTarget.blur()
     }
   }
@@ -64,14 +64,14 @@ export const Slider = forwardRef<ElementRef<typeof SliderRadix.Root>, Props>((pr
       return
     }
     const temp = [...value]
-    const clampedValue = Math.min(newValue, max ?? 100)
+    const clampedValue = Math.abs(Math.min(newValue, max ?? 100))
 
     if (side === 'left') {
       temp[0] = clampedValue
     } else {
       temp[1] = clampedValue
     }
-    onValueChange?.(temp)
+    onValueCommit?.(temp)
   }
 
   const onBlurValidate = () => {
@@ -81,7 +81,7 @@ export const Slider = forwardRef<ElementRef<typeof SliderRadix.Root>, Props>((pr
     const temp = [...value]
 
     if (temp[0] > temp[1]) {
-      onValueChange?.([temp[1], temp[0]])
+      onValueCommit?.([temp[1], temp[0]])
     }
   }
 
@@ -105,7 +105,7 @@ export const Slider = forwardRef<ElementRef<typeof SliderRadix.Root>, Props>((pr
         className={clsx(s.root, className)}
         max={max}
         min={min}
-        onValueChange={onValueChange}
+        onValueCommit={onValueCommit}
         ref={ref}
         step={step}
         value={value}

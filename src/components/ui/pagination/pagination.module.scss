@@ -2,6 +2,14 @@
   display: flex;
   align-items: center;
   height: auto;
+
+  &:first-child {
+    margin-right: 0;
+  }
+
+  &:last-child {
+    margin-left: 0;
+  }
 }
 
 .navigateButton {
@@ -28,6 +36,19 @@
     height: 16px;
     margin: 0 6px 0 0;
   }
+
+  &:hover {
+    color: var(--color-light-100);
+    background-color: var(--color-dark-500);
+  }
+
+  &:link {
+    text-decoration: none;
+  }
+
+  &:visited {
+    color: var(--color-light-100);
+  }
 }
 
 .navigateLastButton {
@@ -36,27 +57,17 @@
   margin: 0 25px 0 6px;
 }
 
-.navigateButton:hover {
-  color: var(--color-light-100);
-  background-color: var(--color-dark-500);
-}
-
 .navigateButton.defaultButton.active {
   color: var(--color-dark-900);
   background-color: var(--color-light-100);
   border-radius: 2px;
 }
 
-.navigateButton:disabled {
-  path {
-    fill: var(--color-dark-100);
-  }
+.paginationWrapp .disabledLink {
+  pointer-events: none;
+  opacity: 0.5;
 }
 
-.paginationWrapp:first-child {
-  margin-right: 0;
-}
-
-.paginationWrapp:last-child {
-  margin-left: 0;
+.paginationWrapp .notALink {
+  pointer-events: none;
 }

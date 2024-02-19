@@ -1,22 +1,22 @@
-import { Link, useLocation, useParams } from 'react-router-dom'
+import { MouseEvent } from 'react'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 
 import { ArrowBackOutline } from '@/assets'
+import { AddCardModal } from '@/components/modal'
+import { DeckTable } from '@/components/table'
 import { Button, Page, TextField, Typography } from '@/components/ui'
 import { useGetDeckQuery, useMeQuery } from '@/services'
 import { clsx } from 'clsx'
 
 import s from './deck-page.module.scss'
 
-import { AddCardModal } from '../../components/modal/add-card-modal'
-import { DeckTable } from '../../components/table/deck-table'
-
 export const DeckPage = () => {
   const { id = '' } = useParams<{ id: 'string' }>()
   const { data: meData } = useMeQuery()
   const { data: deckData } = useGetDeckQuery({ id })
-  //todo try with location for link
-  const location = useLocation()
+
   const userIsDeckAuthor = meData?.id === deckData?.userId
+  const navigate = useNavigate()
 
   //todo fix Link
   //todo fix search card
@@ -24,7 +24,16 @@ export const DeckPage = () => {
     <Page mt={'24px'}>
       <div className={s.root}>
         <div className={s.column}>
-          <Typography as={Link} className={s.linkBack} to={'/'} variant={'body_2'}>
+          <Typography
+            as={Link}
+            className={s.linkBack}
+            onClick={(e: MouseEvent<HTMLAnchorElement>) => {
+              e.preventDefault()
+              navigate(-1)
+            }}
+            to={'..'}
+            variant={'body_2'}
+          >
             <ArrowBackOutline fill={'white'} /> Back to Decks List
           </Typography>
 
@@ -47,7 +56,6 @@ export const DeckPage = () => {
       <span className={s.textFieldWrapper}>
         <TextField placeholder={'Search card'} style={{ marginBottom: '30px' }} type={'search'} />
       </span>
-
       <DeckTable />
     </Page>
   )

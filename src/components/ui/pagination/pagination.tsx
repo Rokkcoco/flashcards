@@ -1,3 +1,5 @@
+import { Link, useLocation } from 'react-router-dom'
+
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@/assets'
 import { Select, SelectItemWithText, Typography } from '@/components/ui'
 import { usePagination } from '@/components/ui/pagination/usePagination'
@@ -33,13 +35,11 @@ export const Pagination = ({
     totalCount,
   })
 
-  console.log(paginationRange)
   if (currentPage === 0 || (paginationRange && paginationRange.length < 2)) {
     return null
   }
 
   const lastPage = paginationRange?.at(-1)
-
   const onPrevious = () => {
     onPageChange(currentPage - 1)
   }
@@ -76,7 +76,11 @@ export const Pagination = ({
     <div className={clsx(s.paginationWrapp, className)}>
       <PaginationPrevButton disabled={currentPage === 1} onClick={onPrevious} />
       {buttons}
-      <PaginationNextButton disabled={currentPage === lastPage} onClick={onNext} />
+      <PaginationNextButton
+        disabled={currentPage === lastPage}
+        lastPage={lastPage}
+        onClick={onNext}
+      />
       {selectOptions && (
         <>
           <Typography variant={'body_2'}>Показать</Typography>
@@ -98,41 +102,100 @@ type NavigateButtonProps = {
   currentPage?: number
   disabled?: boolean
   item?: number | string
+  lastPage?: number | string
   onClick?: () => void
   onPageChange?: (page: number) => void
 }
 
 const DefaultNavigateButton = ({ currentPage, item, onPageChange }: NavigateButtonProps) => {
+  const location = useLocation()
+  const searchParams = new URLSearchParams(location.search)
+
+  if (item !== 1) {
+    searchParams.set('currentPage', String(item))
+  }
+  if (item === 1) {
+    searchParams.delete('currentPage')
+  }
+
   return (
-    <button
-      className={clsx(s.defaultButton, s.navigateButton, currentPage === item ? s.active : '')}
+    <Link
+      className={clsx(
+        s.defaultButton,
+        s.navigateButton,
+        currentPage === item ? s.active : '',
+        typeof item !== 'number' && s.notALink
+      )}
       onClick={() => {
         if (onPageChange && typeof item === 'number') {
           onPageChange(item)
         }
       }}
+      to={{
+        pathname: '/',
+        search: searchParams.toString(),
+      }}
     >
       <Typography variant={'body_2'}>{item}</Typography>
-    </button>
+    </Link>
   )
 }
-
 const PaginationPrevButton = ({ disabled, onClick }: NavigateButtonProps) => {
+  const location = useLocation()
+  const searchParams = new URLSearchParams(location.search)
+
+  const curPage = searchParams.get('currentPage')
+
+  console.log('disabled', disabled)
+  if (curPage) {
+    if (+curPage > 1) {
+      searchParams.set('currentPage', String(+curPage - 1))
+    }
+    if (+curPage === 2) {
+      searchParams.delete('currentPage')
+    }
+  }
+
   return (
-    <button className={s.navigateButton} disabled={disabled} onClick={onClick}>
+    <Link
+      className={clsx(s.navigateButton, disabled && s.disabledLink)}
+      onClick={onClick}
+      to={{
+        pathname: '/',
+        search: searchParams.toString(),
+      }}
+    >
       <KeyboardArrowLeft />
-    </button>
+    </Link>
   )
 }
 
-const PaginationNextButton = ({ disabled, onClick }: NavigateButtonProps) => {
+const PaginationNextButton = ({ disabled, lastPage, onClick }: NavigateButtonProps) => {
+  const location = useLocation()
+  const searchParams = new URLSearchParams(location.search)
+  const curPage = searchParams.get('currentPage')
+
+  console.log('lastPage', lastPage)
+  console.log('curPage', curPage)
+  if (curPage && lastPage) {
+    if (+curPage < +lastPage) {
+      searchParams.set('currentPage', String(+curPage + 1))
+    }
+  }
+  if (!curPage) {
+    searchParams.set('currentPage', '2')
+  }
+
   return (
-    <button
-      className={clsx(s.navigateButton, s.navigateLastButton)}
-      disabled={disabled}
+    <Link
+      className={clsx(s.navigateButton, s.navigateLastButton, disabled && s.disabledLink)}
       onClick={onClick}
+      to={{
+        pathname: '/',
+        search: searchParams.toString(),
+      }}
     >
       <KeyboardArrowRight />
-    </button>
+    </Link>
   )
 }
