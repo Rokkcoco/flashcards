@@ -35,11 +35,11 @@ export const SignIn = ({ onSubmit }: Props) => {
 
   return (
     <Card className={s.root}>
+      <Typography as={'h1'} variant={'h1'}>
+        Sign In
+      </Typography>
       <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
         <DevTool control={control} />
-        <Typography as={'h1'} variant={'h1'}>
-          Sign In
-        </Typography>
         <div className={s.inputContainer}>
           <ControlledTextField
             autoComplete={'email'}
@@ -61,22 +61,24 @@ export const SignIn = ({ onSubmit }: Props) => {
           />
           <ControlledCheckbox control={control} label={'Remember Me'} name={'rememberMe'} />
         </div>
-        {/*        todo remove button inside typography*/}
-        <Typography as={'span'} className={s.passwordForgot} variant={'body_2'}>
-          <Button as={Link} className={s.buttonForgot} to={'/forgot-password'} variant={'link'}>
-            Forgot password?
-          </Button>
+        <Typography
+          as={Link}
+          className={s.passwordForgot}
+          to={'/forgot-password'}
+          variant={'body_2'}
+        >
+          Forgot password?
         </Typography>
         <Button className={s.buttonSignIn} fullWidth type={'submit'}>
           Sign In
         </Button>
-        <Typography as={'span'} className={s.isUser} variant={'body_2'}>
-          Don't have an account?
-        </Typography>
-        <Button as={Link} className={s.buttonSignUp} to={'/sign-up'} variant={'link'}>
-          Sign Up
-        </Button>
       </form>
+      <Typography as={'span'} className={s.isUser} variant={'body_2'}>
+        Don't have an account?
+      </Typography>
+      <Typography as={Link} className={s.buttonSignUp} to={'/sign-up'} variant={'subtitle_1'}>
+        Sign Up
+      </Typography>
     </Card>
   )
 }

@@ -81,7 +81,7 @@ export type CardResponse = {
 export type GetDeckArgs = {
   author: DeckAuthor
   cardsCount: number
-  cover: FileList
+  cover: string
   created: string
   id: string
   isPrivate: boolean

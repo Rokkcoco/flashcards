@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useLocation, useSearchParams } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
 
 import { TrashOutline } from '@/assets'
 import { AddDeckModal } from '@/components/modal'
@@ -7,8 +7,11 @@ import { Button, Slider, TabItem, Tabs, TextField } from '@/components/ui'
 import { useGetMinMaxDeckCardsQuery, useMeQuery } from '@/services'
 
 import s from './search-settings.module.scss'
-
-export const SearchSettings = () => {
+type Props = {
+  onClear: () => void
+  onSearch: () => void
+}
+export const SearchSettings = ({ onClear, onSearch }: Props) => {
   const [searchParams, setSearchParams] = useSearchParams()
   const name = searchParams.get('name')
   const minCards = searchParams.get('minCards')
@@ -29,6 +32,7 @@ export const SearchSettings = () => {
   const { data: meData } = useMeQuery()
 
   const onValueChangeTextFieldWithSearchParams = (name: string) => {
+    onSearch()
     if (!name) {
       searchParams.delete('name')
     } else {
@@ -39,6 +43,7 @@ export const SearchSettings = () => {
   }
   //todo fix TabsOwner
   const setTabsValueWithSearchParams = (value: string) => {
+    onSearch()
     if (meData) {
       if (!value) {
         searchParams.delete('authorId')
@@ -51,6 +56,7 @@ export const SearchSettings = () => {
   }
 
   const setSliderValueWithSearchParamsOnCommit = (values: number[]) => {
+    onSearch()
     if (values[0] !== minMaxSliderValues[0]) {
       searchParams.set('minCards', values[0].toString())
     }
@@ -71,6 +77,7 @@ export const SearchSettings = () => {
     setTabsValue('')
     setSearchValueTextField('')
     setSliderValue(minMaxSliderValues)
+    onClear()
     setSearchParams({})
   }
 

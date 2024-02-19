@@ -146,7 +146,6 @@ const PaginationPrevButton = ({ disabled, onClick }: NavigateButtonProps) => {
 
   const curPage = searchParams.get('currentPage')
 
-  console.log('disabled', disabled)
   if (curPage) {
     if (+curPage > 1) {
       searchParams.set('currentPage', String(+curPage - 1))
@@ -175,8 +174,6 @@ const PaginationNextButton = ({ disabled, lastPage, onClick }: NavigateButtonPro
   const searchParams = new URLSearchParams(location.search)
   const curPage = searchParams.get('currentPage')
 
-  console.log('lastPage', lastPage)
-  console.log('curPage', curPage)
   if (curPage && lastPage) {
     if (+curPage < +lastPage) {
       searchParams.set('currentPage', String(+curPage + 1))

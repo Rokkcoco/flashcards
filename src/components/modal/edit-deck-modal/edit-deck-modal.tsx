@@ -102,7 +102,7 @@ export const EditDeckModal = ({ deck }: Props) => {
       open={modalOpen}
       title={'Edit Deck'}
       trigger={
-        <button>
+        <button className={s.trigger}>
           <Edit2Outline />
         </button>
       }

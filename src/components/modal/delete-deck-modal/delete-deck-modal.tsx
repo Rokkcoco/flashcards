@@ -2,6 +2,8 @@ import { useState } from 'react'
 
 import { TrashOutline } from '@/assets'
 import { Button, Modal, Typography } from '@/components/ui'
+
+import s from './delete-deck-modal.module.scss'
 type Props = {
   deckName: string
   onDelete: () => void
@@ -26,7 +28,7 @@ export const DeleteDeckModal = ({ deckName, onDelete }: Props) => {
       open={openModal}
       title={'Delete Card'}
       trigger={
-        <button>
+        <button className={s.trigger}>
           <TrashOutline />
         </button>
       }

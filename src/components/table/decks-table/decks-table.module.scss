@@ -30,3 +30,15 @@
   pointer-events: none;
   opacity: 0.5;
 }
+
+.image {
+  width: 90px;
+  height: 90px;
+  object-fit: cover;
+}
+
+.imageTooltip {
+  width: 250px;
+  height: 250px;
+  object-fit: contain;
+}

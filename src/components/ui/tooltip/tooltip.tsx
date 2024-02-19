@@ -5,10 +5,11 @@ import * as TooltipRadix from '@radix-ui/react-tooltip'
 import { clsx } from 'clsx'
 
 import s from './tooltip.module.scss'
+
 type Props = {
+  className?: string
   content: ReactNode
-} & ComponentPropsWithoutRef<typeof TooltipRadix.Root> &
-  ComponentPropsWithoutRef<'div'>
+} & ComponentPropsWithoutRef<typeof TooltipRadix.Root>
 export const Tooltip = forwardRef<ElementRef<typeof TooltipRadix.Content>, Props>((props, ref) => {
   const { children, className, content, defaultOpen, onOpenChange, open, ...rest } = props
 
@@ -28,7 +29,7 @@ export const Tooltip = forwardRef<ElementRef<typeof TooltipRadix.Content>, Props
           {...rest}
         >
           <Typography variant={'caption'}>{content}</Typography>
-          <TooltipRadix.Arrow fill={'#808080'} height={5} width={10} />
+          <TooltipRadix.Arrow className={s.arrow} height={6} width={8} />
         </TooltipRadix.Content>
       </TooltipRadix.Root>
     </TooltipRadix.Provider>

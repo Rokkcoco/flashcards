@@ -3,7 +3,7 @@ import { useSearchParams } from 'react-router-dom'
 
 import { useDebounce } from '@/common/hooks'
 import { DecksTable } from '@/components/table/decks-table/decks-table'
-import { Page, Pagination } from '@/components/ui'
+import { Loader, Page, Pagination } from '@/components/ui'
 import { Typography } from '@/components/ui/typography/typography'
 import { SearchSettings } from '@/features'
 import { useGetDecksQuery, useGetMinMaxDeckCardsQuery } from '@/services'
@@ -33,7 +33,6 @@ export const DecksPage = () => {
   //todo update currentPage after update
   const [searchParams, setSearchParams] = useSearchParams()
 
-  /*  const page = Number(searchParams.get('page'))*/
   const currentPageQuery = Number(searchParams.get('currentPage'))
   const itemsPerPageQuery = Number(searchParams.get('itemsPerPage'))
   const [currentPage, setCurrentPage] = useState(currentPageQuery === 0 ? 1 : currentPageQuery)
@@ -41,9 +40,15 @@ export const DecksPage = () => {
     itemsPerPageQuery === 0 ? pageSizeOptions['5'] : itemsPerPageQuery
   )
 
-  console.log('currentPage', currentPage)
-  console.log('pageSize', pageSize)
-
+  const setCurrentPageWithSearchParams = (page: number) => {
+    if (page === 1) {
+      searchParams.delete('page')
+    } else {
+      searchParams.set('currentPage', page.toString())
+    }
+    setCurrentPage(page)
+    setSearchParams(searchParams)
+  }
   const setPageSizeWithSearchParams = (itemsPerPage: string) => {
     if (itemsPerPage === '5') {
       searchParams.delete('itemsPerPage')
@@ -52,6 +57,15 @@ export const DecksPage = () => {
     }
     setSearchParams(searchParams)
     setPageSize(itemsPerPage)
+  }
+
+  const resetPaginationSettings = () => {
+    setCurrentPageWithSearchParams(1)
+    setPageSizeWithSearchParams('5')
+  }
+
+  const resetPaginationCurrentPage = () => {
+    setCurrentPageWithSearchParams(1)
   }
 
   const name = searchParams.get('name')
@@ -75,7 +89,7 @@ export const DecksPage = () => {
   const { isLoading: minMaxDeckCardsIsLoading } = useGetMinMaxDeckCardsQuery()
 
   if (isLoading || minMaxDeckCardsIsLoading) {
-    return <div>Loading...</div>
+    return <Loader />
   }
 
   if (error) {
@@ -89,12 +103,12 @@ export const DecksPage = () => {
           Decks
         </Typography>
       </div>
-      <SearchSettings />
+      <SearchSettings onClear={resetPaginationSettings} onSearch={resetPaginationCurrentPage} />
       <DecksTable decks={data?.items} />
       <div className={s.pagination}>
         <Pagination
           currentPage={currentPage}
-          onPageChange={setCurrentPage}
+          onPageChange={setCurrentPageWithSearchParams}
           onPageSizeChange={setPageSizeWithSearchParams}
           pageSize={Number(pageSize)}
           selectOptions={pageSizeOptions}

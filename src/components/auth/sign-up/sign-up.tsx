@@ -1,4 +1,5 @@
 import { useForm } from 'react-hook-form'
+import { Link } from 'react-router-dom'
 
 import { Button, Card, Typography } from '@/components/ui'
 import { ControlledTextField } from '@/components/ui/controlled'
@@ -45,11 +46,11 @@ export const SignUp = ({ onSubmit }: Props) => {
 
   return (
     <Card className={s.root}>
+      <div className={s.titleContainer}>
+        <Typography variant={'h1'}>Sign Up</Typography>
+      </div>
       <form className={s.form} onSubmit={handleSubmit(submitHandler)}>
         <DevTool control={control} />
-        <div className={s.titleContainer}>
-          <Typography variant={'h1'}>Sign Up</Typography>
-        </div>
         <div className={s.inputsContainer}>
           <ControlledTextField
             autoComplete={'email'}
@@ -61,7 +62,7 @@ export const SignUp = ({ onSubmit }: Props) => {
             type={'email'}
           />
           <ControlledTextField
-            autoComplete={'current-password'}
+            autoComplete={'new-password'}
             control={control}
             errorMessage={errors?.password?.message}
             label={'Password'}
@@ -70,32 +71,27 @@ export const SignUp = ({ onSubmit }: Props) => {
             type={'password'}
           />
           <ControlledTextField
-            autoComplete={'current-password'}
+            autoComplete={'new-password'}
             control={control}
             errorMessage={errors?.confirmPassword?.message}
-            label={'Password'}
+            label={'Confirm Password'}
             name={'confirmPassword'}
             placeholder={'**********'}
             type={'password'}
           />
         </div>
-        <div className={s.buttonsContainer}>
-          <Button as={'button'} className={s.signInButton} fullWidth>
-            Send
-          </Button>
-          <Typography className={s.buttonSubTitle} variant={'body_2'}>
-            Already have an account?
-          </Typography>
-          <Button
-            as={'a'}
-            href={'/sign-in'}
-            style={{ textDecoration: 'underline' }}
-            variant={'link'}
-          >
-            Sign in
-          </Button>
-        </div>
+        <Button className={s.signUpButton} fullWidth type={'submit'}>
+          Sign Up
+        </Button>
       </form>
+      <div className={s.buttonsContainer}>
+        <Typography className={s.buttonSubTitle} variant={'body_2'}>
+          Already have an account?
+        </Typography>
+        <Button as={Link} className={s.buttonLink} to={'/sign-in'} variant={'link'}>
+          Sign in
+        </Button>
+      </div>
     </Card>
   )
 }

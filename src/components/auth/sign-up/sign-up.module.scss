@@ -25,11 +25,14 @@
   align-items: center;
 }
 
-.signInButton {
+.signUpButton {
   margin-bottom: 20px;
 }
 
 .buttonSubTitle {
   margin-bottom: 11px;
   color: var(--color-light-900);
+}
+.buttonLink {
+  text-decoration: underline;
 }

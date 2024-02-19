@@ -49,6 +49,10 @@
   &:visited {
     color: var(--color-light-100);
   }
+
+  &:not(:visited) {
+    color: var(--color-light-100);
+  }
 }
 
 .navigateLastButton {

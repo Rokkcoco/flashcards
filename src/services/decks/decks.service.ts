@@ -113,7 +113,7 @@ export const DecksService = baseApi.injectEndpoints({
         }),
       }),
       getRandomCard: builder.query<GetRandomCardResponse, GetRandomCardArgs>({
-        providesTags: [''],
+        providesTags: ['Card'],
         query: ({ id, ...args }) => ({
           params: args,
           url: `v1/decks/${id}/learn`,
@@ -128,7 +128,7 @@ export const DecksService = baseApi.injectEndpoints({
         }),
       }),
       updateCardGrade: builder.mutation<GetRandomCardResponse, UpdateCardGradeArgs>({
-        invalidatesTags: [''],
+        invalidatesTags: ['CardGrade'],
         query: body => ({
           body,
           method: 'POST',

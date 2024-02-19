@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useLocation, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 
 import { Button, Card, Page, RadioGroup, RadioItem, Typography } from '@/components/ui'
 import { useGetDeckQuery, useGetRandomCardQuery, useUpdateCardGradeMutation } from '@/services'
@@ -12,8 +12,12 @@ export const LearnDeckPage = () => {
   const { id = '' } = useParams<{ id: 'string' }>()
   const { data: deckData } = useGetDeckQuery({ id })
   const { data: cardData } = useGetRandomCardQuery({ id })
-  const [saveGrade] = useUpdateCardGradeMutation()
-  const location = useLocation()
+  const [saveGrade, { data: updateCardData }] = useUpdateCardGradeMutation()
+
+  const actualData = updateCardData ?? cardData
+
+  console.log('data', actualData)
+  console.log('updateCardData', updateCardData)
   //todo save prevCard id for request
   //todo remove useeffect
   const answerButtonHanlder = () => setShowAnswer(true)
@@ -44,20 +48,20 @@ export const LearnDeckPage = () => {
 
         <span className={s.question}>
           <Typography variant={'subtitle_1'}>Question:&nbsp;</Typography>
-          <Typography variant={'body_1'}>{cardData?.question}</Typography>
+          <Typography variant={'body_1'}>{actualData?.question}</Typography>
         </span>
-        {cardData?.questionImg && (
+        {actualData?.questionImg && (
           <span className={s.imageContainer}>
             <img
               alt={'question picture'}
               className={s.questionPicture}
-              src={cardData.questionImg}
+              src={actualData.questionImg}
             />
           </span>
         )}
         <span className={s.questionShots}>
           <Typography variant={'body_2'}>Количество попыток ответов на вопрос:&nbsp;</Typography>
-          <Typography variant={'subtitle_2'}>{cardData?.shots}</Typography>
+          <Typography variant={'subtitle_2'}>{actualData?.shots}</Typography>
         </span>
         {!showAnswer && (
           <Button fullWidth onClick={answerButtonHanlder}>
@@ -67,12 +71,12 @@ export const LearnDeckPage = () => {
         {showAnswer && (
           <span className={s.question}>
             <Typography variant={'subtitle_1'}>Answer:&nbsp;</Typography>
-            <Typography variant={'body_1'}>{cardData?.answer}</Typography>
+            <Typography variant={'body_1'}>{actualData?.answer}</Typography>
           </span>
         )}
-        {showAnswer && cardData?.answerImg && (
+        {showAnswer && actualData?.answerImg && (
           <span className={s.imageContainer}>
-            <img alt={'answer picture'} className={s.questionPicture} src={cardData.answerImg} />
+            <img alt={'answer picture'} className={s.questionPicture} src={actualData.answerImg} />
           </span>
         )}
         {showAnswer && (

@@ -2,7 +2,15 @@ import { Link } from 'react-router-dom'
 
 import { PlayCircleOutline } from '@/assets'
 import { DeleteDeckModal, EditDeckModal } from '@/components/modal'
-import { Table, TableBody, TableCell, TableHead, TableHeadCell, TableRow } from '@/components/ui'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeadCell,
+  TableRow,
+  Tooltip,
+} from '@/components/ui'
 import { Deck, useDeleteDeckMutation, useMeQuery } from '@/services'
 import { clsx } from 'clsx'
 
@@ -42,11 +50,17 @@ export const DecksTable = ({ decks }: Props) => {
               <TableCell>
                 <Link className={s.tableLink} to={`/deck/${deck.id}`}>
                   {deck.cover && (
-                    <img
-                      alt={deck.name + ' deck image'}
-                      src={deck.cover}
-                      style={{ height: '90px', width: '90px' }}
-                    />
+                    <Tooltip
+                      content={
+                        <img
+                          alt={deck.name + ' deck image'}
+                          className={s.imageTooltip}
+                          src={deck.cover}
+                        />
+                      }
+                    >
+                      <img alt={deck.name + ' deck image'} className={s.image} src={deck.cover} />
+                    </Tooltip>
                   )}
                   {deck.name}
                 </Link>
