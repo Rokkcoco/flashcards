@@ -40,6 +40,7 @@ export const Typography: TypographyComponent = forwardRef(
     function exhaustiveCheck(value: never) {
       return value
     }
+
     //todo review this function
     function typographyVar(as: ElementType = 'p', variant: Props<T>['variant'] = 'body_1') {
       switch (variant) {
