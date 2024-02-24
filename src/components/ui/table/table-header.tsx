@@ -11,7 +11,7 @@ export type Sort = {
   direction: 'asc' | 'desc'
   key: string
 } | null
-//todo sortable?
+
 type Props = Omit<
   ComponentPropsWithoutRef<'thead'> & {
     columns: Column[]

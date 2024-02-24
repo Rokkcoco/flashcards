@@ -72,6 +72,7 @@ export const DecksPage = () => {
   const minCards = searchParams.get('minCards')
   const maxCards = searchParams.get('maxCards')
   const authorId = searchParams.get('authorId')
+  const sort = searchParams.get('sort')
 
   const nameWithDebounce = useDebounce(name ?? undefined, 1000)
   const minCardsValueWithDebounce = useDebounce(minCards ?? undefined, 1000)
@@ -85,6 +86,7 @@ export const DecksPage = () => {
     maxCardsCount: maxCardsValueWithDebounce === undefined ? undefined : +maxCardsValueWithDebounce,
     minCardsCount: minCardsValueWithDebounce === undefined ? undefined : +minCardsValueWithDebounce,
     name: nameWithDebounce,
+    orderBy: sort,
   })
   const { isLoading: minMaxDeckCardsIsLoading } = useGetMinMaxDeckCardsQuery()
 

@@ -68,7 +68,6 @@ export const TableStory: Story = {
         name: 'Movies',
       },
     ]
-
     const sortedString = useMemo(() => {
       if (!sort) {
         return null
@@ -77,8 +76,7 @@ export const TableStory: Story = {
       return `${sort.key}-${sort.direction}`
     }, [sort])
 
-    console.log(sortedString)
-    console.log(sort)
+    console.log('sortedStringForBackend', sortedString)
 
     return (
       <Table {...args}>

@@ -1,13 +1,15 @@
-import { Link } from 'react-router-dom'
+import { useEffect, useMemo, useState } from 'react'
+import { Link, useSearchParams } from 'react-router-dom'
 
 import { PlayCircleOutline } from '@/assets'
 import { DeleteDeckModal, EditDeckModal } from '@/components/modal'
 import {
+  Column,
+  Sort,
   Table,
   TableBody,
   TableCell,
-  TableHead,
-  TableHeadCell,
+  TableHeader,
   TableRow,
   Tooltip,
 } from '@/components/ui'
@@ -20,6 +22,48 @@ type Props = {
   decks: Deck[] | undefined
 }
 export const DecksTable = ({ decks }: Props) => {
+  const columns: Column[] = [
+    {
+      key: 'name',
+      sortable: true,
+      title: 'Name',
+    },
+    {
+      key: 'cardsCount',
+      sortable: true,
+      title: 'Cards',
+    },
+    {
+      key: 'updated',
+      sortable: true,
+      title: 'Last Updated',
+    },
+    {
+      key: 'author.name',
+      sortable: true,
+      title: 'Created by',
+    },
+  ]
+  const [searchParams, setSearchParams] = useSearchParams()
+  const [sort, setSort] = useState<Sort>(null)
+
+  const sortedString = useMemo(() => {
+    if (!sort) {
+      return null
+    }
+
+    return `${sort.key}-${sort.direction}`
+  }, [sort])
+
+  useEffect(() => {
+    if (sort === null) {
+      searchParams.delete('sort')
+    } else {
+      sortedString && searchParams.set('sort', sortedString)
+    }
+    setSearchParams(searchParams)
+  }, [sort])
+
   const { data: meData } = useMeQuery()
   const [deleteDeck] = useDeleteDeckMutation()
   const classNames = {
@@ -35,14 +79,7 @@ export const DecksTable = ({ decks }: Props) => {
 
   return (
     <Table>
-      <TableHead>
-        <TableRow>
-          <TableHeadCell>Name</TableHeadCell>
-          <TableHeadCell>Cards</TableHeadCell>
-          <TableHeadCell>Last updated</TableHeadCell>
-          <TableHeadCell>Created by</TableHeadCell>
-        </TableRow>
-      </TableHead>
+      <TableHeader columns={columns} onSort={setSort} sort={sort} />
       <TableBody>
         {decks?.map(deck => {
           return (
