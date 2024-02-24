@@ -1,14 +1,17 @@
-import { ComponentPropsWithoutRef, useMemo } from 'react'
+import { ComponentPropsWithoutRef } from 'react'
 
-type Column = {
+import { TableHead, TableHeadCell, TableRow } from '@/components/ui'
+
+export type Column = {
   key: string
+  sortable?: boolean
   title: string
 }
-type Sort = {
+export type Sort = {
   direction: 'asc' | 'desc'
   key: string
 } | null
-
+//todo sortable?
 type Props = Omit<
   ComponentPropsWithoutRef<'thead'> & {
     columns: Column[]
@@ -37,24 +40,16 @@ export const TableHeader = ({ columns, onSort, sort, ...restProps }: Props) => {
     })
   }
 
-  const sortedString = useMemo(() => {
-    if (!sort) {
-      return null
-    }
-
-    return `${sort.key}-${sort.direction}`
-  }, [sort])
-
   return (
-    <thead {...restProps}>
-      <tr>
+    <TableHead {...restProps}>
+      <TableRow>
         {columns.map(({ key, sortable, title }) => (
-          <th key={key} onClick={handleSort(key, sortable)}>
+          <TableHeadCell key={key} onClick={handleSort(key, sortable)}>
             {title}
             {sort && sort.key === key && <span>{sort.direction === 'asc' ? '▲' : '▼'}</span>}
-          </th>
+          </TableHeadCell>
         ))}
-      </tr>
-    </thead>
+      </TableRow>
+    </TableHead>
   )
 }
