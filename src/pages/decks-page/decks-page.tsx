@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
 import { useDebounce } from '@/common/hooks'
@@ -13,19 +13,7 @@ import s from './decks-page.module.scss'
 export const DecksPage = () => {
   //test@test.com
   //test
-
-  // const orderBy = JSON.parse(search.get('orderBy') ?? 'null')
-  // const setOrderBy = (value: Sort) => {
-  //   search.set('orderBy', JSON.stringify(value))
-  //   setSearch(search)
-  // }
-  // const orderByString = useMemo(() => {
-  //   if (!orderBy) return null
-  //
-  //   return `${orderBy.key}-${orderBy.direction}`
-  // }, [orderBy])
-
-  const pageSizeOptions = {
+  const pageSizeOptionsDecks = {
     5: '5',
     7: '7',
     10: '10',
@@ -34,20 +22,40 @@ export const DecksPage = () => {
   const [searchParams, setSearchParams] = useSearchParams()
 
   const currentPageQuery = Number(searchParams.get('currentPage'))
+
   const itemsPerPageQuery = Number(searchParams.get('itemsPerPage'))
   const [currentPage, setCurrentPage] = useState(currentPageQuery === 0 ? 1 : currentPageQuery)
   const [pageSize, setPageSize] = useState(
-    itemsPerPageQuery === 0 ? pageSizeOptions['5'] : itemsPerPageQuery
+    itemsPerPageQuery === 0 ? pageSizeOptionsDecks['5'] : itemsPerPageQuery
   )
+
+  /*  for back button page in browser*/
+  useEffect(() => {
+    if (currentPageQuery !== currentPage && currentPageQuery !== 0) {
+      setCurrentPage(currentPageQuery)
+    }
+    if (currentPageQuery === 0) {
+      setCurrentPage(1)
+    }
+  }, [currentPageQuery])
+
+  useEffect(() => {
+    if (itemsPerPageQuery !== pageSize && itemsPerPageQuery !== 0) {
+      setPageSize(itemsPerPageQuery)
+    }
+    if (itemsPerPageQuery === 0) {
+      setPageSize('5')
+    }
+  }, [itemsPerPageQuery])
 
   const setCurrentPageWithSearchParams = (page: number) => {
     if (page === 1) {
-      searchParams.delete('page')
+      searchParams.delete('currentPage')
     } else {
       searchParams.set('currentPage', page.toString())
     }
-    setCurrentPage(page)
     setSearchParams(searchParams)
+    setCurrentPage(page)
   }
   const setPageSizeWithSearchParams = (itemsPerPage: string) => {
     if (itemsPerPage === '5') {
@@ -88,6 +96,16 @@ export const DecksPage = () => {
     name: nameWithDebounce,
     orderBy: sort,
   })
+
+  /*if our last page is out of range*/
+  useEffect(() => {
+    if (data) {
+      if (data.pagination.totalPages !== 0 && data.pagination.totalPages < currentPage) {
+        setCurrentPage(data.pagination.totalPages)
+      }
+    }
+  }, [data?.pagination])
+
   const { isLoading: minMaxDeckCardsIsLoading } = useGetMinMaxDeckCardsQuery()
 
   if (isLoading || minMaxDeckCardsIsLoading) {
@@ -113,7 +131,7 @@ export const DecksPage = () => {
           onPageChange={setCurrentPageWithSearchParams}
           onPageSizeChange={setPageSizeWithSearchParams}
           pageSize={Number(pageSize)}
-          selectOptions={pageSizeOptions}
+          selectOptions={pageSizeOptionsDecks}
           totalCount={data?.pagination?.totalItems ?? 1}
         />
       </div>

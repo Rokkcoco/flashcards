@@ -72,8 +72,8 @@ export const AddDeckModal = () => {
     fileCustomRef.current = e
   }
   const imgUploaderHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    imageOnChange(e)
-    trigger('cover')
+    void imageOnChange(e)
+    void trigger('cover')
   }
 
   return (

@@ -85,8 +85,8 @@ export const AddCardModal = () => {
   }
 
   const answerImgHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    answerImageOnChange(e)
-    trigger('answerImg')
+    void answerImageOnChange(e)
+    void trigger('answerImg')
   }
 
   const answerImgRef = (e: HTMLInputElement | null) => {
@@ -98,8 +98,8 @@ export const AddCardModal = () => {
     questionImageRef.current = e
   }
   const questionImgHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    questionImageOnChange(e)
-    trigger('questionImg')
+    void questionImageOnChange(e)
+    void trigger('questionImg')
   }
 
   return (

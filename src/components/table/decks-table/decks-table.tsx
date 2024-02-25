@@ -44,8 +44,13 @@ export const DecksTable = ({ decks }: Props) => {
       title: 'Created by',
     },
   ]
+
   const [searchParams, setSearchParams] = useSearchParams()
-  const [sort, setSort] = useState<Sort>(null)
+  const sorted = searchParams.get('sort')
+
+  const newSort = sorted?.split('-')
+  const sortObject = { direction: newSort?.[1] as 'asc' | 'desc', key: newSort?.[0] ?? '' }
+  const [sort, setSort] = useState<Sort>(sorted ? sortObject : null)
 
   const sortedString = useMemo(() => {
     if (!sort) {
@@ -61,8 +66,15 @@ export const DecksTable = ({ decks }: Props) => {
     } else {
       sortedString && searchParams.set('sort', sortedString)
     }
+
     setSearchParams(searchParams)
   }, [sort])
+
+  useEffect(() => {
+    if (!sorted) {
+      setSort(null)
+    }
+  }, [sorted])
 
   const { data: meData } = useMeQuery()
   const [deleteDeck] = useDeleteDeckMutation()

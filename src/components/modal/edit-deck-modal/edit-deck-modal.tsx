@@ -77,8 +77,8 @@ export const EditDeckModal = ({ deck }: Props) => {
   const closeModalHandler = () => setModalOpen(false)
 
   const imageUploaderHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    imageOnChange(e)
-    trigger('newCover')
+    void imageOnChange(e)
+    void trigger('newCover')
   }
 
   const imageUploaderRef = (e: HTMLInputElement | null) => {

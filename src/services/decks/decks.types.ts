@@ -101,9 +101,9 @@ export type GetCardsInADeckResponse = {
 
 export type GetCardsInADeckArgs = {
   answer?: string
-  currentPage?: string
+  currentPage?: number
   id: string
-  itemsPerPage?: string
+  itemsPerPage?: number
   orderBy?: string
   question?: string
 }

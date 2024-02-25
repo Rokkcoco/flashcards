@@ -4,6 +4,7 @@ import { CheckEmail } from './'
 
 const meta = {
   component: CheckEmail,
+  parameters: { layout: 'centered' },
   tags: ['autodocs'],
   title: 'Components/Auth/CheckEmail',
 } satisfies Meta<typeof CheckEmail>

@@ -1,4 +1,4 @@
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useSearchParams } from 'react-router-dom'
 
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@/assets'
 import { Select, SelectItemWithText, Typography } from '@/components/ui'
@@ -17,7 +17,7 @@ type Props = {
   siblingCount?: number
   totalCount: number
 }
-//todo buttons -> links
+
 export const Pagination = ({
   className,
   currentPage = 1,
@@ -34,10 +34,6 @@ export const Pagination = ({
     siblingCount,
     totalCount,
   })
-
-  if (currentPage === 0 || (paginationRange && paginationRange.length < 2)) {
-    return null
-  }
 
   const lastPage = paginationRange?.at(-1)
   const onPrevious = () => {
@@ -108,8 +104,7 @@ type NavigateButtonProps = {
 }
 
 const DefaultNavigateButton = ({ currentPage, item, onPageChange }: NavigateButtonProps) => {
-  const location = useLocation()
-  const searchParams = new URLSearchParams(location.search)
+  const [searchParams] = useSearchParams()
 
   if (item !== 1) {
     searchParams.set('currentPage', String(item))
@@ -131,8 +126,8 @@ const DefaultNavigateButton = ({ currentPage, item, onPageChange }: NavigateButt
           onPageChange(item)
         }
       }}
+      replace
       to={{
-        pathname: '/',
         search: searchParams.toString(),
       }}
     >
@@ -143,7 +138,6 @@ const DefaultNavigateButton = ({ currentPage, item, onPageChange }: NavigateButt
 const PaginationPrevButton = ({ disabled, onClick }: NavigateButtonProps) => {
   const location = useLocation()
   const searchParams = new URLSearchParams(location.search)
-
   const curPage = searchParams.get('currentPage')
 
   if (curPage) {
@@ -159,8 +153,8 @@ const PaginationPrevButton = ({ disabled, onClick }: NavigateButtonProps) => {
     <Link
       className={clsx(s.navigateButton, disabled && s.disabledLink)}
       onClick={onClick}
+      replace
       to={{
-        pathname: '/',
         search: searchParams.toString(),
       }}
     >
@@ -187,8 +181,8 @@ const PaginationNextButton = ({ disabled, lastPage, onClick }: NavigateButtonPro
     <Link
       className={clsx(s.navigateButton, s.navigateLastButton, disabled && s.disabledLink)}
       onClick={onClick}
+      replace
       to={{
-        pathname: '/',
         search: searchParams.toString(),
       }}
     >

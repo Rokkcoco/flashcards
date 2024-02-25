@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
 import { TrashOutline } from '@/assets'
@@ -13,6 +13,7 @@ type Props = {
 }
 export const SearchSettings = ({ onClear, onSearch }: Props) => {
   const [searchParams, setSearchParams] = useSearchParams()
+  const [onSearchTrigger, setOnSearchTrigger] = useState(false)
   const name = searchParams.get('name')
   const minCards = searchParams.get('minCards')
   const maxCards = searchParams.get('maxCards')
@@ -32,7 +33,6 @@ export const SearchSettings = ({ onClear, onSearch }: Props) => {
   const { data: meData } = useMeQuery()
 
   const onValueChangeTextFieldWithSearchParams = (name: string) => {
-    onSearch()
     if (!name) {
       searchParams.delete('name')
     } else {
@@ -40,10 +40,10 @@ export const SearchSettings = ({ onClear, onSearch }: Props) => {
     }
     setSearchParams(searchParams)
     setSearchValueTextField(name)
+    setOnSearchTrigger(true)
   }
   //todo fix TabsOwner
   const setTabsValueWithSearchParams = (value: string) => {
-    onSearch()
     if (meData) {
       if (!value) {
         searchParams.delete('authorId')
@@ -51,12 +51,12 @@ export const SearchSettings = ({ onClear, onSearch }: Props) => {
         searchParams.set('authorId', meData.id)
       }
     }
-    setSearchParams(searchParams)
     setTabsValue(value)
+    setSearchParams(searchParams)
+    setOnSearchTrigger(true)
   }
 
   const setSliderValueWithSearchParamsOnCommit = (values: number[]) => {
-    onSearch()
     if (values[0] !== minMaxSliderValues[0]) {
       searchParams.set('minCards', values[0].toString())
     }
@@ -69,10 +69,10 @@ export const SearchSettings = ({ onClear, onSearch }: Props) => {
     if (values[1] === minMaxSliderValues[1]) {
       searchParams.delete('maxCards')
     }
-    setSearchParams(searchParams)
     setSliderValue(values)
+    setSearchParams(searchParams)
+    setOnSearchTrigger(true)
   }
-
   const clearSearchParams = () => {
     setTabsValue('')
     setSearchValueTextField('')
@@ -80,6 +80,49 @@ export const SearchSettings = ({ onClear, onSearch }: Props) => {
     onClear()
     setSearchParams({})
   }
+
+  useEffect(() => {
+    if (onSearchTrigger) {
+      onSearch()
+      setOnSearchTrigger(false)
+    }
+  }, [onSearchTrigger])
+
+  useEffect(() => {
+    if (name !== searchValueTextField && name !== null) {
+      setSearchValueTextField(name)
+    }
+    if (name === null) {
+      setSearchValueTextField('')
+    }
+  }, [name])
+
+  useEffect(() => {
+    if (sliderValue[0] !== Number(minCards) && minCards !== null) {
+      setSliderValue([Number(minCards), sliderValue[1]])
+    }
+    if (minCards === null) {
+      setSliderValue([minMaxCardsData?.min ?? 0, sliderValue[1]])
+    }
+  }, [minCards])
+
+  useEffect(() => {
+    if (sliderValue[1] !== Number(maxCards) && maxCards !== null) {
+      setSliderValue([sliderValue[0], Number(minCards)])
+    }
+    if (maxCards === null) {
+      setSliderValue([sliderValue[0], minMaxCardsData?.max ?? 0])
+    }
+  }, [maxCards])
+
+  useEffect(() => {
+    if (deckOwner !== tabsValue && deckOwner !== null) {
+      setTabsValue(deckOwner)
+    }
+    if (deckOwner === null) {
+      setTabsValue('')
+    }
+  }, [deckOwner])
 
   return (
     <div className={s.filter}>
@@ -92,7 +135,7 @@ export const SearchSettings = ({ onClear, onSearch }: Props) => {
       />
       <div className={s.tabs}>
         <Tabs onValueChange={setTabsValueWithSearchParams} value={tabsValue}>
-          <TabItem value={meData?.id ?? ''}>My Cards</TabItem>
+          <TabItem value={meData?.id ?? 'me'}>My Cards</TabItem>
           <TabItem value={''}>All Cards</TabItem>
         </Tabs>
       </div>

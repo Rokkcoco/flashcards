@@ -39,7 +39,7 @@ export const Tabs = forwardRef<ElementRef<typeof TabsRadix.Root>, Props>((props,
   }
 
   return (
-    <TabsRadix.Root className={classNames.root} defaultValue={value} ref={ref} {...rest}>
+    <TabsRadix.Root className={classNames.root} ref={ref} value={value} {...rest}>
       {label && (
         <Label.Root asChild className={classNames.label}>
           <Typography as={'label'} variant={'body_2'}>
