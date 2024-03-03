@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
 import { useDebounce } from '@/common/hooks'
+import { AddDeckModal } from '@/components/modal'
 import { DecksTable } from '@/components/table/decks-table/decks-table'
 import { Loader, Page, Pagination } from '@/components/ui'
 import { Typography } from '@/components/ui/typography/typography'
@@ -123,6 +124,7 @@ export const DecksPage = () => {
           Decks
         </Typography>
       </div>
+      <AddDeckModal />
       <SearchSettings onClear={resetPaginationSettings} onSearch={resetPaginationCurrentPage} />
       <DecksTable decks={data?.items} />
       <div className={s.pagination}>

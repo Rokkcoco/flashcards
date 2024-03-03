@@ -146,7 +146,6 @@ export const SearchSettings = ({ onClear, onSearch }: Props) => {
         onValueCommit={setSliderValueWithSearchParamsOnCommit}
         value={sliderValue}
       />
-      <AddDeckModal />
       <Button onClick={clearSearchParams} variant={'secondary'}>
         <TrashOutline />
         Clear Field
